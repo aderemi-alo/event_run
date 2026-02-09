@@ -1,0 +1,10 @@
+name: event_run_workspace
+repository: https://github.com/your_org/event_run
+
+packages:
+  - packages/*
+
+command:
+  bootstrap:
+    # This links packages locally without publishing them
+    usePubspecOverrides: true

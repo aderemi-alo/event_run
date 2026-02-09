@@ -1,0 +1,14 @@
+name: event_run_workspace
+description: The monorepo for Event Run (App + Landing).
+environment:
+  sdk: '>=3.5.0 <4.0.0' # Ensure you are on a modern SDK
+
+# This is key for Melos v7+ and Dart 3.5+
+workspace:
+  - packages/core
+  - packages/app
+  - packages/landing
+
+dev_dependencies:
+  melos: ^7.4.0
+  lints: ^5.0.0
