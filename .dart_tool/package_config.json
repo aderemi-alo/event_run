@@ -8,6 +8,12 @@
       "languageVersion": "3.5"
     },
     {
+      "name": "adaptive_number",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/adaptive_number-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "analyzer",
       "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/analyzer-7.6.0",
       "packageUri": "lib/",
@@ -24,6 +30,30 @@
       "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/ansi_styles-0.3.2+1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "app_links",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/app_links-6.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "app_links_linux",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/app_links_linux-1.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "app_links_platform_interface",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/app_links_platform_interface-2.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "app_links_web",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/app_links_web-1.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
     },
     {
       "name": "archive",
@@ -194,10 +224,22 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "dart_jsonwebtoken",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/dart_jsonwebtoken-3.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "dart_style",
       "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/dart_style-3.1.1",
       "packageUri": "lib/",
       "languageVersion": "3.7"
+    },
+    {
+      "name": "ed25519_edwards",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/ed25519_edwards-0.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "equatable",
@@ -284,6 +326,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "functions_client",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/functions_client-2.5.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "glob",
       "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/glob-2.1.3",
       "packageUri": "lib/",
@@ -302,10 +350,22 @@
       "languageVersion": "3.9"
     },
     {
+      "name": "gotrue",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/gotrue-2.18.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "graphs",
       "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/graphs-2.3.2",
       "packageUri": "lib/",
       "languageVersion": "3.4"
+    },
+    {
+      "name": "gtk",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/gtk-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "hotreloader",
@@ -390,6 +450,12 @@
       "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/json_serializable-6.9.5",
       "packageUri": "lib/",
       "languageVersion": "3.6"
+    },
+    {
+      "name": "jwt_decode",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/jwt_decode-0.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "leak_tracker",
@@ -530,6 +596,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "pointycastle",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/pointycastle-4.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
       "name": "pool",
       "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/pool-1.5.2",
       "packageUri": "lib/",
@@ -538,6 +610,12 @@
     {
       "name": "posix",
       "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/posix-6.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "postgrest",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/postgrest-2.6.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -578,6 +656,18 @@
       "languageVersion": "3.6"
     },
     {
+      "name": "realtime_client",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/realtime_client-2.7.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "retry",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/retry-3.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "riverpod",
       "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/riverpod-2.6.1",
       "packageUri": "lib/",
@@ -600,6 +690,12 @@
       "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/riverpod_generator-2.6.5",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "rxdart",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/rxdart-0.28.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "scratch_space",
@@ -722,6 +818,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "storage_client",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/storage_client-2.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "stream_channel",
       "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/stream_channel-2.1.4",
       "packageUri": "lib/",
@@ -738,6 +840,18 @@
       "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/string_scanner-1.4.1",
       "packageUri": "lib/",
       "languageVersion": "3.1"
+    },
+    {
+      "name": "supabase",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/supabase-2.10.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "supabase_flutter",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/supabase_flutter-2.12.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
     },
     {
       "name": "term_glyph",
@@ -768,6 +882,54 @@
       "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/universal_web-1.1.1+1",
       "packageUri": "lib/",
       "languageVersion": "3.4"
+    },
+    {
+      "name": "url_launcher",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/url_launcher-6.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "url_launcher_android",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.28",
+      "packageUri": "lib/",
+      "languageVersion": "3.9"
+    },
+    {
+      "name": "url_launcher_ios",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/url_launcher_ios-6.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.10"
+    },
+    {
+      "name": "url_launcher_linux",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/url_launcher_linux-3.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.8"
+    },
+    {
+      "name": "url_launcher_macos",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/url_launcher_macos-3.2.5",
+      "packageUri": "lib/",
+      "languageVersion": "3.9"
+    },
+    {
+      "name": "url_launcher_platform_interface",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/url_launcher_platform_interface-2.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
+      "name": "url_launcher_web",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/url_launcher_web-2.4.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.10"
+    },
+    {
+      "name": "url_launcher_windows",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/url_launcher_windows-3.1.5",
+      "packageUri": "lib/",
+      "languageVersion": "3.8"
     },
     {
       "name": "uuid",
@@ -834,6 +996,12 @@
       "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/yaml_edit-2.2.3",
       "packageUri": "lib/",
       "languageVersion": "3.1"
+    },
+    {
+      "name": "yet_another_json_isolate",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/yet_another_json_isolate-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "event_run_workspace",

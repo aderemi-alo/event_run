@@ -1,28 +1,35 @@
-import 'package:event_run/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:event_run/core/constants/app_constants.dart';
 import 'package:event_run/core/theme/app_theme.dart';
 import 'package:event_run/core/router/app_router.dart';
-import 'package:event_run/features/auth/presentation/notifiers/auth_notifier.dart';
-// ignore: depend_on_referenced_packages
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  usePathUrlStrategy();
-
-  // Initialize SharedPreferences
-  final sharedPreferences = await SharedPreferences.getInstance();
-
-  runApp(
-    ProviderScope(
-      overrides: [
-        // Override SharedPreferences provider with actual instance
-        // sharedPreferencesProvider.overrideWithValue(sharedPreferences),
-      ],
-      child: const MainApp(),
-    ),
+  await Supabase.initialize(
+    url: AppConstants.supabaseUrl,
+    anonKey: AppConstants.supabaseAnonKey,
   );
+
+  runApp(const ProviderScope(child: EventRunApp()));
+}
+
+class EventRunApp extends ConsumerWidget {
+  const EventRunApp({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(routerProvider);
+
+    return MaterialApp.router(
+      title: AppConstants.appName,
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.light,
+      routerConfig: router,
+    );
+  }
 }

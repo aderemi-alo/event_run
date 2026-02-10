@@ -1,67 +1,55 @@
-import 'package:event_run/features/auth/data/datasources/auth_local_datasource.dart';
-import 'package:event_run/features/auth/data/models/vendor_model.dart';
-import 'package:event_run/features/auth/domain/entities/vendor.dart';
+import 'package:event_run/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:event_run/features/auth/data/models/profile_model.dart';
+import 'package:event_run/features/auth/domain/entities/profile_entity.dart';
 import 'package:event_run/features/auth/domain/repositories/auth_repository.dart';
-import 'package:event_run/core/constants/mock_data.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// part 'auth_repository_impl.g.dart';
-
-/// Implementation of AuthRepository using local data source
 class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl(this._localDataSource);
+  final AuthRemoteDatasource _datasource;
 
-  final AuthLocalDataSource _localDataSource;
+  AuthRepositoryImpl(this._datasource);
 
   @override
-  Future<bool> isAuthenticated() async {
-    return _localDataSource.isAuthenticated();
+  Future<void> signIn({required String email, required String password}) {
+    return _datasource.signIn(email: email, password: password);
   }
 
   @override
-  Future<bool> hasCompletedOnboarding() async {
-    return _localDataSource.hasCompletedOnboarding();
+  Future<void> signUp({
+    required String email,
+    required String password,
+    required String fullName,
+  }) {
+    return _datasource.signUp(
+      email: email,
+      password: password,
+      fullName: fullName,
+    );
   }
 
   @override
-  Future<void> completeOnboarding() async {
-    await _localDataSource.completeOnboarding();
+  Future<void> signOut() {
+    return _datasource.signOut();
   }
 
   @override
-  Future<Vendor?> getCurrentUser() async {
-    return _localDataSource.getCurrentUser();
+  Future<ProfileEntity?> getProfile(String userId) {
+    return _datasource.getProfile(userId);
   }
 
   @override
-  Future<Vendor> login(String email, String password) async {
-    // Simulate network delay
-    await Future.delayed(const Duration(milliseconds: 500));
-
-    // Mock login - in real app would call API
-    // For now, return mock vendor
-    final vendorModel = VendorModel.fromEntity(MockData.mockVendor);
-
-    await _localDataSource.saveUser(vendorModel);
-    return vendorModel;
+  Future<ProfileEntity> updateProfile({required ProfileEntity profile}) {
+    final model = ProfileModel(
+      id: profile.id,
+      email: profile.email,
+      fullName: profile.fullName,
+      avatarUrl: profile.avatarUrl,
+      createdAt: profile.createdAt,
+    );
+    return _datasource.updateProfile(profile: model);
   }
 
   @override
-  Future<Vendor> signup(Vendor vendor, String password) async {
-    // Simulate network delay
-    await Future.delayed(const Duration(milliseconds: 500));
-
-    // Mock signup - in real app would call API
-    final vendorModel = VendorModel.fromEntity(vendor);
-
-    await _localDataSource.saveUser(vendorModel);
-    await _localDataSource.completeOnboarding();
-
-    return vendorModel;
-  }
-
-  @override
-  Future<void> logout() async {
-    await _localDataSource.removeUser();
+  Future<void> resetPassword({required String email}) {
+    return _datasource.resetPassword(email: email);
   }
 }
