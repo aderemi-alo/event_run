@@ -1,0 +1,21 @@
+name: event_run_core
+description: Shared business logic, models, and constants.
+version: 1.0.0
+resolution: workspace
+environment:
+  sdk: ^3.10.1
+
+dependencies:
+  # Add this so you can write logic in Core!
+  riverpod: ^2.6.1 
+  riverpod_annotation: ^2.6.1
+
+  json_annotation: ^4.9.0
+  freezed_annotation: ^2.4.4
+  equatable: ^2.0.5
+
+dev_dependencies:
+  build_runner: ^2.4.13
+  riverpod_generator: ^2.6.3 # Generator for the logic
+  json_serializable: ^6.9.0
+  freezed: ^2.5.7

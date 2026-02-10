@@ -1,0 +1,38 @@
+name: event_run
+description: "EventRun - Event Management System for Vendors"
+publish_to: 'none'
+resolution: workspace
+version: 0.1.0
+environment:
+  sdk: ^3.10.1
+  
+dependencies:
+  flutter:
+    sdk: flutter
+
+  event_run_core:
+    path: ../core
+  
+  # State Management (Align with Core)
+  flutter_riverpod: ^2.6.1 
+  riverpod_annotation: ^2.6.1
+  
+  go_router: ^14.6.0 # Downgraded to stable. 17.x is very new/beta?
+  shared_preferences: ^2.3.2
+  google_fonts: ^6.2.1
+  fl_chart: ^0.69.0
+  intl: ^0.19.0
+  equatable: ^2.0.5
+  json_annotation: ^4.9.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  riverpod_generator: ^2.6.3
+  build_runner: ^2.4.13
+  mockito: ^5.4.4
+  json_serializable: ^6.9.0
+
+flutter:
+  uses-material-design: true

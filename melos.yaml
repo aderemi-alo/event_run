@@ -1,10 +1,62 @@
 name: event_run_workspace
-repository: https://github.com/your_org/event_run
+repository: https://github.com/aderemi-alo/event_run
 
 packages:
   - packages/*
 
 command:
   bootstrap:
-    # This links packages locally without publishing them
     usePubspecOverrides: true
+
+scripts:
+  # ----------------------------------------------------------------------------
+  # CORE COMMANDS
+  # ----------------------------------------------------------------------------
+  
+  # Run this after pulling code or adding new dependencies
+  postclean:
+    run: melos bootstrap
+    description: Bootstrap the workspace.
+
+  # ----------------------------------------------------------------------------
+  # CODE GENERATION (The most important part)
+  # ----------------------------------------------------------------------------
+
+  # Generates code for ALL packages (Core, App, Landing) in parallel
+  gen:
+    run: dart run build_runner build --delete-conflicting-outputs
+    exec:
+      concurrency: 1
+    packageFilters:
+      dependsOn: build_runner # Only run in packages that actually use build_runner
+    description: Build JSON/Freezed files for all packages.
+
+  # Watch mode: Re-generates files instantly when you save
+  watch:
+    run: dart run build_runner watch --delete-conflicting-outputs
+    exec:
+      concurrency: 5 # Run watches in parallel
+    packageFilters:
+      dependsOn: build_runner
+    description: Watch for changes and rebuild files.
+
+  # ----------------------------------------------------------------------------
+  # QUALITY CONTROL
+  # ----------------------------------------------------------------------------
+
+  # Run the linter on everything
+  lint:
+    run: dart analyze .
+    exec:
+      concurrency: 5
+    description: Run static analysis.
+
+  # Run all unit tests
+  test:
+    run: flutter test
+    exec:
+      concurrency: 1
+      failFast: true
+    packageFilters:
+      dirExists: test # Only run if a 'test' folder exists
+    description: Run unit tests.

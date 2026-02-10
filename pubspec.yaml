@@ -12,3 +12,70 @@ workspace:
 dev_dependencies:
   melos: ^7.4.0
   lints: ^5.0.0
+
+
+dependency_overrides:
+  flutter_riverpod: ^2.6.1
+  riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+  riverpod_generator: ^2.6.3
+  build_runner: ^2.4.13
+  json_serializable: ^6.9.0
+  freezed: ^2.5.7
+  freezed_annotation: ^2.4.4
+  flutter_lints: ^5.0.0
+  
+melos:
+  repository: https://github.com/your_org/event_run
+  
+  # Note: 'packages' list is NOT needed here anymore because 
+  # Melos reads the 'workspace' list above automatically.
+
+  command:
+    bootstrap:
+      usePubspecOverrides: true
+
+  scripts:
+    # ----------------------------------------------------------------------
+    # CORE COMMANDS
+    # ----------------------------------------------------------------------
+    postclean:
+      run: melos bootstrap
+      description: Bootstrap the workspace.
+
+    # ----------------------------------------------------------------------
+    # CODE GENERATION
+    # ----------------------------------------------------------------------
+    gen:
+      run: dart run build_runner build --delete-conflicting-outputs
+      exec:
+        concurrency: 1
+      packageFilters:
+        dependsOn: build_runner
+      description: Build JSON/Freezed files for all packages.
+
+    watch:
+      run: dart run build_runner watch --delete-conflicting-outputs
+      exec:
+        concurrency: 5
+      packageFilters:
+        dependsOn: build_runner
+      description: Watch for changes and rebuild files.
+
+    # ----------------------------------------------------------------------
+    # QUALITY CONTROL
+    # ----------------------------------------------------------------------
+    lint:
+      run: dart analyze .
+      exec:
+        concurrency: 5
+      description: Run static analysis.
+
+    test:
+      run: flutter test
+      exec:
+        concurrency: 1
+        failFast: true
+      packageFilters:
+        dirExists: test
+      description: Run unit tests.

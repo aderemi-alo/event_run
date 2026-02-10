@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+<module fileurl="file://$PROJECT_DIR$/packages/app/melos_event_run.iml" filepath="$PROJECT_DIR$/packages/app/melos_event_run.iml"/>
+<module fileurl="file://$PROJECT_DIR$/packages/core/melos_event_run_core.iml" filepath="$PROJECT_DIR$/packages/core/melos_event_run_core.iml"/>
+<module fileurl="file://$PROJECT_DIR$/packages/landing/melos_landing.iml" filepath="$PROJECT_DIR$/packages/landing/melos_landing.iml"/>
+<module fileurl="file://$PROJECT_DIR$/melos_event_run_workspace.iml" filepath="$PROJECT_DIR$/melos_event_run_workspace.iml"/>
+    </modules>
+  </component>
+</project>
