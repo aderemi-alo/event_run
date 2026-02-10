@@ -1,8 +1,11 @@
 import 'package:jaspr/server.dart';
 import 'package:jaspr_router/jaspr_router.dart';
 import 'package:landing/jaspr_options.dart';
-
-import 'landing.dart';
+import 'package:landing/pages/contact_us.dart';
+import 'package:landing/pages/landing.dart';
+import 'package:landing/pages/pricing.dart';
+import 'package:landing/pages/privacy_policy.dart';
+import 'package:landing/pages/terms_of_service.dart';
 
 /// Example app setup showing how to use the Landing component
 /// with Jaspr's router.
@@ -25,6 +28,26 @@ class App extends StatelessComponent {
           path: '/',
           title: 'EventRun - Run Your Event Business Like a Pro',
           builder: (context, state) => const Landing(),
+        ),
+        Route(
+          path: '/pricing',
+          title: 'EventRun - Pricing',
+          builder: (context, state) => const PricingPage(),
+        ),
+        Route(
+          path: '/privacy',
+          title: 'EventRun - Privacy Policy',
+          builder: (context, state) => const PrivacyPolicyPage(),
+        ),
+        Route(
+          path: '/terms',
+          title: 'EventRun - Terms of Service',
+          builder: (context, state) => const TermsOfServicePage(),
+        ),
+        Route(
+          path: '/contact',
+          title: 'EventRun - Contact Us',
+          builder: (context, state) => const ContactPage(),
         ),
         // Add your other routes here:
         // Route(path: '/login', ...),
