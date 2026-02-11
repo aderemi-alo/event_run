@@ -37,15 +37,5 @@ class EventRunApp extends ConsumerWidget {
       themeMode: ThemeMode.light,
       routerConfig: router,
     );
-    // return MaterialApp(
-    //   localizationsDelegates: AppLocalizations.localizationsDelegates,
-    //   supportedLocales: AppLocalizations.supportedLocales,
-    //   title: AppConstants.appName,
-    //   debugShowCheckedModeBanner: false,
-    //   theme: AppTheme.light,
-    //   darkTheme: AppTheme.dark,
-    //   themeMode: ThemeMode.light,
-    //   home: SignupScreen(),
-    // );
   }
 }
