@@ -115,8 +115,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               Text.rich(
                                 TextSpan(
                                   text: 'Forgot password?',
-                                  style: textTheme.labelLarge!.vCopyWith(
-                                    color: AppColors.textSecondary,
+                                  style: textTheme.labelMedium!.vCopyWith(
+                                    color: colorScheme.primary,
                                   ),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () => context.pushNamed(
