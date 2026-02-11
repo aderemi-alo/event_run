@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:event_run/core/router/route_names.dart';
-import 'package:event_run/core/widgets/app_loading.dart';
-import 'package:event_run/core/widgets/app_error_widget.dart';
-import 'package:event_run/core/widgets/empty_state_widget.dart';
-import 'package:event_run/features/clients/presentation/providers/client_providers.dart';
-import 'package:event_run/features/clients/presentation/widgets/client_card.dart';
-import 'package:event_run/features/clients/presentation/widgets/client_search_delegate.dart';
+import 'package:app/core/router/route_names.dart';
+import 'package:app/core/widgets/app_loading.dart';
+import 'package:app/core/widgets/app_error_widget.dart';
+import 'package:app/core/widgets/empty_state_widget.dart';
+import 'package:app/features/clients/presentation/providers/client_providers.dart';
+import 'package:app/features/clients/presentation/widgets/client_card.dart';
+import 'package:app/features/clients/presentation/widgets/client_search_delegate.dart';
 
 class ClientsListScreen extends ConsumerWidget {
   const ClientsListScreen({super.key, required this.vendorId});

@@ -1,18 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:event_run/features/inventory/data/datasources/inventory_remote_datasource.dart';
-import 'package:event_run/features/inventory/data/repositories/inventory_repository_impl.dart';
-import 'package:event_run/features/inventory/domain/entities/inventory_item_entity.dart';
-import 'package:event_run/features/inventory/domain/repositories/inventory_repository.dart';
-import 'package:event_run/features/inventory/domain/usecases/get_inventory_items.dart';
-import 'package:event_run/features/inventory/domain/usecases/get_item_by_id.dart';
-import 'package:event_run/features/inventory/domain/usecases/create_item.dart';
-import 'package:event_run/features/inventory/domain/usecases/update_item.dart';
-import 'package:event_run/features/inventory/domain/usecases/delete_item.dart';
+import 'package:app/features/inventory/data/datasources/inventory_remote_datasource.dart';
+import 'package:app/features/inventory/data/repositories/inventory_repository_impl.dart';
+import 'package:app/features/inventory/domain/entities/inventory_item_entity.dart';
+import 'package:app/features/inventory/domain/repositories/inventory_repository.dart';
+import 'package:app/features/inventory/domain/usecases/get_inventory_items.dart';
+import 'package:app/features/inventory/domain/usecases/get_item_by_id.dart';
+import 'package:app/features/inventory/domain/usecases/create_item.dart';
+import 'package:app/features/inventory/domain/usecases/update_item.dart';
+import 'package:app/features/inventory/domain/usecases/delete_item.dart';
 
 // Datasource
-final inventoryRemoteDatasourceProvider =
-    Provider<InventoryRemoteDatasource>((ref) {
+final inventoryRemoteDatasourceProvider = Provider<InventoryRemoteDatasource>((
+  ref,
+) {
   return InventoryRemoteDatasourceImpl(Supabase.instance.client);
 });
 
@@ -45,10 +46,10 @@ final deleteItemUsecaseProvider = Provider<DeleteItem>((ref) {
 // Async state
 final inventoryItemsProvider = FutureProvider.autoDispose
     .family<List<InventoryItemEntity>, String>((ref, vendorId) {
-  return ref.watch(getInventoryItemsUsecaseProvider).call(vendorId);
-});
+      return ref.watch(getInventoryItemsUsecaseProvider).call(vendorId);
+    });
 
 final inventoryItemDetailProvider = FutureProvider.autoDispose
     .family<InventoryItemEntity?, String>((ref, itemId) {
-  return ref.watch(getItemByIdUsecaseProvider).call(itemId);
-});
+      return ref.watch(getItemByIdUsecaseProvider).call(itemId);
+    });

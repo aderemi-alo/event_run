@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:event_run/core/utils/validators.dart';
-import 'package:event_run/features/auth/presentation/widgets/auth_form_field.dart';
-import 'package:event_run/features/vendor/presentation/providers/vendor_providers.dart';
+import 'package:app/core/utils/validators.dart';
+import 'package:app/features/auth/presentation/widgets/auth_form_field.dart';
+import 'package:app/features/vendor/presentation/providers/vendor_providers.dart';
 
 class BankDetailsScreen extends ConsumerStatefulWidget {
   const BankDetailsScreen({super.key});
@@ -32,23 +32,25 @@ class _BankDetailsScreenState extends ConsumerState<BankDetailsScreen> {
 
     setState(() => _loading = true);
     try {
-      await ref.read(updateBankDetailsUsecaseProvider).call(
+      await ref
+          .read(updateBankDetailsUsecaseProvider)
+          .call(
             vendorId: vendorId,
             bankName: _bankNameController.text.trim(),
             accountName: _accountNameController.text.trim(),
             accountNumber: _accountNumberController.text.trim(),
           );
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Bank details updated')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Bank details updated')));
         context.pop();
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.toString())));
       }
     } finally {
       if (mounted) setState(() => _loading = false);
@@ -78,7 +80,11 @@ class _BankDetailsScreenState extends ConsumerState<BankDetailsScreen> {
                 controller: _bankNameController,
                 prefixIcon: Icons.account_balance_outlined,
                 textInputAction: TextInputAction.next,
-                validator: (v) => Validators.validateRequired(v, 'Bank name'),
+                validator: (v) => Validators.validateRequired(
+                  context,
+                  v,
+                  fieldName: 'Bank name',
+                ),
               ),
               const SizedBox(height: 16),
               AuthFormField(
@@ -87,8 +93,11 @@ class _BankDetailsScreenState extends ConsumerState<BankDetailsScreen> {
                 controller: _accountNameController,
                 prefixIcon: Icons.person_outlined,
                 textInputAction: TextInputAction.next,
-                validator: (v) =>
-                    Validators.validateRequired(v, 'Account name'),
+                validator: (v) => Validators.validateRequired(
+                  context,
+                  v,
+                  fieldName: 'Account name',
+                ),
               ),
               const SizedBox(height: 16),
               AuthFormField(
@@ -98,8 +107,11 @@ class _BankDetailsScreenState extends ConsumerState<BankDetailsScreen> {
                 keyboardType: TextInputType.number,
                 prefixIcon: Icons.numbers_outlined,
                 textInputAction: TextInputAction.done,
-                validator: (v) =>
-                    Validators.validateRequired(v, 'Account number'),
+                validator: (v) => Validators.validateRequired(
+                  context,
+                  v,
+                  fieldName: 'Account number',
+                ),
               ),
               const SizedBox(height: 32),
               ElevatedButton(

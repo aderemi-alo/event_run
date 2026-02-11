@@ -1,4 +1,4 @@
-import 'package:event_run/features/inventory/domain/entities/inventory_item_entity.dart';
+import 'package:app/features/inventory/domain/entities/inventory_item_entity.dart';
 
 abstract class InventoryRepository {
   Future<List<InventoryItemEntity>> getInventoryItems(String vendorId);

@@ -1,7 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:event_run/core/constants/supabase_constants.dart';
-import 'package:event_run/core/error/exceptions.dart';
-import 'package:event_run/features/clients/data/models/client_model.dart';
+import 'package:app/core/constants/supabase_constants.dart';
+import 'package:app/core/error/exceptions.dart';
+import 'package:app/features/clients/data/models/client_model.dart';
 
 abstract class ClientRemoteDatasource {
   Future<List<ClientModel>> getClients(String vendorId);
@@ -20,7 +20,7 @@ class ClientRemoteDatasourceImpl implements ClientRemoteDatasource {
   Future<List<ClientModel>> getClients(String vendorId) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.clients)
+          .from(SupabaseConstants.clientsTable)
           .select()
           .eq('vendor_id', vendorId)
           .order('full_name');
@@ -35,7 +35,7 @@ class ClientRemoteDatasourceImpl implements ClientRemoteDatasource {
   Future<ClientModel?> getClientById(String clientId) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.clients)
+          .from(SupabaseConstants.clientsTable)
           .select()
           .eq('id', clientId)
           .maybeSingle();
@@ -51,7 +51,7 @@ class ClientRemoteDatasourceImpl implements ClientRemoteDatasource {
   Future<ClientModel> createClient({required ClientModel client}) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.clients)
+          .from(SupabaseConstants.clientsTable)
           .insert(client.toJson())
           .select()
           .single();
@@ -66,7 +66,7 @@ class ClientRemoteDatasourceImpl implements ClientRemoteDatasource {
   Future<ClientModel> updateClient({required ClientModel client}) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.clients)
+          .from(SupabaseConstants.clientsTable)
           .update(client.toJson())
           .eq('id', client.id)
           .select()
@@ -82,7 +82,7 @@ class ClientRemoteDatasourceImpl implements ClientRemoteDatasource {
   Future<void> deleteClient(String clientId) async {
     try {
       await _client
-          .from(SupabaseConstants.clients)
+          .from(SupabaseConstants.clientsTable)
           .delete()
           .eq('id', clientId);
     } catch (e) {

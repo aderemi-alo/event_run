@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:event_run/core/theme/app_colors.dart';
+import 'package:app/core/theme/app_colors.dart';
 
 class AppTheme {
   AppTheme._();
@@ -57,7 +57,10 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_radiusMd),
           ),
-          textStyle: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 16),
+          textStyle: GoogleFonts.inter(
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+          ),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
@@ -81,7 +84,10 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: false,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 12,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(_radiusMd),
           borderSide: const BorderSide(color: AppColors.slate200),
@@ -161,7 +167,10 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: false,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 12,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(_radiusMd),
           borderSide: const BorderSide(color: AppColors.slate700),

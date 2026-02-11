@@ -1,7 +1,7 @@
-import 'package:event_run/features/invoices/data/datasources/invoice_remote_datasource.dart';
-import 'package:event_run/features/invoices/data/models/invoice_model.dart';
-import 'package:event_run/features/invoices/domain/entities/invoice_entity.dart';
-import 'package:event_run/features/invoices/domain/repositories/invoice_repository.dart';
+import 'package:app/features/invoices/data/datasources/invoice_remote_datasource.dart';
+import 'package:app/features/invoices/data/models/invoice_model.dart';
+import 'package:app/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:app/features/invoices/domain/repositories/invoice_repository.dart';
 
 class InvoiceRepositoryImpl implements InvoiceRepository {
   final InvoiceRemoteDatasource _datasource;

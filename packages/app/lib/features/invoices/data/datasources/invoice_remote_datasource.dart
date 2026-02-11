@@ -1,7 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:event_run/core/constants/supabase_constants.dart';
-import 'package:event_run/core/error/exceptions.dart';
-import 'package:event_run/features/invoices/data/models/invoice_model.dart';
+import 'package:app/core/constants/supabase_constants.dart';
+import 'package:app/core/error/exceptions.dart';
+import 'package:app/features/invoices/data/models/invoice_model.dart';
 
 abstract class InvoiceRemoteDatasource {
   Future<List<InvoiceModel>> getInvoices(String vendorId);
@@ -25,7 +25,7 @@ class InvoiceRemoteDatasourceImpl implements InvoiceRemoteDatasource {
   Future<List<InvoiceModel>> getInvoices(String vendorId) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.invoices)
+          .from(SupabaseConstants.invoicesTable)
           .select('*, invoice_items(*)')
           .eq('vendor_id', vendorId)
           .order('created_at', ascending: false);
@@ -40,7 +40,7 @@ class InvoiceRemoteDatasourceImpl implements InvoiceRemoteDatasource {
   Future<InvoiceModel?> getInvoiceById(String invoiceId) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.invoices)
+          .from(SupabaseConstants.invoicesTable)
           .select('*, invoice_items(*)')
           .eq('id', invoiceId)
           .maybeSingle();
@@ -56,7 +56,7 @@ class InvoiceRemoteDatasourceImpl implements InvoiceRemoteDatasource {
   Future<InvoiceModel> createInvoice({required InvoiceModel invoice}) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.invoices)
+          .from(SupabaseConstants.invoicesTable)
           .insert(invoice.toJson())
           .select('*, invoice_items(*)')
           .single();
@@ -71,7 +71,7 @@ class InvoiceRemoteDatasourceImpl implements InvoiceRemoteDatasource {
   Future<InvoiceModel> updateInvoice({required InvoiceModel invoice}) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.invoices)
+          .from(SupabaseConstants.invoicesTable)
           .update(invoice.toJson())
           .eq('id', invoice.id)
           .select('*, invoice_items(*)')
@@ -87,7 +87,7 @@ class InvoiceRemoteDatasourceImpl implements InvoiceRemoteDatasource {
   Future<void> deleteInvoice(String invoiceId) async {
     try {
       await _client
-          .from(SupabaseConstants.invoices)
+          .from(SupabaseConstants.invoicesTable)
           .delete()
           .eq('id', invoiceId);
     } catch (e) {
@@ -99,8 +99,9 @@ class InvoiceRemoteDatasourceImpl implements InvoiceRemoteDatasource {
   Future<void> markAsSent(String invoiceId) async {
     try {
       await _client
-          .from(SupabaseConstants.invoices)
-          .update({'status': 'sent'}).eq('id', invoiceId);
+          .from(SupabaseConstants.invoicesTable)
+          .update({'status': 'sent'})
+          .eq('id', invoiceId);
     } catch (e) {
       throw ServerException(message: e.toString());
     }
@@ -110,8 +111,9 @@ class InvoiceRemoteDatasourceImpl implements InvoiceRemoteDatasource {
   Future<void> markAsPaid(String invoiceId) async {
     try {
       await _client
-          .from(SupabaseConstants.invoices)
-          .update({'status': 'paid'}).eq('id', invoiceId);
+          .from(SupabaseConstants.invoicesTable)
+          .update({'status': 'paid'})
+          .eq('id', invoiceId);
     } catch (e) {
       throw ServerException(message: e.toString());
     }
@@ -121,7 +123,7 @@ class InvoiceRemoteDatasourceImpl implements InvoiceRemoteDatasource {
   Future<List<InvoiceModel>> getOverdueInvoices(String vendorId) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.invoices)
+          .from(SupabaseConstants.invoicesTable)
           .select('*, invoice_items(*)')
           .eq('vendor_id', vendorId)
           .inFilter('status', ['sent', 'overdue'])
@@ -138,7 +140,7 @@ class InvoiceRemoteDatasourceImpl implements InvoiceRemoteDatasource {
   Future<List<InvoiceModel>> getInvoicesByClient(String clientId) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.invoices)
+          .from(SupabaseConstants.invoicesTable)
           .select('*, invoice_items(*)')
           .eq('client_id', clientId)
           .order('created_at', ascending: false);
@@ -153,7 +155,7 @@ class InvoiceRemoteDatasourceImpl implements InvoiceRemoteDatasource {
   Future<String> generateInvoiceNumber(String vendorId) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.invoices)
+          .from(SupabaseConstants.invoicesTable)
           .select('id')
           .eq('vendor_id', vendorId);
 

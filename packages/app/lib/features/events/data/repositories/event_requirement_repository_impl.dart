@@ -1,8 +1,8 @@
-import 'package:event_run/features/events/data/datasources/event_requirement_remote_datasource.dart';
-import 'package:event_run/features/events/data/models/event_requirement_model.dart';
-import 'package:event_run/features/events/domain/entities/event_requirement_entity.dart';
-import 'package:event_run/features/events/domain/entities/inventory_conflict_entity.dart';
-import 'package:event_run/features/events/domain/repositories/event_requirement_repository.dart';
+import 'package:app/features/events/data/datasources/event_requirement_remote_datasource.dart';
+import 'package:app/features/events/data/models/event_requirement_model.dart';
+import 'package:app/features/events/domain/entities/event_requirement_entity.dart';
+import 'package:app/features/events/domain/entities/inventory_conflict_entity.dart';
+import 'package:app/features/events/domain/repositories/event_requirement_repository.dart';
 
 class EventRequirementRepositoryImpl implements EventRequirementRepository {
   final EventRequirementRemoteDatasource _datasource;
@@ -15,8 +15,9 @@ class EventRequirementRepositoryImpl implements EventRequirementRepository {
   }
 
   @override
-  Future<EventRequirementEntity> addRequirement(
-      {required EventRequirementEntity requirement}) {
+  Future<EventRequirementEntity> addRequirement({
+    required EventRequirementEntity requirement,
+  }) {
     final model = EventRequirementModel(
       id: requirement.id,
       eventId: requirement.eventId,
@@ -29,8 +30,9 @@ class EventRequirementRepositoryImpl implements EventRequirementRepository {
   }
 
   @override
-  Future<EventRequirementEntity> updateRequirement(
-      {required EventRequirementEntity requirement}) {
+  Future<EventRequirementEntity> updateRequirement({
+    required EventRequirementEntity requirement,
+  }) {
     final model = EventRequirementModel(
       id: requirement.id,
       eventId: requirement.eventId,

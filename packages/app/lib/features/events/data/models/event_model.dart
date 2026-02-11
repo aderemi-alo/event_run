@@ -1,4 +1,4 @@
-import 'package:event_run/features/events/domain/entities/event_entity.dart';
+import 'package:app/features/events/domain/entities/event_entity.dart';
 
 class EventModel extends EventEntity {
   const EventModel({
@@ -6,9 +6,7 @@ class EventModel extends EventEntity {
     required super.vendorId,
     super.clientId,
     required super.name,
-    super.description,
     required super.eventDate,
-    super.endDate,
     super.location,
     required super.status,
     super.revenue,
@@ -22,11 +20,7 @@ class EventModel extends EventEntity {
       vendorId: json['vendor_id'] as String,
       clientId: json['client_id'] as String?,
       name: json['name'] as String,
-      description: json['description'] as String?,
       eventDate: DateTime.parse(json['event_date'] as String),
-      endDate: json['end_date'] != null
-          ? DateTime.parse(json['end_date'] as String)
-          : null,
       location: json['location'] as String?,
       status: EventStatus.values.byName(json['status'] as String),
       revenue: json['revenue'] as num?,
@@ -41,9 +35,7 @@ class EventModel extends EventEntity {
       'vendor_id': vendorId,
       'client_id': clientId,
       'name': name,
-      'description': description,
       'event_date': eventDate.toIso8601String(),
-      'end_date': endDate?.toIso8601String(),
       'location': location,
       'status': status.name,
       'revenue': revenue,

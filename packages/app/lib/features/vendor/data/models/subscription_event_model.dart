@@ -1,4 +1,4 @@
-import 'package:event_run/features/vendor/domain/entities/subscription_event_entity.dart';
+import 'package:app/features/vendor/domain/entities/subscription_event_entity.dart';
 
 class SubscriptionEventModel extends SubscriptionEventEntity {
   const SubscriptionEventModel({

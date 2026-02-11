@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:event_run/features/invoices/data/datasources/invoice_remote_datasource.dart';
-import 'package:event_run/features/invoices/data/repositories/invoice_repository_impl.dart';
-import 'package:event_run/features/invoices/domain/usecases/get_invoices.dart';
-import 'package:event_run/features/invoices/domain/usecases/get_invoice_by_id.dart';
-import 'package:event_run/features/invoices/domain/usecases/create_invoice.dart';
-import 'package:event_run/features/invoices/domain/usecases/update_invoice.dart';
-import 'package:event_run/features/invoices/domain/usecases/delete_invoice.dart';
+import 'package:app/features/invoices/data/datasources/invoice_remote_datasource.dart';
+import 'package:app/features/invoices/data/repositories/invoice_repository_impl.dart';
+import 'package:app/features/invoices/domain/usecases/get_invoices.dart';
+import 'package:app/features/invoices/domain/usecases/get_invoice_by_id.dart';
+import 'package:app/features/invoices/domain/usecases/create_invoice.dart';
+import 'package:app/features/invoices/domain/usecases/update_invoice.dart';
+import 'package:app/features/invoices/domain/usecases/delete_invoice.dart';
 
 final invoiceRemoteDatasourceProvider = Provider<InvoiceRemoteDatasource>(
   (ref) => InvoiceRemoteDatasourceImpl(Supabase.instance.client),

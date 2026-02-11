@@ -1,7 +1,7 @@
-import 'package:event_run/features/auth/data/datasources/auth_remote_datasource.dart';
-import 'package:event_run/features/auth/data/models/profile_model.dart';
-import 'package:event_run/features/auth/domain/entities/profile_entity.dart';
-import 'package:event_run/features/auth/domain/repositories/auth_repository.dart';
+import 'package:app/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:app/features/auth/data/models/profile_model.dart';
+import 'package:app/features/auth/domain/entities/profile_entity.dart';
+import 'package:app/features/auth/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDatasource _datasource;

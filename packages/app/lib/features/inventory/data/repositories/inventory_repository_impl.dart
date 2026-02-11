@@ -1,7 +1,7 @@
-import 'package:event_run/features/inventory/data/datasources/inventory_remote_datasource.dart';
-import 'package:event_run/features/inventory/data/models/inventory_item_model.dart';
-import 'package:event_run/features/inventory/domain/entities/inventory_item_entity.dart';
-import 'package:event_run/features/inventory/domain/repositories/inventory_repository.dart';
+import 'package:app/features/inventory/data/datasources/inventory_remote_datasource.dart';
+import 'package:app/features/inventory/data/models/inventory_item_model.dart';
+import 'package:app/features/inventory/domain/entities/inventory_item_entity.dart';
+import 'package:app/features/inventory/domain/repositories/inventory_repository.dart';
 
 class InventoryRepositoryImpl implements InventoryRepository {
   final InventoryRemoteDatasource _datasource;
@@ -19,8 +19,7 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
-  Future<InventoryItemEntity> createItem(
-      {required InventoryItemEntity item}) {
+  Future<InventoryItemEntity> createItem({required InventoryItemEntity item}) {
     final model = InventoryItemModel(
       id: item.id,
       vendorId: item.vendorId,
@@ -35,8 +34,7 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
-  Future<InventoryItemEntity> updateItem(
-      {required InventoryItemEntity item}) {
+  Future<InventoryItemEntity> updateItem({required InventoryItemEntity item}) {
     final model = InventoryItemModel(
       id: item.id,
       vendorId: item.vendorId,

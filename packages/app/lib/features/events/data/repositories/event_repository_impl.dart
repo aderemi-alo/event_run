@@ -1,7 +1,7 @@
-import 'package:event_run/features/events/data/datasources/event_remote_datasource.dart';
-import 'package:event_run/features/events/data/models/event_model.dart';
-import 'package:event_run/features/events/domain/entities/event_entity.dart';
-import 'package:event_run/features/events/domain/repositories/event_repository.dart';
+import 'package:app/features/events/data/datasources/event_remote_datasource.dart';
+import 'package:app/features/events/data/models/event_model.dart';
+import 'package:app/features/events/domain/entities/event_entity.dart';
+import 'package:app/features/events/domain/repositories/event_repository.dart';
 
 class EventRepositoryImpl implements EventRepository {
   final EventRemoteDatasource _datasource;
@@ -25,9 +25,7 @@ class EventRepositoryImpl implements EventRepository {
       vendorId: event.vendorId,
       clientId: event.clientId,
       name: event.name,
-      description: event.description,
       eventDate: event.eventDate,
-      endDate: event.endDate,
       location: event.location,
       status: event.status,
       revenue: event.revenue,
@@ -44,9 +42,7 @@ class EventRepositoryImpl implements EventRepository {
       vendorId: event.vendorId,
       clientId: event.clientId,
       name: event.name,
-      description: event.description,
       eventDate: event.eventDate,
-      endDate: event.endDate,
       location: event.location,
       status: event.status,
       revenue: event.revenue,

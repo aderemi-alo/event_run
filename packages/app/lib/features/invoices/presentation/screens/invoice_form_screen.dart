@@ -2,20 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
-import 'package:event_run/core/utils/currency_formatter.dart';
-import 'package:event_run/features/invoices/domain/entities/invoice_entity.dart';
-import 'package:event_run/features/invoices/domain/entities/invoice_item_entity.dart';
-import 'package:event_run/features/invoices/presentation/providers/invoice_providers.dart';
+import 'package:app/core/utils/currency_formatter.dart';
+import 'package:app/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:app/features/invoices/domain/entities/invoice_item_entity.dart';
+import 'package:app/features/invoices/presentation/providers/invoice_providers.dart';
 
 class InvoiceFormScreen extends ConsumerStatefulWidget {
   final String vendorId;
   final String? invoiceId;
 
-  const InvoiceFormScreen({
-    super.key,
-    required this.vendorId,
-    this.invoiceId,
-  });
+  const InvoiceFormScreen({super.key, required this.vendorId, this.invoiceId});
 
   @override
   ConsumerState<InvoiceFormScreen> createState() => _InvoiceFormScreenState();
@@ -42,8 +38,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
   }
 
   Future<void> _loadInvoice() async {
-    final invoice =
-        await ref.read(getInvoiceByIdProvider).call(widget.invoiceId!);
+    final invoice = await ref
+        .read(getInvoiceByIdProvider)
+        .call(widget.invoiceId!);
     if (invoice != null && mounted) {
       setState(() {
         _clientIdController.text = invoice.clientId;
@@ -51,13 +48,19 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         _dueDate = invoice.dueDate;
         _items.clear();
         for (final item in invoice.items) {
-          _items.add(_ItemEntry(
-            descriptionController: TextEditingController(text: item.description),
-            quantityController:
-                TextEditingController(text: item.quantity.toString()),
-            priceController:
-                TextEditingController(text: item.unitPrice.toString()),
-          ));
+          _items.add(
+            _ItemEntry(
+              descriptionController: TextEditingController(
+                text: item.description,
+              ),
+              quantityController: TextEditingController(
+                text: item.quantity.toString(),
+              ),
+              priceController: TextEditingController(
+                text: item.unitPrice.toString(),
+              ),
+            ),
+          );
         }
       });
     }
@@ -65,11 +68,13 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
 
   void _addItem() {
     setState(() {
-      _items.add(_ItemEntry(
-        descriptionController: TextEditingController(),
-        quantityController: TextEditingController(text: '1'),
-        priceController: TextEditingController(),
-      ));
+      _items.add(
+        _ItemEntry(
+          descriptionController: TextEditingController(),
+          quantityController: TextEditingController(text: '1'),
+          priceController: TextEditingController(),
+        ),
+      );
     });
   }
 
@@ -93,9 +98,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
     if (_items.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Add at least one item.')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Add at least one item.')));
       return;
     }
 
@@ -108,8 +113,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       final invoiceNumber = _isEditing
           ? '' // Will be ignored on update
           : await ref
-              .read(invoiceRepositoryProvider)
-              .generateInvoiceNumber(widget.vendorId);
+                .read(invoiceRepositoryProvider)
+                .generateInvoiceNumber(widget.vendorId);
 
       final items = _items.map((entry) {
         return InvoiceItemEntity(
@@ -147,9 +152,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       if (mounted) context.pop();
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: $e')));
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -179,9 +184,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_isEditing ? 'Edit Invoice' : 'New Invoice'),
-      ),
+      appBar: AppBar(title: Text(_isEditing ? 'Edit Invoice' : 'New Invoice')),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -221,8 +224,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 Text(
                   'Items',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 TextButton.icon(
                   onPressed: _addItem,
@@ -248,7 +251,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                             child: Text(
                               'Item ${index + 1}',
                               style: const TextStyle(
-                                  fontWeight: FontWeight.w600),
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                           if (_items.length > 1)
@@ -318,9 +322,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               alignment: Alignment.centerRight,
               child: Text(
                 'Total: ${CurrencyFormatter.formatNaira(_totalAmount)}',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(height: 16),

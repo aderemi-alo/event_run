@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:event_run/features/vendor/data/datasources/vendor_remote_datasource.dart';
-import 'package:event_run/features/vendor/data/repositories/vendor_repository_impl.dart';
-import 'package:event_run/features/vendor/domain/entities/vendor_entity.dart';
-import 'package:event_run/features/vendor/domain/repositories/vendor_repository.dart';
-import 'package:event_run/features/vendor/domain/usecases/get_vendor.dart';
-import 'package:event_run/features/vendor/domain/usecases/create_vendor.dart';
-import 'package:event_run/features/vendor/domain/usecases/update_vendor.dart';
-import 'package:event_run/features/vendor/domain/usecases/update_bank_details.dart';
+import 'package:app/features/vendor/data/datasources/vendor_remote_datasource.dart';
+import 'package:app/features/vendor/data/repositories/vendor_repository_impl.dart';
+import 'package:app/features/vendor/domain/entities/vendor_entity.dart';
+import 'package:app/features/vendor/domain/repositories/vendor_repository.dart';
+import 'package:app/features/vendor/domain/usecases/get_vendor.dart';
+import 'package:app/features/vendor/domain/usecases/create_vendor.dart';
+import 'package:app/features/vendor/domain/usecases/update_vendor.dart';
+import 'package:app/features/vendor/domain/usecases/update_bank_details.dart';
 
 // Datasource
 final vendorRemoteDatasourceProvider = Provider<VendorRemoteDatasource>((ref) {
@@ -37,7 +37,8 @@ final updateBankDetailsUsecaseProvider = Provider<UpdateBankDetails>((ref) {
 });
 
 // Async state
-final vendorProvider =
-    FutureProvider.autoDispose.family<VendorEntity?, String>((ref, ownerId) {
-  return ref.watch(getVendorUsecaseProvider).call(ownerId);
-});
+final vendorProvider = FutureProvider.autoDispose.family<VendorEntity?, String>(
+  (ref, ownerId) {
+    return ref.watch(getVendorUsecaseProvider).call(ownerId);
+  },
+);

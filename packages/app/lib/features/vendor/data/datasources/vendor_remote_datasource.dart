@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:event_run/core/constants/supabase_constants.dart';
-import 'package:event_run/core/error/exceptions.dart';
-import 'package:event_run/features/vendor/data/models/vendor_model.dart';
+import 'package:app/core/constants/supabase_constants.dart';
+import 'package:app/core/error/exceptions.dart';
+import 'package:app/features/vendor/data/models/vendor_model.dart';
 
 abstract class VendorRemoteDatasource {
   Future<VendorModel?> getVendorByOwner(String ownerId);
@@ -29,7 +29,7 @@ class VendorRemoteDatasourceImpl implements VendorRemoteDatasource {
   Future<VendorModel?> getVendorByOwner(String ownerId) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.vendors)
+          .from(SupabaseConstants.vendorsTable)
           .select()
           .eq('owner_id', ownerId)
           .maybeSingle();
@@ -45,7 +45,7 @@ class VendorRemoteDatasourceImpl implements VendorRemoteDatasource {
   Future<VendorModel> createVendor({required VendorModel vendor}) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.vendors)
+          .from(SupabaseConstants.vendorsTable)
           .insert(vendor.toJson())
           .select()
           .single();
@@ -60,7 +60,7 @@ class VendorRemoteDatasourceImpl implements VendorRemoteDatasource {
   Future<VendorModel> updateVendor({required VendorModel vendor}) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.vendors)
+          .from(SupabaseConstants.vendorsTable)
           .update(vendor.toJson())
           .eq('id', vendor.id)
           .select()
@@ -80,11 +80,14 @@ class VendorRemoteDatasourceImpl implements VendorRemoteDatasource {
     required String accountNumber,
   }) async {
     try {
-      await _client.from(SupabaseConstants.vendors).update({
-        'bank_name': bankName,
-        'account_name': accountName,
-        'account_number': accountNumber,
-      }).eq('id', vendorId);
+      await _client
+          .from(SupabaseConstants.vendorsTable)
+          .update({
+            'bank_name': bankName,
+            'account_name': accountName,
+            'account_number': accountNumber,
+          })
+          .eq('id', vendorId);
     } catch (e) {
       throw ServerException(message: e.toString());
     }
@@ -109,8 +112,9 @@ class VendorRemoteDatasourceImpl implements VendorRemoteDatasource {
           .getPublicUrl(path);
 
       await _client
-          .from(SupabaseConstants.vendors)
-          .update({'logo_url': url}).eq('id', vendorId);
+          .from(SupabaseConstants.vendorsTable)
+          .update({'logo_url': url})
+          .eq('id', vendorId);
 
       return url;
     } catch (e) {

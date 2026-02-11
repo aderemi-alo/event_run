@@ -1,4 +1,4 @@
-import 'package:event_run/features/invoices/domain/entities/payment_entity.dart';
+import 'package:app/features/invoices/domain/entities/payment_entity.dart';
 
 abstract class PaymentRepository {
   Future<List<PaymentEntity>> getPayments(String invoiceId);

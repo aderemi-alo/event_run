@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:event_run/core/router/route_names.dart';
-import 'package:event_run/core/utils/validators.dart';
-import 'package:event_run/features/auth/presentation/providers/auth_providers.dart';
-import 'package:event_run/features/auth/presentation/widgets/auth_form_field.dart';
+import 'package:app/core/router/route_names.dart';
+import 'package:app/core/utils/validators.dart';
+import 'package:app/features/auth/presentation/providers/auth_providers.dart';
+import 'package:app/features/auth/presentation/widgets/auth_form_field.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -31,15 +31,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     setState(() => _loading = true);
     try {
-      await ref.read(signInUsecaseProvider).call(
+      await ref
+          .read(signInUsecaseProvider)
+          .call(
             email: _emailController.text.trim(),
             password: _passwordController.text,
           );
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.toString())));
       }
     } finally {
       if (mounted) setState(() => _loading = false);
@@ -85,7 +87,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     prefixIcon: Icons.email_outlined,
                     textInputAction: TextInputAction.next,
                     autofillHints: const [AutofillHints.email],
-                    validator: Validators.validateEmail,
+                    validator: (value) =>
+                        Validators.validateEmail(context, value),
                   ),
                   const SizedBox(height: 16),
                   AuthFormField(
@@ -95,7 +98,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     prefixIcon: Icons.lock_outlined,
                     textInputAction: TextInputAction.done,
                     autofillHints: const [AutofillHints.password],
-                    validator: Validators.validatePassword,
+                    validator: (value) =>
+                        Validators.validatePassword(context, value),
                     onFieldSubmitted: (_) => _submit(),
                   ),
                   const SizedBox(height: 8),

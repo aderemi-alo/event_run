@@ -1,4 +1,4 @@
-import 'package:event_run/features/invoices/domain/repositories/invoice_repository.dart';
+import 'package:app/features/invoices/domain/repositories/invoice_repository.dart';
 
 class DeleteInvoice {
   final InvoiceRepository _repository;

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
-import 'package:event_run/features/invoices/domain/entities/payment_entity.dart';
-import 'package:event_run/features/invoices/presentation/providers/invoice_providers.dart';
-import 'package:event_run/features/invoices/presentation/providers/payment_providers.dart';
+import 'package:app/features/invoices/domain/entities/payment_entity.dart';
+import 'package:app/features/invoices/presentation/providers/invoice_providers.dart';
+import 'package:app/features/invoices/presentation/providers/payment_providers.dart';
 
 class RecordPaymentScreen extends ConsumerStatefulWidget {
   final String invoiceId;
@@ -57,9 +57,9 @@ class _RecordPaymentScreenState extends ConsumerState<RecordPaymentScreen> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: $e')));
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -93,7 +93,8 @@ class _RecordPaymentScreenState extends ConsumerState<RecordPaymentScreen> {
               keyboardType: TextInputType.number,
               validator: (v) {
                 if (v == null || v.trim().isEmpty) return 'Required';
-                if (num.tryParse(v.trim()) == null) return 'Enter a valid amount';
+                if (num.tryParse(v.trim()) == null)
+                  return 'Enter a valid amount';
                 return null;
               },
             ),
@@ -105,10 +106,10 @@ class _RecordPaymentScreenState extends ConsumerState<RecordPaymentScreen> {
                 border: OutlineInputBorder(),
               ),
               items: PaymentMethod.values
-                  .map((m) => DropdownMenuItem(
-                        value: m,
-                        child: Text(m.displayName),
-                      ))
+                  .map(
+                    (m) =>
+                        DropdownMenuItem(value: m, child: Text(m.displayName)),
+                  )
                   .toList(),
               onChanged: (v) {
                 if (v != null) setState(() => _method = v);

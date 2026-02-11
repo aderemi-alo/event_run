@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:event_run/core/router/route_names.dart';
-import 'package:event_run/core/utils/currency_formatter.dart';
-import 'package:event_run/core/utils/date_formatter.dart';
-import 'package:event_run/core/widgets/app_error_widget.dart';
-import 'package:event_run/core/widgets/app_loading.dart';
-import 'package:event_run/features/invoices/domain/entities/invoice_entity.dart';
-import 'package:event_run/features/invoices/presentation/providers/invoice_providers.dart';
-import 'package:event_run/features/invoices/presentation/providers/payment_providers.dart';
-import 'package:event_run/features/invoices/presentation/widgets/invoice_item_row.dart';
-import 'package:event_run/features/invoices/presentation/widgets/invoice_status_chip.dart';
-import 'package:event_run/features/invoices/presentation/widgets/payment_history_list.dart';
+import 'package:app/core/router/route_names.dart';
+import 'package:app/core/utils/currency_formatter.dart';
+import 'package:app/core/utils/date_formatter.dart';
+import 'package:app/core/widgets/app_error_widget.dart';
+import 'package:app/core/widgets/app_loading.dart';
+import 'package:app/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:app/features/invoices/presentation/providers/invoice_providers.dart';
+import 'package:app/features/invoices/presentation/providers/payment_providers.dart';
+import 'package:app/features/invoices/presentation/widgets/invoice_item_row.dart';
+import 'package:app/features/invoices/presentation/widgets/invoice_status_chip.dart';
+import 'package:app/features/invoices/presentation/widgets/payment_history_list.dart';
 
 class InvoiceDetailScreen extends ConsumerWidget {
   final String invoiceId;
@@ -70,10 +70,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
                   children: [
                     Text(
                       invoice.invoiceNumber,
-                      style:
-                          Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                      style: Theme.of(context).textTheme.headlineSmall
+                          ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     InvoiceStatusChip(status: invoice.status),
                   ],
@@ -105,8 +103,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
                 Text(
                   'Items',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Card(
@@ -118,46 +116,49 @@ class InvoiceDetailScreen extends ConsumerWidget {
                         Row(
                           children: [
                             Expanded(
-                                flex: 3,
-                                child: Text('Description',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall)),
+                              flex: 3,
+                              child: Text(
+                                'Description',
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                            ),
                             SizedBox(
-                                width: 40,
-                                child: Text('Qty',
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall)),
+                              width: 40,
+                              child: Text(
+                                'Qty',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                            ),
                             Expanded(
-                                flex: 2,
-                                child: Text('Price',
-                                    textAlign: TextAlign.right,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall)),
+                              flex: 2,
+                              child: Text(
+                                'Price',
+                                textAlign: TextAlign.right,
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                            ),
                             Expanded(
-                                flex: 2,
-                                child: Text('Total',
-                                    textAlign: TextAlign.right,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall)),
+                              flex: 2,
+                              child: Text(
+                                'Total',
+                                textAlign: TextAlign.right,
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                            ),
                           ],
                         ),
                         const Divider(),
-                        ...invoice.items
-                            .map((item) => InvoiceItemRow(item: item)),
+                        ...invoice.items.map(
+                          (item) => InvoiceItemRow(item: item),
+                        ),
                         const Divider(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
                               'Total: ${CurrencyFormatter.formatNaira(invoice.totalAmount)}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
+                              style: Theme.of(context).textTheme.titleMedium
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                           ],
@@ -173,8 +174,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
                   Text(
                     'Notes',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Card(
@@ -192,10 +193,9 @@ class InvoiceDetailScreen extends ConsumerWidget {
                   children: [
                     Text(
                       'Payments',
-                      style:
-                          Theme.of(context).textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     TextButton.icon(
                       onPressed: () => context.pushNamed(
@@ -218,8 +218,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
                       padding: const EdgeInsets.all(16),
                       child: Text('Error loading payments: $e'),
                     ),
-                    data: (payments) =>
-                        PaymentHistoryList(payments: payments),
+                    data: (payments) => PaymentHistoryList(payments: payments),
                   ),
                 ),
               ],
@@ -249,8 +248,9 @@ class InvoiceDetailScreen extends ConsumerWidget {
           context: context,
           builder: (_) => AlertDialog(
             title: const Text('Delete Invoice'),
-            content:
-                const Text('Are you sure you want to delete this invoice?'),
+            content: const Text(
+              'Are you sure you want to delete this invoice?',
+            ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context, false),
@@ -258,8 +258,10 @@ class InvoiceDetailScreen extends ConsumerWidget {
               ),
               TextButton(
                 onPressed: () => Navigator.pop(context, true),
-                child:
-                    const Text('Delete', style: TextStyle(color: Colors.red)),
+                child: const Text(
+                  'Delete',
+                  style: TextStyle(color: Colors.red),
+                ),
               ),
             ],
           ),

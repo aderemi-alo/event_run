@@ -1,59 +1,85 @@
+import 'package:app/core/utils/extensions.dart';
+import 'package:flutter/material.dart';
+
 class Validators {
   Validators._();
 
-  static String? validateEmail(String? value) {
-    if (value == null || value.isEmpty) return 'Email is required';
-    final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-    if (!emailRegex.hasMatch(value)) return 'Please enter a valid email';
+  static String? validateEmail(BuildContext context, String? value) {
+    if (value == null || value.isEmpty) {
+      return context.l10n.requiredField(context.l10n.auth_email);
+    }
+    final emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    );
+    if (!emailRegex.hasMatch(value)) return context.l10n.invalidEmail;
     return null;
   }
 
-  static String? validatePhone(String? value) {
-    if (value == null || value.isEmpty) return 'Phone number is required';
+  static String? validatePhone(BuildContext context, String? value) {
+    if (value == null || value.isEmpty) {
+      return context.l10n.requiredField(context.l10n.phoneNumber);
+    }
     final cleaned = value.replaceAll(RegExp(r'[\s\-\(\)]'), '');
     if (!cleaned.startsWith('+234') && !cleaned.startsWith('0')) {
-      return 'Phone number must start with +234 or 0';
+      return context.l10n.invalidPhoneStart;
     }
     final expectedLength = cleaned.startsWith('+234') ? 14 : 11;
-    if (cleaned.length != expectedLength) return 'Please enter a valid phone number';
+    if (cleaned.length != expectedLength)
+      return context.l10n.invalidPhoneLength;
     return null;
   }
 
-  static String? validatePassword(String? value) {
-    if (value == null || value.isEmpty) return 'Password is required';
-    if (value.length < 8) return 'Password must be at least 8 characters';
+  static String? validatePassword(BuildContext context, String? value) {
+    if (value == null || value.isEmpty) {
+      return context.l10n.requiredField(context.l10n.auth_password);
+    }
+    if (value.length < 8) return context.l10n.passwordLength;
     if (!RegExp(r'[A-Z]').hasMatch(value)) {
-      return 'Password must contain at least one uppercase letter';
+      return context.l10n.passwordUppercase;
     }
     if (!RegExp(r'[a-z]').hasMatch(value)) {
-      return 'Password must contain at least one lowercase letter';
+      return context.l10n.passwordLowercase;
     }
     if (!RegExp(r'[0-9]').hasMatch(value)) {
-      return 'Password must contain at least one number';
+      return context.l10n.passwordNumber;
     }
     return null;
   }
 
-  static String? validateRequired(String? value, {String? fieldName}) {
+  static String? validateRequired(
+    BuildContext context,
+    String? value, {
+    String? fieldName,
+  }) {
     if (value == null || value.isEmpty) {
-      return '${fieldName ?? 'This field'} is required';
+      return context.l10n.requiredField(fieldName ?? context.l10n.thisField);
     }
     return null;
   }
 
-  static String? validateNumber(String? value, {String? fieldName}) {
+  static String? validateNumber(
+    BuildContext context,
+    String? value, {
+    String? fieldName,
+  }) {
     if (value == null || value.isEmpty) {
-      return '${fieldName ?? 'This field'} is required';
+      return context.l10n.requiredField(fieldName ?? context.l10n.thisField);
     }
-    if (double.tryParse(value) == null) return 'Please enter a valid number';
+    if (double.tryParse(value) == null) return context.l10n.invalidNumber;
     return null;
   }
 
-  static String? validatePositiveNumber(String? value, {String? fieldName}) {
-    final numberError = validateNumber(value, fieldName: fieldName);
+  static String? validatePositiveNumber(
+    BuildContext context,
+    String? value, {
+    String? fieldName,
+  }) {
+    final numberError = validateNumber(context, value, fieldName: fieldName);
     if (numberError != null) return numberError;
     if (double.parse(value!) <= 0) {
-      return '${fieldName ?? 'Value'} must be greater than 0';
+      return context.l10n.positiveNumber(
+        fieldName ?? context.l10n.valueMustBeGreaterThanZero,
+      );
     }
     return null;
   }

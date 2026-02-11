@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:event_run/core/theme/app_colors.dart';
-import 'package:event_run/features/events/domain/entities/inventory_conflict_entity.dart';
+import 'package:app/core/theme/app_colors.dart';
+import 'package:app/features/events/domain/entities/inventory_conflict_entity.dart';
 
 class ConflictBanner extends StatelessWidget {
   const ConflictBanner({super.key, required this.conflicts});

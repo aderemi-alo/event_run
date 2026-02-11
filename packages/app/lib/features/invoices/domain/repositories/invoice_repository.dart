@@ -1,4 +1,4 @@
-import 'package:event_run/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:app/features/invoices/domain/entities/invoice_entity.dart';
 
 abstract class InvoiceRepository {
   Future<List<InvoiceEntity>> getInvoices(String vendorId);

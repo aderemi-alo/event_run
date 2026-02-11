@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:event_run/core/utils/date_formatter.dart';
-import 'package:event_run/features/events/domain/entities/event_entity.dart';
-import 'package:event_run/features/events/presentation/widgets/event_status_chip.dart';
+import 'package:app/core/utils/date_formatter.dart';
+import 'package:app/features/events/domain/entities/event_entity.dart';
+import 'package:app/features/events/presentation/widgets/event_status_chip.dart';
 
 class EventCard extends StatelessWidget {
   const EventCard({super.key, required this.event, this.onTap});
@@ -38,9 +38,11 @@ class EventCard extends StatelessWidget {
               const SizedBox(height: 8),
               Row(
                 children: [
-                  Icon(Icons.calendar_today,
-                      size: 14,
-                      color: theme.colorScheme.onSurface.withAlpha(153)),
+                  Icon(
+                    Icons.calendar_today,
+                    size: 14,
+                    color: theme.colorScheme.onSurface.withAlpha(153),
+                  ),
                   const SizedBox(width: 4),
                   Text(
                     DateFormatter.formatDateShort(event.eventDate),
@@ -50,9 +52,11 @@ class EventCard extends StatelessWidget {
                   ),
                   if (event.location != null) ...[
                     const SizedBox(width: 16),
-                    Icon(Icons.location_on_outlined,
-                        size: 14,
-                        color: theme.colorScheme.onSurface.withAlpha(153)),
+                    Icon(
+                      Icons.location_on_outlined,
+                      size: 14,
+                      color: theme.colorScheme.onSurface.withAlpha(153),
+                    ),
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(

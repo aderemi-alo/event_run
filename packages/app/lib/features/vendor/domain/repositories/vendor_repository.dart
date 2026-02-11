@@ -1,4 +1,4 @@
-import 'package:event_run/features/vendor/domain/entities/vendor_entity.dart';
+import 'package:app/features/vendor/domain/entities/vendor_entity.dart';
 
 abstract class VendorRepository {
   Future<VendorEntity?> getVendorByOwner(String ownerId);

@@ -1,18 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:event_run/features/clients/data/datasources/client_remote_datasource.dart';
-import 'package:event_run/features/clients/data/repositories/client_repository_impl.dart';
-import 'package:event_run/features/clients/domain/entities/client_entity.dart';
-import 'package:event_run/features/clients/domain/repositories/client_repository.dart';
-import 'package:event_run/features/clients/domain/usecases/get_clients.dart';
-import 'package:event_run/features/clients/domain/usecases/get_client_by_id.dart';
-import 'package:event_run/features/clients/domain/usecases/create_client.dart';
-import 'package:event_run/features/clients/domain/usecases/update_client.dart';
-import 'package:event_run/features/clients/domain/usecases/delete_client.dart';
+import 'package:app/features/clients/data/datasources/client_remote_datasource.dart';
+import 'package:app/features/clients/data/repositories/client_repository_impl.dart';
+import 'package:app/features/clients/domain/entities/client_entity.dart';
+import 'package:app/features/clients/domain/repositories/client_repository.dart';
+import 'package:app/features/clients/domain/usecases/get_clients.dart';
+import 'package:app/features/clients/domain/usecases/get_client_by_id.dart';
+import 'package:app/features/clients/domain/usecases/create_client.dart';
+import 'package:app/features/clients/domain/usecases/update_client.dart';
+import 'package:app/features/clients/domain/usecases/delete_client.dart';
 
 // Datasource
-final clientRemoteDatasourceProvider =
-    Provider<ClientRemoteDatasource>((ref) {
+final clientRemoteDatasourceProvider = Provider<ClientRemoteDatasource>((ref) {
   return ClientRemoteDatasourceImpl(Supabase.instance.client);
 });
 
@@ -45,10 +44,10 @@ final deleteClientUsecaseProvider = Provider<DeleteClient>((ref) {
 // Async state
 final clientsProvider = FutureProvider.autoDispose
     .family<List<ClientEntity>, String>((ref, vendorId) {
-  return ref.watch(getClientsUsecaseProvider).call(vendorId);
-});
+      return ref.watch(getClientsUsecaseProvider).call(vendorId);
+    });
 
 final clientDetailProvider = FutureProvider.autoDispose
     .family<ClientEntity?, String>((ref, clientId) {
-  return ref.watch(getClientByIdUsecaseProvider).call(clientId);
-});
+      return ref.watch(getClientByIdUsecaseProvider).call(clientId);
+    });

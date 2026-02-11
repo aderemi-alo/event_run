@@ -1,4 +1,4 @@
-import 'package:event_run/features/vendor/domain/entities/subscription_event_entity.dart';
+import 'package:app/features/vendor/domain/entities/subscription_event_entity.dart';
 
 abstract class SubscriptionRepository {
   Future<List<SubscriptionEventEntity>> getSubscriptionEvents(String vendorId);

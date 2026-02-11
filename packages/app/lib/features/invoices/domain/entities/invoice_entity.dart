@@ -1,4 +1,4 @@
-import 'package:event_run/features/invoices/domain/entities/invoice_item_entity.dart';
+import 'package:app/features/invoices/domain/entities/invoice_item_entity.dart';
 
 enum InvoiceStatus {
   draft,

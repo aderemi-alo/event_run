@@ -1,4 +1,4 @@
-import 'package:event_run/features/events/domain/entities/event_entity.dart';
+import 'package:app/features/events/domain/entities/event_entity.dart';
 
 abstract class EventRepository {
   Future<List<EventEntity>> getEvents(String vendorId);

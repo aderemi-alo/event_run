@@ -1,4 +1,4 @@
-import 'package:event_run/features/inventory/domain/repositories/inventory_repository.dart';
+import 'package:app/features/inventory/domain/repositories/inventory_repository.dart';
 
 class DeleteItem {
   final InventoryRepository _repository;

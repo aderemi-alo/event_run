@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:event_run/core/theme/app_colors.dart';
-import 'package:event_run/features/vendor/domain/entities/vendor_entity.dart';
+import 'package:app/core/theme/app_colors.dart';
+import 'package:app/features/vendor/domain/entities/vendor_entity.dart';
 
 class PlanBadge extends StatelessWidget {
   const PlanBadge({super.key, required this.plan});

@@ -1,15 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:event_run/features/auth/data/datasources/auth_remote_datasource.dart';
-import 'package:event_run/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:event_run/features/auth/domain/repositories/auth_repository.dart';
-import 'package:event_run/features/auth/domain/usecases/sign_in.dart';
-import 'package:event_run/features/auth/domain/usecases/sign_up.dart';
-import 'package:event_run/features/auth/domain/usecases/sign_out.dart';
-import 'package:event_run/features/auth/domain/usecases/get_profile.dart';
-import 'package:event_run/features/auth/domain/usecases/update_profile.dart';
-import 'package:event_run/features/auth/domain/usecases/reset_password.dart';
-import 'package:event_run/features/auth/domain/entities/profile_entity.dart';
+import 'package:app/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:app/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:app/features/auth/domain/repositories/auth_repository.dart';
+import 'package:app/features/auth/domain/usecases/sign_in.dart';
+import 'package:app/features/auth/domain/usecases/sign_up.dart';
+import 'package:app/features/auth/domain/usecases/sign_out.dart';
+import 'package:app/features/auth/domain/usecases/get_profile.dart';
+import 'package:app/features/auth/domain/usecases/update_profile.dart';
+import 'package:app/features/auth/domain/usecases/reset_password.dart';
+import 'package:app/features/auth/domain/entities/profile_entity.dart';
 
 // Datasource
 final authRemoteDatasourceProvider = Provider<AuthRemoteDatasource>((ref) {
@@ -47,7 +47,7 @@ final resetPasswordUsecaseProvider = Provider<ResetPassword>((ref) {
 });
 
 // Async state providers
-final profileProvider =
-    FutureProvider.autoDispose.family<ProfileEntity?, String>((ref, userId) {
-  return ref.watch(getProfileUsecaseProvider).call(userId);
-});
+final profileProvider = FutureProvider.autoDispose
+    .family<ProfileEntity?, String>((ref, userId) {
+      return ref.watch(getProfileUsecaseProvider).call(userId);
+    });

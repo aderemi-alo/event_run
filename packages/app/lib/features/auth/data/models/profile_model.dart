@@ -1,4 +1,4 @@
-import 'package:event_run/features/auth/domain/entities/profile_entity.dart';
+import 'package:app/features/auth/domain/entities/profile_entity.dart';
 
 class ProfileModel extends ProfileEntity {
   const ProfileModel({

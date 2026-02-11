@@ -1,4 +1,4 @@
-import 'package:event_run/features/auth/domain/repositories/auth_repository.dart';
+import 'package:app/features/auth/domain/repositories/auth_repository.dart';
 
 class ResetPassword {
   final AuthRepository _repository;

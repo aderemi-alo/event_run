@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import 'package:event_run/features/dashboard/presentation/providers/dashboard_providers.dart';
-import 'package:event_run/features/events/domain/entities/event_entity.dart';
+import 'package:app/features/dashboard/presentation/providers/dashboard_providers.dart';
+import 'package:app/features/events/domain/entities/event_entity.dart';
 
 class UpcomingEventsList extends ConsumerWidget {
   final VoidCallback? onViewAll;
@@ -92,10 +92,7 @@ class _UpcomingEventTile extends StatelessWidget {
   final EventEntity event;
   final DateFormat dateFormat;
 
-  const _UpcomingEventTile({
-    required this.event,
-    required this.dateFormat,
-  });
+  const _UpcomingEventTile({required this.event, required this.dateFormat});
 
   @override
   Widget build(BuildContext context) {

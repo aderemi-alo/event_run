@@ -1,4 +1,4 @@
-import 'package:event_run/features/events/domain/entities/inventory_conflict_entity.dart';
+import 'package:app/features/events/domain/entities/inventory_conflict_entity.dart';
 
 class InventoryConflictModel extends InventoryConflictEntity {
   const InventoryConflictModel({
@@ -15,8 +15,8 @@ class InventoryConflictModel extends InventoryConflictEntity {
       itemName: json['item_name'] as String,
       availableQuantity: json['available_quantity'] as int,
       requestedQuantity: json['requested_quantity'] as int,
-      conflictingEventIds:
-          (json['conflicting_event_ids'] as List).cast<String>(),
+      conflictingEventIds: (json['conflicting_event_ids'] as List)
+          .cast<String>(),
     );
   }
 }

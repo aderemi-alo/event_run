@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:event_run/features/clients/domain/entities/client_entity.dart';
+import 'package:app/features/clients/domain/entities/client_entity.dart';
 
 class ClientCard extends StatelessWidget {
   const ClientCard({super.key, required this.client, this.onTap});
@@ -14,9 +14,7 @@ class ClientCard extends StatelessWidget {
         onTap: onTap,
         leading: CircleAvatar(
           child: Text(
-            client.fullName.isNotEmpty
-                ? client.fullName[0].toUpperCase()
-                : '?',
+            client.fullName.isNotEmpty ? client.fullName[0].toUpperCase() : '?',
           ),
         ),
         title: Text(client.fullName),

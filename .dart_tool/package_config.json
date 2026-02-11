@@ -290,6 +290,12 @@
       "languageVersion": "3.5"
     },
     {
+      "name": "flutter_localizations",
+      "rootUri": "file:///Users/aderemialo/Development/flutter/packages/flutter_localizations",
+      "packageUri": "lib/",
+      "languageVersion": "3.8"
+    },
+    {
       "name": "flutter_riverpod",
       "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/flutter_riverpod-2.6.1",
       "packageUri": "lib/",
@@ -399,9 +405,9 @@
     },
     {
       "name": "intl",
-      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/intl-0.19.0",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/intl-0.20.2",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.3"
     },
     {
       "name": "io",
@@ -1016,7 +1022,7 @@
       "languageVersion": "3.10"
     },
     {
-      "name": "event_run",
+      "name": "app",
       "rootUri": "../packages/app",
       "packageUri": "lib/",
       "languageVersion": "3.10"

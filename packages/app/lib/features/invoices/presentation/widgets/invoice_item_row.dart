@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:event_run/core/utils/currency_formatter.dart';
-import 'package:event_run/features/invoices/domain/entities/invoice_item_entity.dart';
+import 'package:app/core/utils/currency_formatter.dart';
+import 'package:app/features/invoices/domain/entities/invoice_item_entity.dart';
 
 class InvoiceItemRow extends StatelessWidget {
   final InvoiceItemEntity item;
@@ -42,9 +42,9 @@ class InvoiceItemRow extends StatelessWidget {
             child: Text(
               CurrencyFormatter.formatNaira(item.total),
               textAlign: TextAlign.right,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
             ),
           ),
         ],

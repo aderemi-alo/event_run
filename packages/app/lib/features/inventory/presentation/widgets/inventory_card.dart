@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:event_run/features/inventory/domain/entities/inventory_item_entity.dart';
+import 'package:app/features/inventory/domain/entities/inventory_item_entity.dart';
 
 class InventoryCard extends StatelessWidget {
   const InventoryCard({super.key, required this.item, this.onTap});

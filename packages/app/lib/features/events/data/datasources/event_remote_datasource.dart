@@ -1,7 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:event_run/core/constants/supabase_constants.dart';
-import 'package:event_run/core/error/exceptions.dart';
-import 'package:event_run/features/events/data/models/event_model.dart';
+import 'package:app/core/constants/supabase_constants.dart';
+import 'package:app/core/error/exceptions.dart';
+import 'package:app/features/events/data/models/event_model.dart';
 
 abstract class EventRemoteDatasource {
   Future<List<EventModel>> getEvents(String vendorId);
@@ -22,7 +22,7 @@ class EventRemoteDatasourceImpl implements EventRemoteDatasource {
   Future<List<EventModel>> getEvents(String vendorId) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.events)
+          .from(SupabaseConstants.eventsTable)
           .select()
           .eq('vendor_id', vendorId)
           .order('event_date', ascending: false);
@@ -37,7 +37,7 @@ class EventRemoteDatasourceImpl implements EventRemoteDatasource {
   Future<EventModel?> getEventById(String eventId) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.events)
+          .from(SupabaseConstants.eventsTable)
           .select()
           .eq('id', eventId)
           .maybeSingle();
@@ -53,7 +53,7 @@ class EventRemoteDatasourceImpl implements EventRemoteDatasource {
   Future<EventModel> createEvent({required EventModel event}) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.events)
+          .from(SupabaseConstants.eventsTable)
           .insert(event.toJson())
           .select()
           .single();
@@ -68,7 +68,7 @@ class EventRemoteDatasourceImpl implements EventRemoteDatasource {
   Future<EventModel> updateEvent({required EventModel event}) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.events)
+          .from(SupabaseConstants.eventsTable)
           .update(event.toJson())
           .eq('id', event.id)
           .select()
@@ -83,7 +83,10 @@ class EventRemoteDatasourceImpl implements EventRemoteDatasource {
   @override
   Future<void> deleteEvent(String eventId) async {
     try {
-      await _client.from(SupabaseConstants.events).delete().eq('id', eventId);
+      await _client
+          .from(SupabaseConstants.eventsTable)
+          .delete()
+          .eq('id', eventId);
     } catch (e) {
       throw ServerException(message: e.toString());
     }
@@ -93,7 +96,7 @@ class EventRemoteDatasourceImpl implements EventRemoteDatasource {
   Future<List<EventModel>> getUpcomingEvents(String vendorId) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.events)
+          .from(SupabaseConstants.eventsTable)
           .select()
           .eq('vendor_id', vendorId)
           .eq('status', 'upcoming')
@@ -109,7 +112,7 @@ class EventRemoteDatasourceImpl implements EventRemoteDatasource {
   Future<List<EventModel>> getEventsByClient(String clientId) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.events)
+          .from(SupabaseConstants.eventsTable)
           .select()
           .eq('client_id', clientId)
           .order('event_date', ascending: false);

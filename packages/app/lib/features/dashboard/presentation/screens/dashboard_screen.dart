@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import 'package:event_run/features/dashboard/presentation/providers/dashboard_providers.dart';
-import 'package:event_run/features/dashboard/presentation/widgets/stats_card.dart';
-import 'package:event_run/features/dashboard/presentation/widgets/upcoming_events_list.dart';
-import 'package:event_run/features/dashboard/presentation/widgets/outstanding_invoices_list.dart';
+import 'package:app/features/dashboard/presentation/providers/dashboard_providers.dart';
+import 'package:app/features/dashboard/presentation/widgets/stats_card.dart';
+import 'package:app/features/dashboard/presentation/widgets/upcoming_events_list.dart';
+import 'package:app/features/dashboard/presentation/widgets/outstanding_invoices_list.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
@@ -16,10 +16,7 @@ class DashboardScreen extends ConsumerWidget {
     final currencyFormat = NumberFormat.currency(symbol: '\$');
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dashboard'),
-        centerTitle: false,
-      ),
+      appBar: AppBar(title: const Text('Dashboard'), centerTitle: false),
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(dashboardStatsProvider);
@@ -47,8 +44,11 @@ class DashboardScreen extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(vertical: 48),
                     child: Column(
                       children: [
-                        Icon(Icons.error_outline,
-                            color: Colors.red[400], size: 48),
+                        Icon(
+                          Icons.error_outline,
+                          color: Colors.red[400],
+                          size: 48,
+                        ),
                         const SizedBox(height: 8),
                         Text(
                           'Failed to load dashboard stats',
@@ -84,8 +84,7 @@ class DashboardScreen extends ConsumerWidget {
                         StatsCard(
                           icon: Icons.money_off,
                           title: 'Outstanding',
-                          value:
-                              currencyFormat.format(stats.outstandingAmount),
+                          value: currencyFormat.format(stats.outstandingAmount),
                           color: Colors.orange,
                         ),
                         StatsCard(

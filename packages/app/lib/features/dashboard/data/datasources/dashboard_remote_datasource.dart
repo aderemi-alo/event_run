@@ -1,6 +1,6 @@
-import 'package:event_run/features/dashboard/data/models/dashboard_stats_model.dart';
-import 'package:event_run/features/events/data/models/event_model.dart';
-import 'package:event_run/features/invoices/data/models/invoice_model.dart';
+import 'package:app/features/dashboard/data/models/dashboard_stats_model.dart';
+import 'package:app/features/events/data/models/event_model.dart';
+import 'package:app/features/invoices/data/models/invoice_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class DashboardRemoteDatasource {

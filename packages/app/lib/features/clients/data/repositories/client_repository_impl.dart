@@ -1,7 +1,7 @@
-import 'package:event_run/features/clients/data/datasources/client_remote_datasource.dart';
-import 'package:event_run/features/clients/data/models/client_model.dart';
-import 'package:event_run/features/clients/domain/entities/client_entity.dart';
-import 'package:event_run/features/clients/domain/repositories/client_repository.dart';
+import 'package:app/features/clients/data/datasources/client_remote_datasource.dart';
+import 'package:app/features/clients/data/models/client_model.dart';
+import 'package:app/features/clients/domain/entities/client_entity.dart';
+import 'package:app/features/clients/domain/repositories/client_repository.dart';
 
 class ClientRepositoryImpl implements ClientRepository {
   final ClientRemoteDatasource _datasource;

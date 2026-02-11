@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:event_run/core/utils/validators.dart';
-import 'package:event_run/features/auth/presentation/widgets/auth_form_field.dart';
-import 'package:event_run/features/events/domain/entities/event_entity.dart';
-import 'package:event_run/features/events/presentation/providers/event_providers.dart';
+import 'package:app/core/utils/validators.dart';
+import 'package:app/features/auth/presentation/widgets/auth_form_field.dart';
+import 'package:app/features/events/domain/entities/event_entity.dart';
+import 'package:app/features/events/presentation/providers/event_providers.dart';
 
 class EventFormScreen extends ConsumerStatefulWidget {
   const EventFormScreen({super.key, this.eventId});
@@ -56,14 +56,11 @@ class _EventFormScreenState extends ConsumerState<EventFormScreen> {
         id: widget.eventId ?? '',
         vendorId: '',
         name: _nameController.text.trim(),
-        description: _descriptionController.text.trim().isNotEmpty
-            ? _descriptionController.text.trim()
-            : null,
         eventDate: _eventDate,
         location: _locationController.text.trim().isNotEmpty
             ? _locationController.text.trim()
             : null,
-        status: EventStatus.upcoming,
+        status: EventStatus.draft,
         revenue: _revenueController.text.trim().isNotEmpty
             ? num.tryParse(_revenueController.text.trim())
             : null,
@@ -82,9 +79,9 @@ class _EventFormScreenState extends ConsumerState<EventFormScreen> {
       if (mounted) context.pop();
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.toString())));
       }
     } finally {
       if (mounted) setState(() => _loading = false);
@@ -114,8 +111,11 @@ class _EventFormScreenState extends ConsumerState<EventFormScreen> {
                 controller: _nameController,
                 prefixIcon: Icons.event_outlined,
                 textInputAction: TextInputAction.next,
-                validator: (v) =>
-                    Validators.validateRequired(v, 'Event name'),
+                validator: (v) => Validators.validateRequired(
+                  context,
+                  v,
+                  fieldName: 'Event name',
+                ),
               ),
               const SizedBox(height: 16),
               AuthFormField(
@@ -125,10 +125,12 @@ class _EventFormScreenState extends ConsumerState<EventFormScreen> {
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 16),
-              Text('Event Date',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w500,
-                      )),
+              Text(
+                'Event Date',
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+              ),
               const SizedBox(height: 6),
               InkWell(
                 onTap: _pickDate,
@@ -159,7 +161,7 @@ class _EventFormScreenState extends ConsumerState<EventFormScreen> {
                 textInputAction: TextInputAction.next,
                 validator: (v) {
                   if (v != null && v.isNotEmpty) {
-                    return Validators.validateNumber(v);
+                    return Validators.validateNumber(context, v);
                   }
                   return null;
                 },

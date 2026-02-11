@@ -1,7 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:event_run/core/constants/supabase_constants.dart';
-import 'package:event_run/core/error/exceptions.dart';
-import 'package:event_run/features/invoices/data/models/payment_model.dart';
+import 'package:app/core/constants/supabase_constants.dart';
+import 'package:app/core/error/exceptions.dart';
+import 'package:app/features/invoices/data/models/payment_model.dart';
 
 abstract class PaymentRemoteDatasource {
   Future<List<PaymentModel>> getPayments(String invoiceId);
@@ -17,7 +17,7 @@ class PaymentRemoteDatasourceImpl implements PaymentRemoteDatasource {
   Future<List<PaymentModel>> getPayments(String invoiceId) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.payments)
+          .from(SupabaseConstants.paymentsTable)
           .select()
           .eq('invoice_id', invoiceId)
           .order('paid_at', ascending: false);
@@ -32,7 +32,7 @@ class PaymentRemoteDatasourceImpl implements PaymentRemoteDatasource {
   Future<PaymentModel> recordPayment({required PaymentModel payment}) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.payments)
+          .from(SupabaseConstants.paymentsTable)
           .insert(payment.toJson())
           .select()
           .single();

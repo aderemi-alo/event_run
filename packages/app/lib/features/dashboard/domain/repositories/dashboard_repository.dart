@@ -1,6 +1,6 @@
-import 'package:event_run/features/dashboard/domain/entities/dashboard_stats_entity.dart';
-import 'package:event_run/features/events/domain/entities/event_entity.dart';
-import 'package:event_run/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:app/features/dashboard/domain/entities/dashboard_stats_entity.dart';
+import 'package:app/features/events/domain/entities/event_entity.dart';
+import 'package:app/features/invoices/domain/entities/invoice_entity.dart';
 
 abstract class DashboardRepository {
   Future<DashboardStatsEntity> getDashboardStats(String vendorId);

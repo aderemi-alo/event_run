@@ -1,14 +1,14 @@
 enum EventStatus {
-  upcoming,
-  inProgress,
+  draft,
+  confirmed,
   completed,
   cancelled;
 
   String get displayName {
     switch (this) {
-      case EventStatus.upcoming:
+      case EventStatus.draft:
         return 'Upcoming';
-      case EventStatus.inProgress:
+      case EventStatus.confirmed:
         return 'In Progress';
       case EventStatus.completed:
         return 'Completed';
@@ -22,10 +22,10 @@ class EventEntity {
   final String id;
   final String vendorId;
   final String? clientId;
+  final String? clientName;
   final String name;
-  final String? description;
   final DateTime eventDate;
-  final DateTime? endDate;
+  final DateTime? startTime;
   final String? location;
   final EventStatus status;
   final num? revenue;
@@ -36,10 +36,10 @@ class EventEntity {
     required this.id,
     required this.vendorId,
     this.clientId,
+    this.clientName,
     required this.name,
-    this.description,
     required this.eventDate,
-    this.endDate,
+    this.startTime,
     this.location,
     required this.status,
     this.revenue,

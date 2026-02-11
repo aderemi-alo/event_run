@@ -1,4 +1,4 @@
-import 'package:event_run/features/clients/domain/entities/client_entity.dart';
+import 'package:app/features/clients/domain/entities/client_entity.dart';
 
 class ClientModel extends ClientEntity {
   const ClientModel({

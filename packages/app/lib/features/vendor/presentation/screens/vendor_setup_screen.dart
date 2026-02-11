@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:event_run/core/router/route_names.dart';
-import 'package:event_run/core/utils/validators.dart';
-import 'package:event_run/features/auth/presentation/providers/auth_state_provider.dart';
-import 'package:event_run/features/vendor/domain/entities/vendor_entity.dart';
-import 'package:event_run/features/vendor/presentation/providers/vendor_providers.dart';
-import 'package:event_run/features/auth/presentation/widgets/auth_form_field.dart';
+import 'package:app/core/router/route_names.dart';
+import 'package:app/core/utils/validators.dart';
+import 'package:app/features/auth/presentation/providers/auth_state_provider.dart';
+import 'package:app/features/vendor/domain/entities/vendor_entity.dart';
+import 'package:app/features/vendor/presentation/providers/vendor_providers.dart';
+import 'package:app/features/auth/presentation/widgets/auth_form_field.dart';
 
 class VendorSetupScreen extends ConsumerStatefulWidget {
   const VendorSetupScreen({super.key});
@@ -50,9 +50,9 @@ class _VendorSetupScreenState extends ConsumerState<VendorSetupScreen> {
       if (mounted) context.goNamed(RouteNames.dashboard);
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.toString())));
       }
     } finally {
       if (mounted) setState(() => _loading = false);
@@ -85,8 +85,11 @@ class _VendorSetupScreenState extends ConsumerState<VendorSetupScreen> {
                 controller: _businessNameController,
                 prefixIcon: Icons.business_outlined,
                 textInputAction: TextInputAction.next,
-                validator: (v) =>
-                    Validators.validateRequired(v, 'Business name'),
+                validator: (v) => Validators.validateRequired(
+                  context,
+                  v,
+                  fieldName: 'Business name',
+                ),
               ),
               const SizedBox(height: 16),
               AuthFormField(
@@ -96,7 +99,7 @@ class _VendorSetupScreenState extends ConsumerState<VendorSetupScreen> {
                 keyboardType: TextInputType.emailAddress,
                 prefixIcon: Icons.email_outlined,
                 textInputAction: TextInputAction.next,
-                validator: Validators.validateEmail,
+                validator: (v) => Validators.validateEmail(context, v),
               ),
               const SizedBox(height: 16),
               AuthFormField(
@@ -106,7 +109,7 @@ class _VendorSetupScreenState extends ConsumerState<VendorSetupScreen> {
                 keyboardType: TextInputType.phone,
                 prefixIcon: Icons.phone_outlined,
                 textInputAction: TextInputAction.done,
-                validator: Validators.validatePhone,
+                validator: (v) => Validators.validatePhone(context, v),
                 onFieldSubmitted: (_) => _submit(),
               ),
               const SizedBox(height: 32),

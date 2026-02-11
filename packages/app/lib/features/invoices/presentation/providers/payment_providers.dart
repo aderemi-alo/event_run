@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:event_run/features/invoices/data/datasources/payment_remote_datasource.dart';
-import 'package:event_run/features/invoices/data/repositories/payment_repository_impl.dart';
-import 'package:event_run/features/invoices/domain/usecases/record_payment.dart';
+import 'package:app/features/invoices/data/datasources/payment_remote_datasource.dart';
+import 'package:app/features/invoices/data/repositories/payment_repository_impl.dart';
+import 'package:app/features/invoices/domain/usecases/record_payment.dart';
 
 final paymentRemoteDatasourceProvider = Provider<PaymentRemoteDatasource>(
   (ref) => PaymentRemoteDatasourceImpl(Supabase.instance.client),

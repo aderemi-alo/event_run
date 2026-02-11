@@ -1,0 +1,47 @@
+{
+  "@@locale": "en",
+  "appName": "EventLock",
+  "common_save": "Save",
+  "common_cancel": "Cancel",
+  "auth_email": "Email",
+  "auth_password": "Password",
+  "auth_signIn": "Sign in",
+  "createYourAccount": "Create Your Account",
+  "fullName": "Full Name",
+  "fullNameHint": "e.g. Tunde Bakare",
+  "phoneNumber": "Phone Number",
+  "phoneNumberHint": "0876 543 2100",
+  "emailAddress": "Email Address",
+  "emailAddressHint": "you@example.com",
+  "password": "Password",
+  "passwordHint": "••••••••",
+  "nextStep": "Next Step",
+  "alreadyHaveAccount": "Already have an account? ",
+  "logIn": "Log in",
+  "requiredField": "{fieldName} is required",
+  "@requiredField": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "invalidEmail": "Please enter a valid email",
+  "invalidPhoneStart": "Phone number must start with +234 or 0",
+  "invalidPhoneLength": "Please enter a valid phone number",
+  "passwordLength": "Password must be at least 8 characters",
+  "passwordUppercase": "Password must contain at least one uppercase letter",
+  "passwordLowercase": "Password must contain at least one lowercase letter",
+  "passwordNumber": "Password must contain at least one number",
+  "invalidNumber": "Please enter a valid number",
+  "positiveNumber": "{fieldName} must be greater than 0",
+  "@positiveNumber": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "valueMustBeGreaterThanZero": "Value must be greater than 0", 
+  "thisField": "This field"
+}

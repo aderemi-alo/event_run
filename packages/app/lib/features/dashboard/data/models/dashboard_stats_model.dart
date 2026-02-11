@@ -1,4 +1,4 @@
-import 'package:event_run/features/dashboard/domain/entities/dashboard_stats_entity.dart';
+import 'package:app/features/dashboard/domain/entities/dashboard_stats_entity.dart';
 
 class DashboardStatsModel extends DashboardStatsEntity {
   const DashboardStatsModel({

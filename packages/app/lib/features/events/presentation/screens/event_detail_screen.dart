@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:event_run/core/router/route_names.dart';
-import 'package:event_run/core/utils/currency_formatter.dart';
-import 'package:event_run/core/utils/date_formatter.dart';
-import 'package:event_run/core/widgets/app_loading.dart';
-import 'package:event_run/core/widgets/app_error_widget.dart';
-import 'package:event_run/features/events/presentation/providers/event_providers.dart';
-import 'package:event_run/features/events/presentation/widgets/event_status_chip.dart';
+import 'package:app/core/router/route_names.dart';
+import 'package:app/core/utils/currency_formatter.dart';
+import 'package:app/core/utils/date_formatter.dart';
+import 'package:app/core/widgets/app_loading.dart';
+import 'package:app/core/widgets/app_error_widget.dart';
+import 'package:app/features/events/presentation/providers/event_providers.dart';
+import 'package:app/features/events/presentation/widgets/event_status_chip.dart';
 
 class EventDetailScreen extends ConsumerWidget {
   const EventDetailScreen({super.key, required this.eventId});
@@ -47,7 +47,8 @@ class EventDetailScreen extends ConsumerWidget {
                   builder: (ctx) => AlertDialog(
                     title: const Text('Delete Event'),
                     content: const Text(
-                        'Are you sure you want to delete this event?'),
+                      'Are you sure you want to delete this event?',
+                    ),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(ctx, false),
@@ -61,9 +62,7 @@ class EventDetailScreen extends ConsumerWidget {
                   ),
                 );
                 if (confirmed == true && context.mounted) {
-                  await ref
-                      .read(deleteEventUsecaseProvider)
-                      .call(eventId);
+                  await ref.read(deleteEventUsecaseProvider).call(eventId);
                   if (context.mounted) context.pop();
                 }
               }
@@ -73,10 +72,7 @@ class EventDetailScreen extends ConsumerWidget {
                 value: 'requirements',
                 child: Text('Requirements'),
               ),
-              const PopupMenuItem(
-                value: 'delete',
-                child: Text('Delete'),
-              ),
+              const PopupMenuItem(value: 'delete', child: Text('Delete')),
             ],
           ),
         ],
@@ -126,15 +122,10 @@ class EventDetailScreen extends ConsumerWidget {
                           icon: Icons.attach_money,
                           label: 'Revenue',
                           value: CurrencyFormatter.formatNaira(
-                              event.revenue!.toDouble()),
+                            event.revenue!.toDouble(),
+                          ),
                         ),
-                      if (event.description != null) ...[
-                        const Divider(height: 24),
-                        Text('Description',
-                            style: theme.textTheme.labelMedium),
-                        const SizedBox(height: 4),
-                        Text(event.description!),
-                      ],
+
                       if (event.notes != null) ...[
                         const Divider(height: 24),
                         Text('Notes', style: theme.textTheme.labelMedium),
@@ -175,13 +166,12 @@ class _DetailRow extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(label,
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurface
-                            .withAlpha(153),
-                      )),
+              Text(
+                label,
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface.withAlpha(153),
+                ),
+              ),
               Text(value),
             ],
           ),

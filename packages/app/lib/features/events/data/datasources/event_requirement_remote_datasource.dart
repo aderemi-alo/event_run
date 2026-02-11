@@ -1,15 +1,17 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:event_run/core/constants/supabase_constants.dart';
-import 'package:event_run/core/error/exceptions.dart';
-import 'package:event_run/features/events/data/models/event_requirement_model.dart';
-import 'package:event_run/features/events/data/models/inventory_conflict_model.dart';
+import 'package:app/core/constants/supabase_constants.dart';
+import 'package:app/core/error/exceptions.dart';
+import 'package:app/features/events/data/models/event_requirement_model.dart';
+import 'package:app/features/events/data/models/inventory_conflict_model.dart';
 
 abstract class EventRequirementRemoteDatasource {
   Future<List<EventRequirementModel>> getRequirements(String eventId);
-  Future<EventRequirementModel> addRequirement(
-      {required EventRequirementModel requirement});
-  Future<EventRequirementModel> updateRequirement(
-      {required EventRequirementModel requirement});
+  Future<EventRequirementModel> addRequirement({
+    required EventRequirementModel requirement,
+  });
+  Future<EventRequirementModel> updateRequirement({
+    required EventRequirementModel requirement,
+  });
   Future<void> removeRequirement(String requirementId);
   Future<List<InventoryConflictModel>> checkConflicts(String eventId);
 }
@@ -24,7 +26,7 @@ class EventRequirementRemoteDatasourceImpl
   Future<List<EventRequirementModel>> getRequirements(String eventId) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.eventRequirements)
+          .from(SupabaseConstants.eventRequirementsTable)
           .select()
           .eq('event_id', eventId);
 
@@ -37,11 +39,12 @@ class EventRequirementRemoteDatasourceImpl
   }
 
   @override
-  Future<EventRequirementModel> addRequirement(
-      {required EventRequirementModel requirement}) async {
+  Future<EventRequirementModel> addRequirement({
+    required EventRequirementModel requirement,
+  }) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.eventRequirements)
+          .from(SupabaseConstants.eventRequirementsTable)
           .insert(requirement.toJson())
           .select()
           .single();
@@ -53,11 +56,12 @@ class EventRequirementRemoteDatasourceImpl
   }
 
   @override
-  Future<EventRequirementModel> updateRequirement(
-      {required EventRequirementModel requirement}) async {
+  Future<EventRequirementModel> updateRequirement({
+    required EventRequirementModel requirement,
+  }) async {
     try {
       final response = await _client
-          .from(SupabaseConstants.eventRequirements)
+          .from(SupabaseConstants.eventRequirementsTable)
           .update(requirement.toJson())
           .eq('id', requirement.id)
           .select()
@@ -73,7 +77,7 @@ class EventRequirementRemoteDatasourceImpl
   Future<void> removeRequirement(String requirementId) async {
     try {
       await _client
-          .from(SupabaseConstants.eventRequirements)
+          .from(SupabaseConstants.eventRequirementsTable)
           .delete()
           .eq('id', requirementId);
     } catch (e) {
@@ -84,12 +88,16 @@ class EventRequirementRemoteDatasourceImpl
   @override
   Future<List<InventoryConflictModel>> checkConflicts(String eventId) async {
     try {
-      final response = await _client
-          .rpc('check_inventory_conflicts', params: {'p_event_id': eventId});
+      final response = await _client.rpc(
+        'check_inventory_conflicts',
+        params: {'p_event_id': eventId},
+      );
 
       return (response as List)
-          .map((json) =>
-              InventoryConflictModel.fromJson(json as Map<String, dynamic>))
+          .map(
+            (json) =>
+                InventoryConflictModel.fromJson(json as Map<String, dynamic>),
+          )
           .toList();
     } catch (e) {
       throw ServerException(message: e.toString());

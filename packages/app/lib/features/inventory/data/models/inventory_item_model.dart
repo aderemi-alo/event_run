@@ -1,4 +1,4 @@
-import 'package:event_run/features/inventory/domain/entities/inventory_item_entity.dart';
+import 'package:app/features/inventory/domain/entities/inventory_item_entity.dart';
 
 class InventoryItemModel extends InventoryItemEntity {
   const InventoryItemModel({

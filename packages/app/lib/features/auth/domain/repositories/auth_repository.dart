@@ -1,4 +1,4 @@
-import 'package:event_run/features/auth/domain/entities/profile_entity.dart';
+import 'package:app/features/auth/domain/entities/profile_entity.dart';
 
 abstract class AuthRepository {
   Future<void> signIn({required String email, required String password});

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import 'package:event_run/features/dashboard/presentation/providers/dashboard_providers.dart';
-import 'package:event_run/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:app/features/dashboard/presentation/providers/dashboard_providers.dart';
+import 'package:app/features/invoices/domain/entities/invoice_entity.dart';
 
 class OutstandingInvoicesList extends ConsumerWidget {
   final VoidCallback? onViewAll;
@@ -112,8 +112,9 @@ class _OutstandingInvoiceTile extends StatelessWidget {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: (isOverdue ? Colors.red : Colors.orange)
-              .withValues(alpha: 0.1),
+          color: (isOverdue ? Colors.red : Colors.orange).withValues(
+            alpha: 0.1,
+          ),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Icon(
@@ -132,7 +133,7 @@ class _OutstandingInvoiceTile extends StatelessWidget {
             ),
           ),
           Text(
-            currencyFormat.format(invoice.amount),
+            currencyFormat.format(invoice.totalAmount),
             style: theme.textTheme.bodyLarge?.copyWith(
               fontWeight: FontWeight.bold,
               color: isOverdue ? Colors.red : Colors.teal,
@@ -147,13 +148,13 @@ class _OutstandingInvoiceTile extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (invoice.clientName != null)
+              if (invoice.clientId != null)
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(Icons.person, size: 14, color: Colors.grey[500]),
                     const SizedBox(width: 4),
-                    Text(invoice.clientName!, style: theme.textTheme.bodySmall),
+                    Text(invoice.clientId!, style: theme.textTheme.bodySmall),
                   ],
                 ),
               Container(
@@ -165,7 +166,7 @@ class _OutstandingInvoiceTile extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  invoice.status.toUpperCase(),
+                  invoice.status.name.toUpperCase(),
                   style: theme.textTheme.labelSmall?.copyWith(
                     color: isOverdue ? Colors.red : Colors.orange,
                     fontWeight: FontWeight.w600,

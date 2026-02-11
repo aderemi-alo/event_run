@@ -1,5 +1,5 @@
-import 'package:event_run/features/invoices/domain/entities/payment_entity.dart';
-import 'package:event_run/features/invoices/domain/repositories/payment_repository.dart';
+import 'package:app/features/invoices/domain/entities/payment_entity.dart';
+import 'package:app/features/invoices/domain/repositories/payment_repository.dart';
 
 class RecordPayment {
   final PaymentRepository _repository;

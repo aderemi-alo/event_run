@@ -1,4 +1,4 @@
-import 'package:event_run/features/vendor/domain/repositories/subscription_repository.dart';
+import 'package:app/features/vendor/domain/repositories/subscription_repository.dart';
 
 class UpgradeToPro {
   final SubscriptionRepository _repository;

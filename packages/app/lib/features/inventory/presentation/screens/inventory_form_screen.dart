@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:event_run/core/utils/validators.dart';
-import 'package:event_run/features/auth/presentation/widgets/auth_form_field.dart';
-import 'package:event_run/features/inventory/domain/entities/inventory_item_entity.dart';
-import 'package:event_run/features/inventory/presentation/providers/inventory_providers.dart';
+import 'package:app/core/utils/validators.dart';
+import 'package:app/features/auth/presentation/widgets/auth_form_field.dart';
+import 'package:app/features/inventory/domain/entities/inventory_item_entity.dart';
+import 'package:app/features/inventory/presentation/providers/inventory_providers.dart';
 
 class InventoryFormScreen extends ConsumerStatefulWidget {
   const InventoryFormScreen({super.key, this.itemId});
@@ -63,9 +63,9 @@ class _InventoryFormScreenState extends ConsumerState<InventoryFormScreen> {
       if (mounted) context.pop();
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.toString())));
       }
     } finally {
       if (mounted) setState(() => _loading = false);
@@ -95,7 +95,11 @@ class _InventoryFormScreenState extends ConsumerState<InventoryFormScreen> {
                 controller: _nameController,
                 prefixIcon: Icons.inventory_2_outlined,
                 textInputAction: TextInputAction.next,
-                validator: (v) => Validators.validateRequired(v, 'Item name'),
+                validator: (v) => Validators.validateRequired(
+                  context,
+                  v,
+                  fieldName: 'Item name',
+                ),
               ),
               const SizedBox(height: 16),
               AuthFormField(
@@ -105,7 +109,7 @@ class _InventoryFormScreenState extends ConsumerState<InventoryFormScreen> {
                 keyboardType: TextInputType.number,
                 prefixIcon: Icons.numbers,
                 textInputAction: TextInputAction.next,
-                validator: Validators.validatePositiveNumber,
+                validator: (v) => Validators.validatePositiveNumber(context, v),
               ),
               const SizedBox(height: 16),
               AuthFormField(

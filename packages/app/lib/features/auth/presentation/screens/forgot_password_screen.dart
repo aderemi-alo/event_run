@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:event_run/core/utils/validators.dart';
-import 'package:event_run/features/auth/presentation/providers/auth_providers.dart';
-import 'package:event_run/features/auth/presentation/widgets/auth_form_field.dart';
+import 'package:app/core/utils/validators.dart';
+import 'package:app/features/auth/presentation/providers/auth_providers.dart';
+import 'package:app/features/auth/presentation/widgets/auth_form_field.dart';
 
 class ForgotPasswordScreen extends ConsumerStatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -30,15 +30,15 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
 
     setState(() => _loading = true);
     try {
-      await ref.read(resetPasswordUsecaseProvider).call(
-            email: _emailController.text.trim(),
-          );
+      await ref
+          .read(resetPasswordUsecaseProvider)
+          .call(email: _emailController.text.trim());
       if (mounted) setState(() => _sent = true);
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.toString())));
       }
     } finally {
       if (mounted) setState(() => _loading = false);
@@ -71,8 +71,11 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(Icons.mark_email_read_outlined,
-            size: 64, color: theme.colorScheme.primary),
+        Icon(
+          Icons.mark_email_read_outlined,
+          size: 64,
+          color: theme.colorScheme.primary,
+        ),
         const SizedBox(height: 16),
         Text(
           'Check your email',
@@ -125,7 +128,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
             keyboardType: TextInputType.emailAddress,
             prefixIcon: Icons.email_outlined,
             textInputAction: TextInputAction.done,
-            validator: Validators.validateEmail,
+            validator: (value) => Validators.validateEmail(context, value),
             onFieldSubmitted: (_) => _submit(),
           ),
           const SizedBox(height: 24),

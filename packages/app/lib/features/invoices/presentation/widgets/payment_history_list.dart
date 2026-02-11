@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:event_run/core/utils/currency_formatter.dart';
-import 'package:event_run/core/utils/date_formatter.dart';
-import 'package:event_run/features/invoices/domain/entities/payment_entity.dart';
+import 'package:app/core/utils/currency_formatter.dart';
+import 'package:app/core/utils/date_formatter.dart';
+import 'package:app/features/invoices/domain/entities/payment_entity.dart';
 
 class PaymentHistoryList extends StatelessWidget {
   final List<PaymentEntity> payments;

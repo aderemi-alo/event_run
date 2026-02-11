@@ -1,4 +1,4 @@
-import 'package:event_run/features/vendor/domain/entities/vendor_entity.dart';
+import 'package:app/features/vendor/domain/entities/vendor_entity.dart';
 
 class VendorModel extends VendorEntity {
   const VendorModel({
@@ -34,9 +34,10 @@ class VendorModel extends VendorEntity {
       accountNumber: json['account_number'] as String?,
       plan: VendorPlan.values.byName(json['plan'] as String? ?? 'free'),
       planExpiresAt: json['plan_expires_at'] != null
-          ? DateTime.parse(json['plan_expires_at'] as String)
+          ? DateTime.tryParse(json['plan_expires_at'] as String)
           : null,
-      createdAt: DateTime.parse(json['created_at'] as String),
+      createdAt:
+          DateTime.tryParse(json['created_at'] as String) ?? DateTime.now(),
       ownerId: json['owner_id'] as String,
     );
   }

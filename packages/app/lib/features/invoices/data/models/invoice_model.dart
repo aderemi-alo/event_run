@@ -1,5 +1,5 @@
-import 'package:event_run/features/invoices/data/models/invoice_item_model.dart';
-import 'package:event_run/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:app/features/invoices/data/models/invoice_item_model.dart';
+import 'package:app/features/invoices/domain/entities/invoice_entity.dart';
 
 class InvoiceModel extends InvoiceEntity {
   const InvoiceModel({
@@ -19,7 +19,8 @@ class InvoiceModel extends InvoiceEntity {
   });
 
   factory InvoiceModel.fromJson(Map<String, dynamic> json) {
-    final itemsList = (json['invoice_items'] as List?)
+    final itemsList =
+        (json['invoice_items'] as List?)
             ?.map((e) => InvoiceItemModel.fromJson(e as Map<String, dynamic>))
             .toList() ??
         [];

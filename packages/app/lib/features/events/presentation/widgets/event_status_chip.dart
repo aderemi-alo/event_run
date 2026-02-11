@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:event_run/core/theme/app_colors.dart';
-import 'package:event_run/features/events/domain/entities/event_entity.dart';
+import 'package:app/core/theme/app_colors.dart';
+import 'package:app/features/events/domain/entities/event_entity.dart';
 
 class EventStatusChip extends StatelessWidget {
   const EventStatusChip({super.key, required this.status});
@@ -10,13 +10,16 @@ class EventStatusChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (Color bg, Color fg) = switch (status) {
-      EventStatus.upcoming => (AppColors.info.withAlpha(30), AppColors.info),
-      EventStatus.inProgress =>
-        (AppColors.warning.withAlpha(30), AppColors.warning),
-      EventStatus.completed =>
-        (AppColors.success.withAlpha(30), AppColors.success),
-      EventStatus.cancelled =>
-        (AppColors.error.withAlpha(30), AppColors.error),
+      EventStatus.draft => (AppColors.info.withAlpha(30), AppColors.info),
+      EventStatus.confirmed => (
+        AppColors.warning.withAlpha(30),
+        AppColors.warning,
+      ),
+      EventStatus.completed => (
+        AppColors.success.withAlpha(30),
+        AppColors.success,
+      ),
+      EventStatus.cancelled => (AppColors.error.withAlpha(30), AppColors.error),
     };
 
     return Container(
@@ -27,11 +30,7 @@ class EventStatusChip extends StatelessWidget {
       ),
       child: Text(
         status.displayName,
-        style: TextStyle(
-          color: fg,
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-        ),
+        style: TextStyle(color: fg, fontSize: 12, fontWeight: FontWeight.w600),
       ),
     );
   }

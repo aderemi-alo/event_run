@@ -1,4 +1,4 @@
-import 'package:event_run/features/clients/domain/repositories/client_repository.dart';
+import 'package:app/features/clients/domain/repositories/client_repository.dart';
 
 class DeleteClient {
   final ClientRepository _repository;

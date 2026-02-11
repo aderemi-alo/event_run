@@ -1,4 +1,4 @@
-import 'package:event_run/features/invoices/domain/entities/payment_entity.dart';
+import 'package:app/features/invoices/domain/entities/payment_entity.dart';
 
 class PaymentModel extends PaymentEntity {
   const PaymentModel({

@@ -1,4 +1,4 @@
-import 'package:event_run/features/events/domain/entities/event_requirement_entity.dart';
+import 'package:app/features/events/domain/entities/event_requirement_entity.dart';
 
 class EventRequirementModel extends EventRequirementEntity {
   const EventRequirementModel({

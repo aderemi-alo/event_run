@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:event_run/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:app/features/invoices/domain/entities/invoice_entity.dart';
 
 class InvoiceStatusChip extends StatelessWidget {
   final InvoiceStatus status;

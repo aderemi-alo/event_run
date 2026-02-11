@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:event_run/core/widgets/app_loading.dart';
-import 'package:event_run/core/widgets/app_error_widget.dart';
-import 'package:event_run/features/auth/presentation/providers/auth_state_provider.dart';
-import 'package:event_run/features/vendor/presentation/providers/vendor_providers.dart';
+import 'package:app/core/widgets/app_loading.dart';
+import 'package:app/core/widgets/app_error_widget.dart';
+import 'package:app/features/auth/presentation/providers/auth_state_provider.dart';
+import 'package:app/features/vendor/presentation/providers/vendor_providers.dart';
 
 class BusinessSettingsScreen extends ConsumerWidget {
   const BusinessSettingsScreen({super.key});
@@ -45,9 +45,12 @@ class BusinessSettingsScreen extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Business Info',
-                          style: theme.textTheme.titleMedium
-                              ?.copyWith(fontWeight: FontWeight.w600)),
+                      Text(
+                        'Business Info',
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                       const SizedBox(height: 12),
                       _InfoRow(label: 'Name', value: vendor.businessName),
                       _InfoRow(label: 'Email', value: vendor.email),
@@ -88,11 +91,8 @@ class _InfoRow extends StatelessWidget {
             child: Text(
               label,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onSurface
-                        .withAlpha(153),
-                  ),
+                color: Theme.of(context).colorScheme.onSurface.withAlpha(153),
+              ),
             ),
           ),
           Expanded(child: Text(value)),

@@ -1,4 +1,4 @@
-import 'package:event_run/features/vendor/domain/repositories/vendor_repository.dart';
+import 'package:app/features/vendor/domain/repositories/vendor_repository.dart';
 
 class UpdateBankDetails {
   final VendorRepository _repository;

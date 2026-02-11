@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:event_run/core/widgets/app_loading.dart';
-import 'package:event_run/core/widgets/app_error_widget.dart';
-import 'package:event_run/features/clients/presentation/providers/client_providers.dart';
+import 'package:app/core/widgets/app_loading.dart';
+import 'package:app/core/widgets/app_error_widget.dart';
+import 'package:app/features/clients/presentation/providers/client_providers.dart';
 
 class ClientDetailScreen extends ConsumerWidget {
   const ClientDetailScreen({super.key, required this.clientId});
@@ -31,7 +31,8 @@ class ClientDetailScreen extends ConsumerWidget {
                 builder: (ctx) => AlertDialog(
                   title: const Text('Delete Client'),
                   content: const Text(
-                      'Are you sure you want to delete this client?'),
+                    'Are you sure you want to delete this client?',
+                  ),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.pop(ctx, false),
@@ -45,9 +46,7 @@ class ClientDetailScreen extends ConsumerWidget {
                 ),
               );
               if (confirmed == true && context.mounted) {
-                await ref
-                    .read(deleteClientUsecaseProvider)
-                    .call(clientId);
+                await ref.read(deleteClientUsecaseProvider).call(clientId);
                 if (context.mounted) context.pop();
               }
             },
@@ -82,8 +81,9 @@ class ClientDetailScreen extends ConsumerWidget {
               const SizedBox(height: 16),
               Text(
                 client.fullName,
-                style: theme.textTheme.titleLarge
-                    ?.copyWith(fontWeight: FontWeight.w600),
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
@@ -108,10 +108,12 @@ class ClientDetailScreen extends ConsumerWidget {
                       if (client.notes != null) ...[
                         const Divider(),
                         const SizedBox(height: 8),
-                        Text('Notes',
-                            style: theme.textTheme.labelMedium?.copyWith(
-                              color: theme.colorScheme.onSurface.withAlpha(153),
-                            )),
+                        Text(
+                          'Notes',
+                          style: theme.textTheme.labelMedium?.copyWith(
+                            color: theme.colorScheme.onSurface.withAlpha(153),
+                          ),
+                        ),
                         const SizedBox(height: 4),
                         Text(client.notes!),
                       ],

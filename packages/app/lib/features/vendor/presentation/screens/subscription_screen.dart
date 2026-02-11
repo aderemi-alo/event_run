@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:event_run/core/theme/app_colors.dart';
-import 'package:event_run/core/widgets/app_loading.dart';
-import 'package:event_run/core/widgets/app_error_widget.dart';
-import 'package:event_run/features/auth/presentation/providers/auth_state_provider.dart';
-import 'package:event_run/features/vendor/presentation/providers/vendor_providers.dart';
-import 'package:event_run/features/vendor/presentation/widgets/plan_badge.dart';
+import 'package:app/core/theme/app_colors.dart';
+import 'package:app/core/widgets/app_loading.dart';
+import 'package:app/core/widgets/app_error_widget.dart';
+import 'package:app/features/auth/presentation/providers/auth_state_provider.dart';
+import 'package:app/features/vendor/presentation/providers/vendor_providers.dart';
+import 'package:app/features/vendor/presentation/widgets/plan_badge.dart';
 
 class SubscriptionScreen extends ConsumerWidget {
   const SubscriptionScreen({super.key});

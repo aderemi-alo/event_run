@@ -1,7 +1,7 @@
-import 'package:event_run/features/vendor/data/datasources/vendor_remote_datasource.dart';
-import 'package:event_run/features/vendor/data/models/vendor_model.dart';
-import 'package:event_run/features/vendor/domain/entities/vendor_entity.dart';
-import 'package:event_run/features/vendor/domain/repositories/vendor_repository.dart';
+import 'package:app/features/vendor/data/datasources/vendor_remote_datasource.dart';
+import 'package:app/features/vendor/data/models/vendor_model.dart';
+import 'package:app/features/vendor/domain/entities/vendor_entity.dart';
+import 'package:app/features/vendor/domain/repositories/vendor_repository.dart';
 
 class VendorRepositoryImpl implements VendorRepository {
   final VendorRemoteDatasource _datasource;

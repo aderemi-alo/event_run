@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:event_run/core/router/route_names.dart';
-import 'package:event_run/features/clients/domain/entities/client_entity.dart';
+import 'package:app/core/router/route_names.dart';
+import 'package:app/features/clients/domain/entities/client_entity.dart';
 
 class ClientSearchDelegate extends SearchDelegate<ClientEntity?> {
   ClientSearchDelegate({required this.clients});
@@ -12,10 +12,7 @@ class ClientSearchDelegate extends SearchDelegate<ClientEntity?> {
   List<Widget>? buildActions(BuildContext context) {
     return [
       if (query.isNotEmpty)
-        IconButton(
-          icon: const Icon(Icons.clear),
-          onPressed: () => query = '',
-        ),
+        IconButton(icon: const Icon(Icons.clear), onPressed: () => query = ''),
     ];
   }
 
@@ -59,9 +56,7 @@ class ClientSearchDelegate extends SearchDelegate<ClientEntity?> {
       itemBuilder: (context, index) {
         final client = filtered[index];
         return ListTile(
-          leading: CircleAvatar(
-            child: Text(client.fullName[0].toUpperCase()),
-          ),
+          leading: CircleAvatar(child: Text(client.fullName[0].toUpperCase())),
           title: Text(client.fullName),
           subtitle: client.email != null ? Text(client.email!) : null,
           onTap: () {

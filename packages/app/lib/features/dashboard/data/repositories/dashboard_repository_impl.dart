@@ -1,8 +1,8 @@
-import 'package:event_run/features/dashboard/data/datasources/dashboard_remote_datasource.dart';
-import 'package:event_run/features/dashboard/domain/entities/dashboard_stats_entity.dart';
-import 'package:event_run/features/dashboard/domain/repositories/dashboard_repository.dart';
-import 'package:event_run/features/events/domain/entities/event_entity.dart';
-import 'package:event_run/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:app/features/dashboard/data/datasources/dashboard_remote_datasource.dart';
+import 'package:app/features/dashboard/domain/entities/dashboard_stats_entity.dart';
+import 'package:app/features/dashboard/domain/repositories/dashboard_repository.dart';
+import 'package:app/features/events/domain/entities/event_entity.dart';
+import 'package:app/features/invoices/domain/entities/invoice_entity.dart';
 
 class DashboardRepositoryImpl implements DashboardRepository {
   final DashboardRemoteDatasource remoteDatasource;
