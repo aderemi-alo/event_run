@@ -40,7 +40,7 @@ import 'package:flutter/material.dart';
 // ============================================================
 
 /// Font family constant — change this once if you swap fonts.
-const String _fontFamily = 'PlusJakartaSans';
+const String _fontFamily = 'Inter';
 
 // ============================================================
 // Font Weights

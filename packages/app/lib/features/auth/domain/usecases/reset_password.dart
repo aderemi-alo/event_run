@@ -1,3 +1,4 @@
+import 'package:app/core/utils/result.dart';
 import 'package:app/features/auth/domain/repositories/auth_repository.dart';
 
 class ResetPassword {
@@ -5,7 +6,7 @@ class ResetPassword {
 
   ResetPassword(this._repository);
 
-  Future<void> call({required String email}) {
+  Future<Result<void>> call({required String email}) {
     return _repository.resetPassword(email: email);
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app/core/router/route_names.dart';
 import 'package:app/features/auth/presentation/providers/auth_state_provider.dart';
+import 'package:app/features/vendor/presentation/providers/vendor_providers.dart';
 import 'package:app/features/auth/presentation/screens/login_screen.dart';
 import 'package:app/features/auth/presentation/screens/signup_screen.dart';
 import 'package:app/features/auth/presentation/screens/forgot_password_screen.dart';
@@ -32,15 +33,46 @@ final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: '/login',
     redirect: (BuildContext context, GoRouterState state) {
-      // final isAuth = authState.isAuthenticated;
-      // final onAuthPage =
-      //     state.matchedLocation == '/login' ||
-      //     state.matchedLocation == '/signup' ||
-      //     state.matchedLocation == '/forgot-password';
+      // Check if user is authenticated
+      final authValue = authState.value;
+      final isAuthenticated = authValue?.session != null;
+      final user = authValue?.session?.user;
 
-      // if (!isAuth && !onAuthPage) return '/login';
-      // if (isAuth && onAuthPage) return '/';
-      // return null;
+      // Define auth pages (public routes)
+      final isOnAuthPage =
+          state.matchedLocation == '/login' ||
+          state.matchedLocation == '/signup' ||
+          state.matchedLocation == '/forgot-password';
+
+      // ── Not authenticated: redirect to login (unless already on auth page) ──
+      if (!isAuthenticated && !isOnAuthPage) {
+        return '/login';
+      }
+
+      // ── Authenticated: check vendor setup completion ──
+      if (isAuthenticated && user != null) {
+        // If on auth page, redirect based on vendor setup status
+        if (isOnAuthPage) {
+          // Check if vendor exists for this user
+          final vendorAsync = ref.read(vendorProvider(user.id));
+
+          return vendorAsync.when(
+            data: (vendor) {
+              // Vendor exists - go to dashboard
+              if (vendor != null) {
+                return '/';
+              }
+              // No vendor - go to vendor setup
+              return '/vendor-setup';
+            },
+            loading: () => null, // Stay on current page while loading
+            error: (_, __) =>
+                '/vendor-setup', // On error, assume no vendor exists
+          );
+        }
+      }
+
+      return null; // No redirect needed
     },
     routes: [
       // Auth (public)

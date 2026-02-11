@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app/core/router/route_names.dart';
 import 'package:app/core/utils/validators.dart';
-import 'package:app/features/auth/presentation/providers/auth_providers.dart';
+import 'package:app/features/auth/presentation/providers/providers_di.dart';
 import 'package:app/features/auth/presentation/widgets/auth_form_field.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -32,7 +32,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     setState(() => _loading = true);
     try {
       await ref
-          .read(signInUsecaseProvider)
+          .read(signInUseCaseProvider)
           .call(
             email: _emailController.text.trim(),
             password: _passwordController.text,

@@ -119,24 +119,30 @@ abstract final class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.disabled))
+          if (states.contains(WidgetState.disabled)) {
             return AppColors.buttonDisabledBg;
-          if (states.contains(WidgetState.pressed))
+          }
+          if (states.contains(WidgetState.pressed)) {
             return AppColors.primaryDarker;
-          if (states.contains(WidgetState.hovered))
+          }
+          if (states.contains(WidgetState.hovered)) {
             return AppColors.primaryDark;
+          }
           return AppColors.primary;
         }),
         foregroundColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.disabled))
+          if (states.contains(WidgetState.disabled)) {
             return AppColors.buttonDisabledFg;
+          }
           return AppColors.onPrimary;
         }),
         overlayColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.pressed))
-            return Colors.white.withOpacity(0.12);
-          if (states.contains(WidgetState.hovered))
-            return Colors.white.withOpacity(0.04);
+          if (states.contains(WidgetState.pressed)) {
+            return Colors.white.withValues(alpha: .12);
+          }
+          if (states.contains(WidgetState.hovered)) {
+            return Colors.white.withValues(alpha: .04);
+          }
           return Colors.transparent;
         }),
         elevation: WidgetStateProperty.resolveWith((states) {
@@ -158,15 +164,18 @@ abstract final class AppTheme {
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.disabled)) return Colors.transparent;
-          if (states.contains(WidgetState.pressed))
-            return AppColors.primary.withOpacity(0.08);
-          if (states.contains(WidgetState.hovered))
-            return AppColors.primary.withOpacity(0.04);
+          if (states.contains(WidgetState.pressed)) {
+            return AppColors.primary.withValues(alpha: 0.08);
+          }
+          if (states.contains(WidgetState.hovered)) {
+            return AppColors.primary.withValues(alpha: 0.04);
+          }
           return Colors.transparent;
         }),
         foregroundColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.disabled))
+          if (states.contains(WidgetState.disabled)) {
             return AppColors.buttonDisabledFg;
+          }
           return AppColors.primary;
         }),
         side: WidgetStateProperty.resolveWith((states) {
@@ -191,15 +200,18 @@ abstract final class AppTheme {
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.pressed))
-            return AppColors.primary.withOpacity(0.08);
-          if (states.contains(WidgetState.hovered))
-            return AppColors.primary.withOpacity(0.04);
+          if (states.contains(WidgetState.pressed)) {
+            return AppColors.primary.withValues(alpha: 0.08);
+          }
+          if (states.contains(WidgetState.hovered)) {
+            return AppColors.primary.withValues(alpha: 0.04);
+          }
           return Colors.transparent;
         }),
         foregroundColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.disabled))
+          if (states.contains(WidgetState.disabled)) {
             return AppColors.buttonDisabledFg;
+          }
           return AppColors.primary;
         }),
         elevation: const WidgetStatePropertyAll(0),
@@ -243,8 +255,9 @@ abstract final class AppTheme {
         return AppColors.iconDefault;
       }),
       trackColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.selected))
+        if (states.contains(WidgetState.selected)) {
           return AppColors.primarySurface;
+        }
         return AppColors.borderLight;
       }),
     ),

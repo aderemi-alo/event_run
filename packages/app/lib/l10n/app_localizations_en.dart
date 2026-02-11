@@ -39,7 +39,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phoneNumber => 'Phone Number';
 
   @override
-  String get phoneNumberHint => '0876 543 2100';
+  String get phoneNumberHint => '876 543 2100';
 
   @override
   String get emailAddress => 'Email Address';
@@ -103,4 +103,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get thisField => 'This field';
+
+  @override
+  String get bySigningUpYouAgreeToOur =>
+      'By creating an account, you agree to our ';
+
+  @override
+  String get termsOfService => 'Terms of Service';
+
+  @override
+  String get and => 'and';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get createAccount => 'Create Account';
+
+  @override
+  String get signupSubtitle => 'Get Started With Event Run';
+
+  @override
+  String get accountCreatedSuccessfully => 'Account created successfully!';
 }

@@ -1,53 +1,93 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:app/features/auth/data/datasources/auth_remote_datasource.dart';
-import 'package:app/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:app/features/auth/domain/repositories/auth_repository.dart';
-import 'package:app/features/auth/domain/usecases/sign_in.dart';
-import 'package:app/features/auth/domain/usecases/sign_up.dart';
-import 'package:app/features/auth/domain/usecases/sign_out.dart';
-import 'package:app/features/auth/domain/usecases/get_profile.dart';
-import 'package:app/features/auth/domain/usecases/update_profile.dart';
-import 'package:app/features/auth/domain/usecases/reset_password.dart';
+import 'package:app/core/utils/result.dart';
 import 'package:app/features/auth/domain/entities/profile_entity.dart';
+import 'package:app/features/auth/presentation/providers/providers_di.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// Datasource
-final authRemoteDatasourceProvider = Provider<AuthRemoteDatasource>((ref) {
-  return AuthRemoteDatasourceImpl(Supabase.instance.client);
-});
+/// Comprehensive auth provider that manages all authentication operations.
+///
+/// Provides methods for:
+/// - Sign in
+/// - Sign out
+/// - Get profile
+/// - Update profile
+/// - Reset password
+final authProvider =
+    AutoDisposeAsyncNotifierProvider<AuthNotifier, ProfileEntity?>(
+      AuthNotifier.new,
+    );
 
-// Repository
-final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  return AuthRepositoryImpl(ref.watch(authRemoteDatasourceProvider));
-});
+class AuthNotifier extends AutoDisposeAsyncNotifier<ProfileEntity?> {
+  @override
+  Future<ProfileEntity?> build() async => null;
 
-// Usecases
-final signInUsecaseProvider = Provider<SignIn>((ref) {
-  return SignIn(ref.watch(authRepositoryProvider));
-});
+  /// Sign in with email and password.
+  Future<void> signIn({required String email, required String password}) async {
+    state = const AsyncLoading();
 
-final signUpUsecaseProvider = Provider<SignUp>((ref) {
-  return SignUp(ref.watch(authRepositoryProvider));
-});
+    state = await AsyncValue.guard(() async {
+      final useCase = ref.read(signInUseCaseProvider);
+      final result = await useCase.call(email: email, password: password);
 
-final signOutUsecaseProvider = Provider<SignOut>((ref) {
-  return SignOut(ref.watch(authRepositoryProvider));
-});
-
-final getProfileUsecaseProvider = Provider<GetProfile>((ref) {
-  return GetProfile(ref.watch(authRepositoryProvider));
-});
-
-final updateProfileUsecaseProvider = Provider<UpdateProfile>((ref) {
-  return UpdateProfile(ref.watch(authRepositoryProvider));
-});
-
-final resetPasswordUsecaseProvider = Provider<ResetPassword>((ref) {
-  return ResetPassword(ref.watch(authRepositoryProvider));
-});
-
-// Async state providers
-final profileProvider = FutureProvider.autoDispose
-    .family<ProfileEntity?, String>((ref, userId) {
-      return ref.watch(getProfileUsecaseProvider).call(userId);
+      return result.fold(
+        onSuccess: (profile) => profile,
+        onError: (failure) => throw Exception(failure.message),
+      );
     });
+  }
+
+  /// Sign out the current user.
+  Future<void> signOut() async {
+    state = const AsyncLoading();
+
+    state = await AsyncValue.guard(() async {
+      final useCase = ref.read(signOutUseCaseProvider);
+      final result = await useCase.call();
+
+      return result.fold(
+        onSuccess: (_) => null,
+        onError: (failure) => throw Exception(failure.message),
+      );
+    });
+  }
+
+  /// Get profile for a specific user ID.
+  Future<void> getProfile(String userId) async {
+    state = const AsyncLoading();
+
+    state = await AsyncValue.guard(() async {
+      final useCase = ref.read(getProfileUseCaseProvider);
+      final result = await useCase.call(userId);
+
+      return result.fold(
+        onSuccess: (profile) => profile,
+        onError: (failure) => throw Exception(failure.message),
+      );
+    });
+  }
+
+  /// Update the current user's profile.
+  Future<void> updateProfile(ProfileEntity profile) async {
+    state = const AsyncLoading();
+
+    state = await AsyncValue.guard(() async {
+      final useCase = ref.read(updateProfileUseCaseProvider);
+      final result = await useCase.call(profile: profile);
+
+      return result.fold(
+        onSuccess: (updatedProfile) => updatedProfile,
+        onError: (failure) => throw Exception(failure.message),
+      );
+    });
+  }
+
+  /// Send password reset email.
+  Future<void> resetPassword(String email) async {
+    final useCase = ref.read(resetPasswordUseCaseProvider);
+    final result = await useCase.call(email: email);
+
+    result.fold(
+      onSuccess: (_) => null,
+      onError: (failure) => throw Exception(failure.message),
+    );
+  }
+}

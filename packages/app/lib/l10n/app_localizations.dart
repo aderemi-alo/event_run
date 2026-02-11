@@ -157,7 +157,7 @@ abstract class AppLocalizations {
   /// No description provided for @phoneNumberHint.
   ///
   /// In en, this message translates to:
-  /// **'0876 543 2100'**
+  /// **'876 543 2100'**
   String get phoneNumberHint;
 
   /// No description provided for @emailAddress.
@@ -273,6 +273,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This field'**
   String get thisField;
+
+  /// No description provided for @bySigningUpYouAgreeToOur.
+  ///
+  /// In en, this message translates to:
+  /// **'By creating an account, you agree to our '**
+  String get bySigningUpYouAgreeToOur;
+
+  /// No description provided for @termsOfService.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get termsOfService;
+
+  /// No description provided for @and.
+  ///
+  /// In en, this message translates to:
+  /// **'and'**
+  String get and;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
+  /// No description provided for @createAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get createAccount;
+
+  /// No description provided for @signupSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started With Event Run'**
+  String get signupSubtitle;
+
+  /// No description provided for @accountCreatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Account created successfully!'**
+  String get accountCreatedSuccessfully;
 }
 
 class _AppLocalizationsDelegate

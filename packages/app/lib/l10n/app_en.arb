@@ -10,7 +10,7 @@
   "fullName": "Full Name",
   "fullNameHint": "e.g. Tunde Bakare",
   "phoneNumber": "Phone Number",
-  "phoneNumberHint": "0876 543 2100",
+  "phoneNumberHint": "876 543 2100",
   "emailAddress": "Email Address",
   "emailAddressHint": "you@example.com",
   "password": "Password",
@@ -43,5 +43,12 @@
     }
   },
   "valueMustBeGreaterThanZero": "Value must be greater than 0", 
-  "thisField": "This field"
+  "thisField": "This field",
+  "bySigningUpYouAgreeToOur": "By creating an account, you agree to our ",
+  "termsOfService": "Terms of Service",
+  "and": "and",
+  "privacyPolicy": "Privacy Policy",
+  "createAccount": "Create Account",
+  "signupSubtitle": "Get Started With Event Run",
+  "accountCreatedSuccessfully": "Account created successfully!"
 }

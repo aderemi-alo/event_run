@@ -1,25 +1,30 @@
+import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/theme/app_typography.dart';
 import 'package:app/core/utils/extensions.dart';
 import 'package:app/core/utils/validators.dart';
+import 'package:app/features/auth/domain/entities/signup_params.dart';
+import 'package:app/features/auth/presentation/providers/sign_up_provider.dart';
+import 'package:app/features/auth/presentation/widgets/signup_legal_text.dart';
 import 'package:app/shared/widgets/app_button.dart';
 import 'package:app/shared/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class SignupScreen extends StatefulWidget {
+class SignupScreen extends ConsumerStatefulWidget {
   const SignupScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  ConsumerState<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _SignupScreenState extends ConsumerState<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
   final _fullNameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _loading = false;
 
   @override
   void dispose() {
@@ -33,76 +38,84 @@ class _SignupScreenState extends State<SignupScreen> {
   Future<void> _handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
 
-    setState(() => _loading = true);
-
-    try {
-      // TODO: Replace with your actual Supabase signup logic
-      // final response = await supabase.auth.signUp(
-      //   email: _emailController.text.trim(),
-      //   password: _passwordController.text,
-      //   data: {
-      //     'full_name': _fullNameController.text.trim(),
-      //     'phone': _phoneController.text.trim(),
-      //   },
-      // );
-
-      // Simulate network delay for now
-      await Future.delayed(const Duration(milliseconds: 600));
-
-      if (mounted) {
-        Navigator.pushReplacementNamed(context, '/setup-business');
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Signup failed: ${e.toString()}'),
-            backgroundColor: Colors.red.shade600,
+    await ref
+        .read(signupProvider.notifier)
+        .signup(
+          SignupParams(
+            fullName: _fullNameController.text,
+            phone: _phoneController.text,
+            email: _emailController.text,
+            password: _passwordController.text,
           ),
         );
-      }
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+
+    // ── Listen to provider state changes for UI feedback only ──
+    // Navigation is handled by the router based on auth state
+    ref.listen(signupProvider, (prev, next) {
+      next.whenOrNull(
+        error: (error, _) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Signup failed: $error'),
+              backgroundColor: Colors.red.shade600,
+            ),
+          );
+        },
+        data: (_) {
+          // Show success feedback - router will handle navigation
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(context.l10n.accountCreatedSuccessfully),
+              backgroundColor: Colors.green.shade600,
+            ),
+          );
+        },
+      );
+    });
+
+    final isLoading = ref.watch(signupProvider).isLoading;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.surfacePrimary,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 448), // max-w-md
+              constraints: const BoxConstraints(maxWidth: 448),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // ── Header ──
                   Text(
                     'EventRun',
-                    style: textTheme.headlineMedium!.vCopyWith(
+                    style: textTheme.headlineLarge!.vCopyWith(
                       fontWeight: AppFontWeight.bold,
-                      color: Colors.teal.shade700,
+                      color: AppColors.primaryDark,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     context.l10n.createYourAccount,
-                    style: textTheme.bodyMedium!.copyWith(
-                      color: const Color(0xFF475569),
+                    style: textTheme.headlineMedium!.vCopyWith(
+                      color: AppColors.textSecondary,
                     ),
-                    // style: TextStyle(
-                    //   fontSize: 20,
-                    //   fontWeight: FontWeight.w600,
-                    //   color: Color(0xFF0F172A), // slate-900
-                    // ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    context.l10n.signupSubtitle,
+                    style: textTheme.labelLarge!.vCopyWith(
+                      color: AppColors.textHint,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
 
-                  // ── Form ──
                   // ── Form ──
                   Form(
                     key: _formKey,
@@ -127,12 +140,14 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         const SizedBox(height: 16),
 
+                        // ── Phone with +234 prefix ──
                         AppTextField(
                           label: context.l10n.phoneNumber,
                           icon: Icons.phone_outlined,
                           controller: _phoneController,
                           hint: context.l10n.phoneNumberHint,
                           keyboardType: TextInputType.phone,
+                          prefix: _buildPhonePrefix(context),
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                             LengthLimitingTextInputFormatter(11),
@@ -165,59 +180,24 @@ class _SignupScreenState extends State<SignupScreen> {
 
                         const SizedBox(height: 24),
 
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 350),
+                          child: SignupLegalText(),
+                        ),
+
+                        const SizedBox(height: 10),
+
                         // ── Submit Button ──
                         AppButton(
-                          label: context.l10n.nextStep,
+                          label: context.l10n.createAccount,
                           onPressed: _handleSubmit,
-                          loading: _loading,
+                          loading: isLoading,
                           trailing: Icons.arrow_forward,
                         ),
-                        // SizedBox(
-                        //   width: double.infinity,
-                        //   height: 52,
-                        //   child: ElevatedButton(
-                        //     // onPressed: _loading ? null : _handleSubmit,
-                        //     style: ElevatedButton.styleFrom(
-                        //       backgroundColor: Colors.teal.shade600,
-                        //       disabledBackgroundColor: Colors.teal.shade600
-                        //           .withOpacity(0.7),
-                        //       foregroundColor: Colors.white,
-                        //       shape: RoundedRectangleBorder(
-                        //         borderRadius: BorderRadius.circular(12),
-                        //       ),
-                        //       elevation: 4,
-                        //       shadowColor: Colors.teal.shade600.withOpacity(
-                        //         0.2,
-                        //       ),
-                        //     ),
-                        //     child: _loading
-                        //         ? const SizedBox(
-                        //             width: 24,
-                        //             height: 24,
-                        //             child: CircularProgressIndicator(
-                        //               color: Colors.white,
-                        //               strokeWidth: 2.5,
-                        //             ),
-                        //           )
-                        //         : Row(
-                        //             mainAxisAlignment: MainAxisAlignment.center,
-                        //             children: [
-                        //               Text(
-                        //                 context.l10n.nextStep,
-                        //                 style: const TextStyle(
-                        //                   fontWeight: FontWeight.bold,
-                        //                   fontSize: 16,
-                        //                 ),
-                        //               ),
-                        //               const SizedBox(width: 8),
-                        //               const Icon(Icons.arrow_forward, size: 20),
-                        //             ],
-                        //           ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
+
                   const SizedBox(height: 24),
 
                   // ── Login Link ──
@@ -232,8 +212,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () =>
-                            Navigator.pushReplacementNamed(context, '/login'),
+                        onTap: () => context.go('/login'),
                         child: Text(
                           context.l10n.logIn,
                           style: TextStyle(
@@ -249,6 +228,26 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  /// Non-editable "+234" chip shown inside the phone field.
+  Widget _buildPhonePrefix(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      margin: const EdgeInsets.only(right: 8),
+      decoration: BoxDecoration(
+        color: AppColors.primaryDark.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Text(
+        '+234',
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+          color: AppColors.primaryDark,
         ),
       ),
     );

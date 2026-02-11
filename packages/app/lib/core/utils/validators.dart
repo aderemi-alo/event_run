@@ -20,12 +20,10 @@ class Validators {
       return context.l10n.requiredField(context.l10n.phoneNumber);
     }
     final cleaned = value.replaceAll(RegExp(r'[\s\-\(\)]'), '');
-    if (!cleaned.startsWith('+234') && !cleaned.startsWith('0')) {
-      return context.l10n.invalidPhoneStart;
-    }
-    final expectedLength = cleaned.startsWith('+234') ? 14 : 11;
-    if (cleaned.length != expectedLength)
+    final expectedLength = cleaned.startsWith('0') ? 11 : 10;
+    if (cleaned.length != expectedLength) {
       return context.l10n.invalidPhoneLength;
+    }
     return null;
   }
 
