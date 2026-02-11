@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'EventLock';
+  String get appName => 'EventRun';
 
   @override
   String get common_save => 'Save';
@@ -60,7 +60,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get alreadyHaveAccount => 'Already have an account? ';
 
   @override
+  String get dontHaveAccount => 'Don\'t have an account? ';
+
+  @override
   String get logIn => 'Log in';
+
+  @override
+  String get login => 'Login';
+
+  @override
+  String get signUp => 'Sign Up';
+
+  @override
+  String get welcomeBack => 'Welcome back';
+
+  @override
+  String get loginToManageEvents => 'Login to manage your events';
+
+  @override
+  String get forgotPassword => 'Forgot password?';
 
   @override
   String requiredField(String fieldName) {
@@ -105,8 +123,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get thisField => 'This field';
 
   @override
-  String get bySigningUpYouAgreeToOur =>
-      'By creating an account, you agree to our ';
+  String get bySigningUpYouAgreeToOur => 'By continuing, you agree to our ';
 
   @override
   String get termsOfService => 'Terms of Service';

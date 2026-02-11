@@ -60,7 +60,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     final isLoading = ref.watch(authProvider).isLoading;
 
     return Scaffold(
-      backgroundColor: AppColors.surfacePrimary,
+      backgroundColor: colorScheme.surface,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(

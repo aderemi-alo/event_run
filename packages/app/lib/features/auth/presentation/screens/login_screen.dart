@@ -2,6 +2,7 @@ import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/theme/app_typography.dart';
 import 'package:app/core/utils/extensions.dart';
 import 'package:app/features/auth/presentation/providers/auth_providers.dart';
+import 'package:app/features/auth/presentation/widgets/signup_legal_text.dart';
 import 'package:app/shared/widgets/app_button.dart';
 import 'package:app/shared/widgets/app_text_field.dart';
 import 'package:flutter/gestures.dart';
@@ -49,7 +50,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final isLoading = ref.watch(authProvider).isLoading;
 
     return Scaffold(
-      backgroundColor: AppColors.surfacePrimary,
+      backgroundColor: colorScheme.surface,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -62,7 +63,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 children: [
                   // Header
                   Text(
-                    'EventRun',
+                    context.l10n.appName,
                     style: textTheme.headlineLarge!.vCopyWith(
                       fontWeight: AppFontWeight.bold,
                       color: AppColors.primaryDark,
@@ -71,14 +72,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   const SizedBox(height: 8),
 
                   Text(
-                    'Welcome back',
+                    context.l10n.welcomeBack,
                     style: textTheme.headlineMedium!.vCopyWith(
                       color: AppColors.textSecondary,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Login to manage your events',
+                    context.l10n.loginToManageEvents,
                     style: textTheme.labelLarge!.vCopyWith(
                       color: AppColors.textHint,
                     ),
@@ -114,7 +115,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               const Spacer(),
                               Text.rich(
                                 TextSpan(
-                                  text: 'Forgot password?',
+                                  text: context.l10n.forgotPassword,
                                   style: textTheme.labelMedium!.vCopyWith(
                                     color: colorScheme.primary,
                                   ),
@@ -136,8 +137,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                         const SizedBox(height: 24),
 
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 380),
+                          child: SignupLegalText(),
+                        ),
+
+                        const SizedBox(height: 10),
+
                         AppButton(
-                          label: context.l10n.createAccount,
+                          label: context.l10n.login,
                           onPressed: _handleSubmit,
                           loading: isLoading,
                           trailing: Icons.arrow_forward,
@@ -149,14 +157,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   const SizedBox(height: 24),
                   Text.rich(
                     TextSpan(
-                      text: 'Don\'t have an account? ',
+                      text: context.l10n.dontHaveAccount,
                       style: textTheme.labelLarge!.vCopyWith(
                         fontWeight: AppFontWeight.regular,
                         color: AppColors.textTertiary,
                       ),
                       children: [
                         TextSpan(
-                          text: 'Sign Up',
+                          text: context.l10n.signUp,
                           style: textTheme.labelLarge!.vCopyWith(
                             fontWeight: AppFontWeight.semiBold,
                             color: colorScheme.primary,
