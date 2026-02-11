@@ -1,3 +1,4 @@
+import 'package:app/core/theme/app_typography.dart';
 import 'package:app/core/utils/extensions.dart';
 import 'package:app/core/utils/validators.dart';
 import 'package:app/shared/widgets/app_text_field.dart';
@@ -66,6 +67,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -80,20 +82,22 @@ class _SignupScreenState extends State<SignupScreen> {
                   // ── Header ──
                   Text(
                     'EventRun',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+                    style: textTheme.headlineMedium!.vCopyWith(
+                      fontWeight: AppFontWeight.bold,
                       color: Colors.teal.shade700,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     context.l10n.createYourAccount,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF0F172A), // slate-900
+                    style: textTheme.bodyMedium!.copyWith(
+                      color: const Color(0xFF475569),
                     ),
+                    // style: TextStyle(
+                    //   fontSize: 20,
+                    //   fontWeight: FontWeight.w600,
+                    //   color: Color(0xFF0F172A), // slate-900
+                    // ),
                   ),
                   const SizedBox(height: 32),
 

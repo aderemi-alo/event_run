@@ -1,3 +1,4 @@
+import 'package:app/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:app/core/theme/app_colors.dart';
@@ -8,12 +9,12 @@ class AppTheme {
   static const double _radiusMd = 12.0;
   static const double _radiusSm = 8.0;
 
-  static TextTheme _textTheme(Brightness brightness) {
-    final base = brightness == Brightness.light
-        ? Typography.material2021().black
-        : Typography.material2021().white;
-    return GoogleFonts.interTextTheme(base);
-  }
+  // static TextTheme _textTheme(Brightness brightness) {
+  //   final base = brightness == Brightness.light
+  //       ? Typography.material2021().black
+  //       : Typography.material2021().white;
+  //   return GoogleFonts.interTextTheme(base);
+  // }
 
   static ThemeData get lightTheme {
     final colorScheme = ColorScheme.fromSeed(
@@ -27,7 +28,7 @@ class AppTheme {
       useMaterial3: true,
       colorScheme: colorScheme,
       scaffoldBackgroundColor: AppColors.backgroundLight,
-      textTheme: _textTheme(Brightness.light),
+      textTheme: AppTypography.textTheme,
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
       appBarTheme: const AppBarTheme(
@@ -135,7 +136,7 @@ class AppTheme {
       useMaterial3: true,
       colorScheme: colorScheme,
       scaffoldBackgroundColor: AppColors.backgroundDark,
-      textTheme: _textTheme(Brightness.dark),
+      textTheme: AppTypography.darkTextTheme,
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.slate800,
         foregroundColor: AppColors.white,
