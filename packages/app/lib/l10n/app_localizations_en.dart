@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'EventLock';
+  String get appName => 'EventRun';
 
   @override
   String get common_save => 'Save';
@@ -39,7 +39,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phoneNumber => 'Phone Number';
 
   @override
-  String get phoneNumberHint => '0876 543 2100';
+  String get phoneNumberHint => '876 543 2100';
 
   @override
   String get emailAddress => 'Email Address';
@@ -60,7 +60,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get alreadyHaveAccount => 'Already have an account? ';
 
   @override
+  String get dontHaveAccount => 'Don\'t have an account? ';
+
+  @override
   String get logIn => 'Log in';
+
+  @override
+  String get login => 'Login';
+
+  @override
+  String get signUp => 'Sign Up';
+
+  @override
+  String get welcomeBack => 'Welcome back';
+
+  @override
+  String get loginToManageEvents => 'Login to manage your events';
+
+  @override
+  String get forgotPassword => 'Forgot password?';
 
   @override
   String requiredField(String fieldName) {
@@ -103,4 +121,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get thisField => 'This field';
+
+  @override
+  String get bySigningUpYouAgreeToOur => 'By continuing, you agree to our ';
+
+  @override
+  String get termsOfService => 'Terms of Service';
+
+  @override
+  String get and => 'and';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get createAccount => 'Create Account';
+
+  @override
+  String get signupSubtitle => 'Get Started With Event Run';
+
+  @override
+  String get accountCreatedSuccessfully => 'Account created successfully!';
 }

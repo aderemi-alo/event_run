@@ -5,16 +5,34 @@ import 'package:app/core/widgets/app_loading.dart';
 import 'package:app/core/widgets/app_error_widget.dart';
 import 'package:app/features/auth/presentation/providers/auth_providers.dart';
 import 'package:app/features/auth/presentation/providers/auth_state_provider.dart';
+import 'package:app/features/auth/presentation/providers/providers_di.dart';
 
-class ProfileScreen extends ConsumerWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Fetch profile when screen loads
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final user = ref.read(currentUserProvider);
+      if (user != null) {
+        ref.read(authProvider.notifier).getProfile(user.id);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final user = ref.watch(currentUserProvider);
     if (user == null) return const AppErrorWidget(message: 'Not signed in');
 
-    final profileAsync = ref.watch(profileProvider(user.id));
+    final profileAsync = ref.watch(authProvider);
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -29,7 +47,7 @@ class ProfileScreen extends ConsumerWidget {
         loading: () => const AppLoading(),
         error: (e, _) => AppErrorWidget(
           message: e.toString(),
-          onRetry: () => ref.invalidate(profileProvider(user.id)),
+          onRetry: () => ref.read(authProvider.notifier).getProfile(user.id),
         ),
         data: (profile) {
           if (profile == null) {
@@ -74,7 +92,7 @@ class ProfileScreen extends ConsumerWidget {
               const SizedBox(height: 32),
               OutlinedButton.icon(
                 onPressed: () async {
-                  await ref.read(signOutUsecaseProvider).call();
+                  await ref.read(signOutUseCaseProvider).call();
                 },
                 icon: const Icon(Icons.logout),
                 label: const Text('Sign Out'),

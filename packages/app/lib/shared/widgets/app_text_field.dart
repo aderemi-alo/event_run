@@ -1,8 +1,11 @@
+import 'package:app/core/theme/app_colors.dart';
+import 'package:app/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AppTextField extends StatefulWidget {
-  final String label;
+  final String? label;
+  final Widget? labelWidget;
   final IconData? icon;
   final TextEditingController controller;
   final String hint;
@@ -10,11 +13,13 @@ class AppTextField extends StatefulWidget {
   final String? Function(String?)? validator;
   final bool isPassword;
   final Widget? suffix;
+  final Widget? prefix;
   final List<TextInputFormatter>? inputFormatters;
 
   const AppTextField({
     super.key,
-    required this.label,
+    this.label,
+    this.labelWidget,
     this.icon,
     required this.controller,
     required this.hint,
@@ -22,6 +27,7 @@ class AppTextField extends StatefulWidget {
     this.validator,
     this.isPassword = false,
     this.suffix,
+    this.prefix,
     this.inputFormatters,
   });
 
@@ -45,14 +51,16 @@ class _AppTextFieldState extends State<AppTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          widget.label,
-          style: textTheme.labelMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-            color: Colors.grey.shade700,
-            letterSpacing: 1.0,
-          ),
-        ),
+        widget.labelWidget ??
+            (widget.label != null
+                ? Text(
+                    widget.label!,
+                    style: textTheme.labelLarge?.vCopyWith(
+                      fontWeight: AppFontWeight.medium,
+                      color: AppColors.textSecondary,
+                    ),
+                  )
+                : const SizedBox.shrink()),
         const SizedBox(height: 6),
         TextFormField(
           inputFormatters: widget.inputFormatters,
@@ -61,14 +69,31 @@ class _AppTextFieldState extends State<AppTextField> {
           obscureText: widget.isPassword ? obscureText : false,
           decoration: InputDecoration(
             hintText: widget.hint,
-            hintStyle: textTheme.bodyMedium?.copyWith(
-              color: Colors.grey.shade400,
+            hintStyle: textTheme.bodyMedium?.vCopyWith(
+              color: AppColors.textHint,
             ),
-            prefixIcon: Icon(
-              widget.icon,
-              color: Colors.grey.shade400,
-              size: 20,
-            ),
+            prefixIcon: widget.prefix != null
+                ? Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (widget.icon != null)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12),
+                          child: Icon(
+                            widget.icon,
+                            color: AppColors.textHint,
+                            size: 20,
+                          ),
+                        ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: widget.prefix!,
+                      ),
+                    ],
+                  )
+                : widget.icon != null
+                ? Icon(widget.icon, color: AppColors.textHint, size: 20)
+                : null,
             suffixIcon: widget.isPassword
                 ? IconButton(
                     icon: Icon(

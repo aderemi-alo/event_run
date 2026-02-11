@@ -124,8 +124,8 @@ class _BenefitTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: AppColors.teal50,
-        child: Icon(icon, color: AppColors.teal600, size: 20),
+        backgroundColor: AppColors.primarySurface,
+        child: Icon(icon, color: AppColors.primary, size: 20),
       ),
       title: Text(title),
       subtitle: Text(subtitle),

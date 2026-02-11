@@ -5,6 +5,7 @@ class ProfileModel extends ProfileEntity {
     required super.id,
     required super.email,
     required super.fullName,
+    required super.phone,
     super.avatarUrl,
     required super.createdAt,
   });
@@ -15,6 +16,7 @@ class ProfileModel extends ProfileEntity {
       email: json['email'] as String,
       fullName: json['full_name'] as String,
       avatarUrl: json['avatar_url'] as String?,
+      phone: json['phone'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
     );
   }
@@ -25,6 +27,7 @@ class ProfileModel extends ProfileEntity {
       'email': email,
       'full_name': fullName,
       'avatar_url': avatarUrl,
+      'phone': phone,
       'created_at': createdAt.toIso8601String(),
     };
   }

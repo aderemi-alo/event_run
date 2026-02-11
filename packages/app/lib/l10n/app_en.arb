@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appName": "EventLock",
+  "appName": "EventRun",
   "common_save": "Save",
   "common_cancel": "Cancel",
   "auth_email": "Email",
@@ -10,14 +10,20 @@
   "fullName": "Full Name",
   "fullNameHint": "e.g. Tunde Bakare",
   "phoneNumber": "Phone Number",
-  "phoneNumberHint": "0876 543 2100",
+  "phoneNumberHint": "876 543 2100",
   "emailAddress": "Email Address",
   "emailAddressHint": "you@example.com",
   "password": "Password",
   "passwordHint": "••••••••",
   "nextStep": "Next Step",
   "alreadyHaveAccount": "Already have an account? ",
+  "dontHaveAccount": "Don't have an account? ",
   "logIn": "Log in",
+  "login": "Login",
+  "signUp": "Sign Up",
+  "welcomeBack": "Welcome back",
+  "loginToManageEvents": "Login to manage your events",
+  "forgotPassword": "Forgot password?",
   "requiredField": "{fieldName} is required",
   "@requiredField": {
     "placeholders": {
@@ -43,5 +49,12 @@
     }
   },
   "valueMustBeGreaterThanZero": "Value must be greater than 0", 
-  "thisField": "This field"
+  "thisField": "This field",
+  "bySigningUpYouAgreeToOur": "By continuing, you agree to our ",
+  "termsOfService": "Terms of Service",
+  "and": "and",
+  "privacyPolicy": "Privacy Policy",
+  "createAccount": "Create Account",
+  "signupSubtitle": "Get Started With Event Run",
+  "accountCreatedSuccessfully": "Account created successfully!"
 }

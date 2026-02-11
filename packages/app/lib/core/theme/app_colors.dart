@@ -1,42 +1,99 @@
-import 'dart:ui';
+// ============================================================
+// EventRun Color System
+// ============================================================
+//
+// Extracted from the signup & business onboarding screens.
+// Based on a Teal primary + Slate neutral palette.
+//
+// Usage:
+//   AppColors.primary
+//   AppColors.textSecondary
+//   AppColors.semantic.info
+// ============================================================
 
-class AppColors {
-  AppColors._();
+import 'package:flutter/material.dart';
 
-  // Teal primary
-  static const Color teal50 = Color(0xFFF0FDFA);
-  static const Color teal100 = Color(0xFFCCFBF1);
-  static const Color teal500 = Color(0xFF14B8A6);
-  static const Color teal600 = Color(0xFF0D9488);
-  static const Color teal700 = Color(0xFF0F766E);
-  static const Color teal800 = Color(0xFF115E59);
-  static const Color teal900 = Color(0xFF134E4A);
+abstract final class AppColors {
+  // ── Brand / Primary (Teal) ────────────────────────────
+  static const Color primary = Color(
+    0xFF00897B,
+  ); // teal-600 — buttons, links, progress bars
+  static const Color primaryLight = Color(
+    0xFF009688,
+  ); // teal-500 — focus rings, checkmarks
+  static const Color primaryDark = Color(
+    0xFF00796B,
+  ); // teal-700 — hover, logo text
+  static const Color primaryDarker = Color(
+    0xFF00695C,
+  ); // teal-800 — pressed state
+  static const Color primarySurface = Color(
+    0xFFE0F2F1,
+  ); // teal-50  — selected card bg, pill buttons
+  static const Color primarySurfaceAlt = Color(
+    0xFFB2DFDB,
+  ); // teal-100 — subtle highlights
 
-  // Slate neutrals
-  static const Color slate50 = Color(0xFFF8FAFC);
-  static const Color slate100 = Color(0xFFF1F5F9);
-  static const Color slate200 = Color(0xFFE2E8F0);
-  static const Color slate300 = Color(0xFFCBD5E1);
-  static const Color slate400 = Color(0xFF94A3B8);
-  static const Color slate500 = Color(0xFF64748B);
-  static const Color slate600 = Color(0xFF475569);
-  static const Color slate700 = Color(0xFF334155);
-  static const Color slate800 = Color(0xFF1E293B);
-  static const Color slate900 = Color(0xFF0F172A);
+  // ── Text ──────────────────────────────────────────────
+  static const Color textPrimary = Color(0xFF0F172A); // slate-900 — headings
+  static const Color textSecondary = Color(
+    0xFF475569,
+  ); // slate-600 — body, feature lists
+  static const Color textTertiary = Color(
+    0xFF64748B,
+  ); // slate-500 — subtitles, captions
+  static const Color textHint = Color(
+    0xFF94A3B8,
+  ); // slate-400 — input placeholders
+  static const Color textDisabled = Color(0xFFBDBDBD); // grey-400
 
-  // Status
-  static const Color success = Color(0xFF10B981);
-  static const Color warning = Color(0xFFF59E0B);
-  static const Color error = Color(0xFFEF4444);
-  static const Color info = Color(0xFF3B82F6);
+  // ── Borders & Dividers ────────────────────────────────
+  static const Color border = Color(0xFFCBD5E1); // slate-300 — input borders
+  static const Color borderLight = Color(
+    0xFFE2E8F0,
+  ); // slate-200 — card borders, dividers
+  static const Color divider = Color(0xFFE2E8F0); // slate-200
 
-  // Basics
-  static const Color white = Color(0xFFFFFFFF);
-  static const Color black = Color(0xFF000000);
+  // ── Surfaces ──────────────────────────────────────────
+  static const Color surfacePrimary = Colors.white; // cards, inputs, signup bg
+  static const Color surfaceSecondary = Color(
+    0xFFF8FAFC,
+  ); // slate-50  — page backgrounds (onboarding)
+  static const Color surfaceTertiary = Color(
+    0xFFF1F5F9,
+  ); // slate-100 — placeholder areas (logo circle)
 
-  // Surfaces
-  static const Color backgroundLight = slate50;
-  static const Color backgroundDark = slate900;
-  static const Color surfaceLight = white;
-  static const Color surfaceDark = slate800;
+  // ── Icons ─────────────────────────────────────────────
+  static const Color iconDefault = Color(
+    0xFF94A3B8,
+  ); // slate-400 — prefix icons, inactive
+  static const Color iconActive = Color(0xFF00897B); // primary
+
+  // ── Semantic ──────────────────────────────────────────
+  static const Color error = Color(0xFFDC2626); // red-600
+  static const Color errorLight = Color(0xFFFEE2E2); // red-100
+  static const Color success = Color(0xFF16A34A); // green-600
+  static const Color successLight = Color(0xFFDCFCE7); // green-100
+  static const Color warning = Color(0xFFF59E0B); // amber-500
+  static const Color warningLight = Color(0xFFFEF3C7); // amber-100
+  static const Color info = Color(0xFF2563EB); // blue-600 — info banner icon
+  static const Color infoLight = Color(0xFFEFF6FF); // blue-50  — info banner bg
+  static const Color infoBorder = Color(
+    0xFFDBEAFE,
+  ); // blue-100 — info banner border
+
+  // ── Shadows / Overlays ────────────────────────────────
+  static const Color shadow = Color(0x0A000000); // black 4%  — card box shadow
+  static const Color shadowPrimary = Color(
+    0x4000897B,
+  ); // teal 25%  — button shadow
+  static const Color overlay = Color(0x1F000000); // black 12% — modal scrim
+
+  // ── Button States ─────────────────────────────────────
+  static const Color buttonDisabledBg = Color(0xFFE0E0E0);
+  static const Color buttonDisabledFg = Color(0xFFBDBDBD);
+
+  // ── On-color (content on colored backgrounds) ─────────
+  static const Color onPrimary = Colors.white;
+  static const Color onError = Colors.white;
 }

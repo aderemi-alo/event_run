@@ -97,7 +97,7 @@ abstract class AppLocalizations {
   /// No description provided for @appName.
   ///
   /// In en, this message translates to:
-  /// **'EventLock'**
+  /// **'EventRun'**
   String get appName;
 
   /// No description provided for @common_save.
@@ -157,7 +157,7 @@ abstract class AppLocalizations {
   /// No description provided for @phoneNumberHint.
   ///
   /// In en, this message translates to:
-  /// **'0876 543 2100'**
+  /// **'876 543 2100'**
   String get phoneNumberHint;
 
   /// No description provided for @emailAddress.
@@ -196,11 +196,47 @@ abstract class AppLocalizations {
   /// **'Already have an account? '**
   String get alreadyHaveAccount;
 
+  /// No description provided for @dontHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account? '**
+  String get dontHaveAccount;
+
   /// No description provided for @logIn.
   ///
   /// In en, this message translates to:
   /// **'Log in'**
   String get logIn;
+
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// No description provided for @signUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signUp;
+
+  /// No description provided for @welcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get welcomeBack;
+
+  /// No description provided for @loginToManageEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Login to manage your events'**
+  String get loginToManageEvents;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get forgotPassword;
 
   /// No description provided for @requiredField.
   ///
@@ -273,6 +309,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This field'**
   String get thisField;
+
+  /// No description provided for @bySigningUpYouAgreeToOur.
+  ///
+  /// In en, this message translates to:
+  /// **'By continuing, you agree to our '**
+  String get bySigningUpYouAgreeToOur;
+
+  /// No description provided for @termsOfService.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get termsOfService;
+
+  /// No description provided for @and.
+  ///
+  /// In en, this message translates to:
+  /// **'and'**
+  String get and;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
+  /// No description provided for @createAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get createAccount;
+
+  /// No description provided for @signupSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started With Event Run'**
+  String get signupSubtitle;
+
+  /// No description provided for @accountCreatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Account created successfully!'**
+  String get accountCreatedSuccessfully;
 }
 
 class _AppLocalizationsDelegate

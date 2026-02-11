@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app/core/utils/validators.dart';
-import 'package:app/features/auth/presentation/providers/auth_providers.dart';
+import 'package:app/features/auth/presentation/providers/providers_di.dart';
 import 'package:app/features/auth/presentation/widgets/auth_form_field.dart';
 
 class ForgotPasswordScreen extends ConsumerStatefulWidget {
@@ -31,7 +31,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
     setState(() => _loading = true);
     try {
       await ref
-          .read(resetPasswordUsecaseProvider)
+          .read(resetPasswordUseCaseProvider)
           .call(email: _emailController.text.trim());
       if (mounted) setState(() => _sent = true);
     } catch (e) {

@@ -1,3 +1,4 @@
+import 'package:app/core/utils/result.dart';
 import 'package:app/features/auth/domain/entities/profile_entity.dart';
 import 'package:app/features/auth/domain/repositories/auth_repository.dart';
 
@@ -6,7 +7,7 @@ class GetProfile {
 
   GetProfile(this._repository);
 
-  Future<ProfileEntity?> call(String userId) {
+  Future<Result<ProfileEntity>> call(String userId) {
     return _repository.getProfile(userId);
   }
 }

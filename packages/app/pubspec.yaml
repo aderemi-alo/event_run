@@ -40,3 +40,11 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+
+  fonts:
+    - family: PlusJakartaSans
+      fonts:
+      - asset: assets/fonts/PlusJakartaSans-VariableFont_wght.ttf
+    - family: Inter
+      fonts:
+      - asset: assets/fonts/Inter-VariableFont_opsz,wght.ttf

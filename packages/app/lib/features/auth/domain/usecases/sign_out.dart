@@ -1,3 +1,4 @@
+import 'package:app/core/utils/result.dart';
 import 'package:app/features/auth/domain/repositories/auth_repository.dart';
 
 class SignOut {
@@ -5,7 +6,7 @@ class SignOut {
 
   SignOut(this._repository);
 
-  Future<void> call() {
+  Future<Result<void>> call() {
     return _repository.signOut();
   }
 }

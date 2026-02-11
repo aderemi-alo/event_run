@@ -1,10 +1,16 @@
+import 'package:app/core/theme/app_colors.dart';
+import 'package:app/core/theme/app_typography.dart';
+import 'package:app/core/utils/extensions.dart';
+import 'package:app/features/auth/presentation/providers/auth_providers.dart';
+import 'package:app/features/auth/presentation/widgets/signup_legal_text.dart';
+import 'package:app/shared/widgets/app_button.dart';
+import 'package:app/shared/widgets/app_text_field.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app/core/router/route_names.dart';
 import 'package:app/core/utils/validators.dart';
-import 'package:app/features/auth/presentation/providers/auth_providers.dart';
-import 'package:app/features/auth/presentation/widgets/auth_form_field.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -17,7 +23,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _loading = false;
 
   @override
   void dispose() {
@@ -26,115 +31,149 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     super.dispose();
   }
 
-  Future<void> _submit() async {
+  Future<void> _handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
 
-    setState(() => _loading = true);
-    try {
-      await ref
-          .read(signInUsecaseProvider)
-          .call(
-            email: _emailController.text.trim(),
-            password: _passwordController.text,
-          );
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(e.toString())));
-      }
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
+    await ref
+        .read(authProvider.notifier)
+        .signIn(
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    final isLoading = ref.watch(authProvider).isLoading;
 
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Form(
-              key: _formKey,
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 448),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  // Header
                   Text(
-                    'Welcome back',
-                    style: theme.textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
+                    context.l10n.appName,
+                    style: textTheme.headlineLarge!.vCopyWith(
+                      fontWeight: AppFontWeight.bold,
+                      color: AppColors.primaryDark,
                     ),
-                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+
+                  Text(
+                    context.l10n.welcomeBack,
+                    style: textTheme.headlineMedium!.vCopyWith(
+                      color: AppColors.textSecondary,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Sign in to manage your events',
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      color: theme.colorScheme.onSurface.withAlpha(153),
+                    context.l10n.loginToManageEvents,
+                    style: textTheme.labelLarge!.vCopyWith(
+                      color: AppColors.textHint,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
-                  AuthFormField(
-                    label: 'Email',
-                    hint: 'you@example.com',
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    prefixIcon: Icons.email_outlined,
-                    textInputAction: TextInputAction.next,
-                    autofillHints: const [AutofillHints.email],
-                    validator: (value) =>
-                        Validators.validateEmail(context, value),
-                  ),
-                  const SizedBox(height: 16),
-                  AuthFormField(
-                    label: 'Password',
-                    controller: _passwordController,
-                    obscureText: true,
-                    prefixIcon: Icons.lock_outlined,
-                    textInputAction: TextInputAction.done,
-                    autofillHints: const [AutofillHints.password],
-                    validator: (value) =>
-                        Validators.validatePassword(context, value),
-                    onFieldSubmitted: (_) => _submit(),
-                  ),
-                  const SizedBox(height: 8),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () =>
-                          context.pushNamed(RouteNames.forgotPassword),
-                      child: const Text('Forgot password?'),
+
+                  //Form
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        AppTextField(
+                          label: context.l10n.emailAddress,
+                          icon: Icons.mail_outline,
+                          controller: _emailController,
+                          hint: context.l10n.emailAddressHint,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) =>
+                              Validators.validateEmail(context, value),
+                        ),
+                        const SizedBox(height: 16),
+
+                        AppTextField(
+                          label: context.l10n.password,
+                          labelWidget: Row(
+                            children: [
+                              Text(
+                                context.l10n.password,
+                                style: textTheme.labelLarge!.vCopyWith(
+                                  color: AppColors.textSecondary,
+                                ),
+                              ),
+                              const Spacer(),
+                              Text.rich(
+                                TextSpan(
+                                  text: context.l10n.forgotPassword,
+                                  style: textTheme.labelMedium!.vCopyWith(
+                                    color: colorScheme.primary,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () => context.pushNamed(
+                                      RouteNames.forgotPassword,
+                                    ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          controller: _passwordController,
+                          icon: Icons.lock_outline,
+                          hint: context.l10n.passwordHint,
+                          isPassword: true,
+                          validator: (value) =>
+                              Validators.validatePassword(context, value),
+                        ),
+
+                        const SizedBox(height: 24),
+
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 380),
+                          child: SignupLegalText(),
+                        ),
+
+                        const SizedBox(height: 10),
+
+                        AppButton(
+                          label: context.l10n.login,
+                          onPressed: _handleSubmit,
+                          loading: isLoading,
+                          trailing: Icons.arrow_forward,
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: _loading ? null : _submit,
-                    child: _loading
-                        ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          )
-                        : const Text('Sign In'),
-                  ),
+
                   const SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Don't have an account? ",
-                        style: theme.textTheme.bodyMedium,
+                  Text.rich(
+                    TextSpan(
+                      text: context.l10n.dontHaveAccount,
+                      style: textTheme.labelLarge!.vCopyWith(
+                        fontWeight: AppFontWeight.regular,
+                        color: AppColors.textTertiary,
                       ),
-                      TextButton(
-                        onPressed: () => context.goNamed(RouteNames.signup),
-                        child: const Text('Sign Up'),
-                      ),
-                    ],
+                      children: [
+                        TextSpan(
+                          text: context.l10n.signUp,
+                          style: textTheme.labelLarge!.vCopyWith(
+                            fontWeight: AppFontWeight.semiBold,
+                            color: colorScheme.primary,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => context.go(RouteNames.signup),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
