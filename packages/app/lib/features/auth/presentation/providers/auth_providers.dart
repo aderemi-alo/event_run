@@ -1,11 +1,13 @@
 import 'package:app/core/utils/result.dart';
 import 'package:app/features/auth/domain/entities/profile_entity.dart';
+import 'package:app/features/auth/domain/entities/signup_params.dart';
 import 'package:app/features/auth/presentation/providers/providers_di.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Comprehensive auth provider that manages all authentication operations.
 ///
 /// Provides methods for:
+/// - Sign up
 /// - Sign in
 /// - Sign out
 /// - Get profile
@@ -19,6 +21,21 @@ final authProvider =
 class AuthNotifier extends AutoDisposeAsyncNotifier<ProfileEntity?> {
   @override
   Future<ProfileEntity?> build() async => null;
+
+  /// Sign up with email and password.
+  Future<void> signup(SignupParams params) async {
+    state = const AsyncLoading();
+
+    state = await AsyncValue.guard(() async {
+      final useCase = ref.read(signupUseCaseProvider);
+      final result = await useCase.call(params);
+
+      return result.fold(
+        onSuccess: (profile) => profile,
+        onError: (failure) => throw Exception(failure.message),
+      );
+    });
+  }
 
   /// Sign in with email and password.
   Future<void> signIn({required String email, required String password}) async {

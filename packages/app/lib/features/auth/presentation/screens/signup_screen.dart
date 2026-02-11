@@ -1,12 +1,14 @@
+import 'package:app/core/router/route_names.dart';
 import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/theme/app_typography.dart';
 import 'package:app/core/utils/extensions.dart';
 import 'package:app/core/utils/validators.dart';
 import 'package:app/features/auth/domain/entities/signup_params.dart';
-import 'package:app/features/auth/presentation/providers/sign_up_provider.dart';
+import 'package:app/features/auth/presentation/providers/auth_providers.dart';
 import 'package:app/features/auth/presentation/widgets/signup_legal_text.dart';
 import 'package:app/shared/widgets/app_button.dart';
 import 'package:app/shared/widgets/app_text_field.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,7 +41,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     await ref
-        .read(signupProvider.notifier)
+        .read(authProvider.notifier)
         .signup(
           SignupParams(
             fullName: _fullNameController.text,
@@ -53,32 +55,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
-    // ── Listen to provider state changes for UI feedback only ──
-    // Navigation is handled by the router based on auth state
-    ref.listen(signupProvider, (prev, next) {
-      next.whenOrNull(
-        error: (error, _) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Signup failed: $error'),
-              backgroundColor: Colors.red.shade600,
-            ),
-          );
-        },
-        data: (_) {
-          // Show success feedback - router will handle navigation
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(context.l10n.accountCreatedSuccessfully),
-              backgroundColor: Colors.green.shade600,
-            ),
-          );
-        },
-      );
-    });
-
-    final isLoading = ref.watch(signupProvider).isLoading;
+    final isLoading = ref.watch(authProvider).isLoading;
 
     return Scaffold(
       backgroundColor: AppColors.surfacePrimary,
@@ -112,7 +91,6 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                     style: textTheme.labelLarge!.vCopyWith(
                       color: AppColors.textHint,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
 
@@ -181,7 +159,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                         const SizedBox(height: 24),
 
                         ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 350),
+                          constraints: const BoxConstraints(maxWidth: 380),
                           child: SignupLegalText(),
                         ),
 
@@ -200,29 +178,26 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
 
                   const SizedBox(height: 24),
 
-                  // ── Login Link ──
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        context.l10n.alreadyHaveAccount,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFF64748B),
-                        ),
+                  // - Login Link -
+                  Text.rich(
+                    TextSpan(
+                      text: context.l10n.alreadyHaveAccount,
+                      style: textTheme.labelLarge!.vCopyWith(
+                        fontWeight: AppFontWeight.regular,
+                        color: AppColors.textTertiary,
                       ),
-                      GestureDetector(
-                        onTap: () => context.go('/login'),
-                        child: Text(
-                          context.l10n.logIn,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.teal.shade600,
+                      children: [
+                        TextSpan(
+                          text: context.l10n.logIn,
+                          style: textTheme.labelLarge!.vCopyWith(
+                            fontWeight: AppFontWeight.semiBold,
+                            color: colorScheme.primary,
                           ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => context.go(RouteNames.login),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),

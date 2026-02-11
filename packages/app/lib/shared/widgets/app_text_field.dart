@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AppTextField extends StatefulWidget {
-  final String label;
+  final String? label;
+  final Widget? labelWidget;
   final IconData? icon;
   final TextEditingController controller;
   final String hint;
@@ -17,7 +18,8 @@ class AppTextField extends StatefulWidget {
 
   const AppTextField({
     super.key,
-    required this.label,
+    this.label,
+    this.labelWidget,
     this.icon,
     required this.controller,
     required this.hint,
@@ -49,13 +51,16 @@ class _AppTextFieldState extends State<AppTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          widget.label,
-          style: textTheme.labelLarge?.vCopyWith(
-            fontWeight: AppFontWeight.medium,
-            color: AppColors.textSecondary,
-          ),
-        ),
+        widget.labelWidget ??
+            (widget.label != null
+                ? Text(
+                    widget.label!,
+                    style: textTheme.labelLarge?.vCopyWith(
+                      fontWeight: AppFontWeight.medium,
+                      color: AppColors.textSecondary,
+                    ),
+                  )
+                : const SizedBox.shrink()),
         const SizedBox(height: 6),
         TextFormField(
           inputFormatters: widget.inputFormatters,
