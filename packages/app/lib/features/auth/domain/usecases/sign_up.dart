@@ -22,10 +22,7 @@ class SignupUseCase {
     return _repository.signUp(
       email: params.email.trim(),
       password: params.password,
-      metadata: {
-        'full_name': params.fullName.trim(),
-        // 'phone': normalisedPhone,
-      },
+      metadata: {'full_name': params.fullName.trim(), 'phone': normalisedPhone},
     );
   }
 }
