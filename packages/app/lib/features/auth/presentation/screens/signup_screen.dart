@@ -1,6 +1,7 @@
 import 'package:app/core/theme/app_typography.dart';
 import 'package:app/core/utils/extensions.dart';
 import 'package:app/core/utils/validators.dart';
+import 'package:app/shared/widgets/app_button.dart';
 import 'package:app/shared/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -165,49 +166,55 @@ class _SignupScreenState extends State<SignupScreen> {
                         const SizedBox(height: 24),
 
                         // ── Submit Button ──
-                        SizedBox(
-                          width: double.infinity,
-                          height: 52,
-                          child: ElevatedButton(
-                            onPressed: _loading ? null : _handleSubmit,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.teal.shade600,
-                              disabledBackgroundColor: Colors.teal.shade600
-                                  .withOpacity(0.7),
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              elevation: 4,
-                              shadowColor: Colors.teal.shade600.withOpacity(
-                                0.2,
-                              ),
-                            ),
-                            child: _loading
-                                ? const SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 2.5,
-                                    ),
-                                  )
-                                : Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        context.l10n.nextStep,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      const Icon(Icons.arrow_forward, size: 20),
-                                    ],
-                                  ),
-                          ),
+                        AppButton(
+                          label: context.l10n.nextStep,
+                          onPressed: _handleSubmit,
+                          loading: _loading,
+                          trailing: Icons.arrow_forward,
                         ),
+                        // SizedBox(
+                        //   width: double.infinity,
+                        //   height: 52,
+                        //   child: ElevatedButton(
+                        //     // onPressed: _loading ? null : _handleSubmit,
+                        //     style: ElevatedButton.styleFrom(
+                        //       backgroundColor: Colors.teal.shade600,
+                        //       disabledBackgroundColor: Colors.teal.shade600
+                        //           .withOpacity(0.7),
+                        //       foregroundColor: Colors.white,
+                        //       shape: RoundedRectangleBorder(
+                        //         borderRadius: BorderRadius.circular(12),
+                        //       ),
+                        //       elevation: 4,
+                        //       shadowColor: Colors.teal.shade600.withOpacity(
+                        //         0.2,
+                        //       ),
+                        //     ),
+                        //     child: _loading
+                        //         ? const SizedBox(
+                        //             width: 24,
+                        //             height: 24,
+                        //             child: CircularProgressIndicator(
+                        //               color: Colors.white,
+                        //               strokeWidth: 2.5,
+                        //             ),
+                        //           )
+                        //         : Row(
+                        //             mainAxisAlignment: MainAxisAlignment.center,
+                        //             children: [
+                        //               Text(
+                        //                 context.l10n.nextStep,
+                        //                 style: const TextStyle(
+                        //                   fontWeight: FontWeight.bold,
+                        //                   fontSize: 16,
+                        //                 ),
+                        //               ),
+                        //               const SizedBox(width: 8),
+                        //               const Icon(Icons.arrow_forward, size: 20),
+                        //             ],
+                        //           ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

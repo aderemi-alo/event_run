@@ -41,8 +41,8 @@ class EventRunApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       title: AppConstants.appName,
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
       themeMode: ThemeMode.light,
       home: SignupScreen(),
     );
