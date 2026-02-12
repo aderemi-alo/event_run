@@ -47,6 +47,7 @@ class _VendorSetupScreenState extends ConsumerState<VendorSetupScreen> {
         ownerId: user.id,
       );
       await ref.read(createVendorUsecaseProvider).call(vendor: vendor);
+      ref.invalidate(vendorProvider(user.id));
       if (mounted) context.goNamed(RouteNames.dashboard);
     } catch (e) {
       if (mounted) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app/core/utils/validators.dart';
+import 'package:app/features/auth/presentation/providers/auth_state_provider.dart';
 import 'package:app/features/auth/presentation/widgets/auth_form_field.dart';
 import 'package:app/features/events/domain/entities/event_entity.dart';
 import 'package:app/features/events/presentation/providers/event_providers.dart';
@@ -50,11 +51,19 @@ class _EventFormScreenState extends ConsumerState<EventFormScreen> {
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
 
+    final vendorId = ref.read(currentVendorIdProvider);
+    if (vendorId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Complete business setup first.')),
+      );
+      return;
+    }
+
     setState(() => _loading = true);
     try {
       final event = EventEntity(
         id: widget.eventId ?? '',
-        vendorId: '',
+        vendorId: vendorId,
         name: _nameController.text.trim(),
         eventDate: _eventDate,
         location: _locationController.text.trim().isNotEmpty
@@ -76,6 +85,7 @@ class _EventFormScreenState extends ConsumerState<EventFormScreen> {
         await ref.read(createEventUsecaseProvider).call(event: event);
       }
 
+      ref.invalidate(eventsProvider(vendorId));
       if (mounted) context.pop();
     } catch (e) {
       if (mounted) {

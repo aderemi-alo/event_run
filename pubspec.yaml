@@ -15,8 +15,8 @@ dev_dependencies:
 
 
 dependency_overrides:
-  flutter_riverpod: ^2.6.1
-  riverpod: ^2.6.1
+  flutter_riverpod: ^3.0.3
+  riverpod: ^3.0.3
   riverpod_annotation: ^2.6.1
   riverpod_generator: ^2.6.3
   build_runner: ^2.4.13

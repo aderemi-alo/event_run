@@ -6,7 +6,6 @@ import 'package:app/core/utils/currency_formatter.dart';
 import 'package:app/core/utils/date_formatter.dart';
 import 'package:app/core/widgets/app_error_widget.dart';
 import 'package:app/core/widgets/app_loading.dart';
-import 'package:app/features/invoices/domain/entities/invoice_entity.dart';
 import 'package:app/features/invoices/presentation/providers/invoice_providers.dart';
 import 'package:app/features/invoices/presentation/providers/payment_providers.dart';
 import 'package:app/features/invoices/presentation/widgets/invoice_item_row.dart';
@@ -31,7 +30,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
             icon: const Icon(Icons.preview),
             onPressed: () => context.pushNamed(
               RouteNames.invoicePreview,
-              pathParameters: {'invoiceId': invoiceId},
+              pathParameters: {'id': invoiceId},
             ),
           ),
           PopupMenuButton<String>(
@@ -200,7 +199,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
                     TextButton.icon(
                       onPressed: () => context.pushNamed(
                         RouteNames.recordPayment,
-                        pathParameters: {'invoiceId': invoiceId},
+                        pathParameters: {'id': invoiceId},
                       ),
                       icon: const Icon(Icons.add, size: 18),
                       label: const Text('Record Payment'),
@@ -235,7 +234,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
       case 'edit':
         context.pushNamed(
           RouteNames.invoiceForm,
-          pathParameters: {'invoiceId': invoiceId},
+          pathParameters: {'id': invoiceId},
         );
       case 'send':
         await repo.markAsSent(invoiceId);

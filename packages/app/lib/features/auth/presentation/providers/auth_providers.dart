@@ -14,11 +14,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// - Update profile
 /// - Reset password
 final authProvider =
-    AutoDisposeAsyncNotifierProvider<AuthNotifier, ProfileEntity?>(
-      AuthNotifier.new,
-    );
+    AsyncNotifierProvider<AuthNotifier, ProfileEntity?>(AuthNotifier.new);
 
-class AuthNotifier extends AutoDisposeAsyncNotifier<ProfileEntity?> {
+class AuthNotifier extends AsyncNotifier<ProfileEntity?> {
   @override
   Future<ProfileEntity?> build() async => null;
 
@@ -26,7 +24,7 @@ class AuthNotifier extends AutoDisposeAsyncNotifier<ProfileEntity?> {
   Future<void> signup(SignupParams params) async {
     state = const AsyncLoading();
 
-    state = await AsyncValue.guard(() async {
+    final nextState = await AsyncValue.guard(() async {
       final useCase = ref.read(signupUseCaseProvider);
       final result = await useCase.call(params);
 
@@ -35,13 +33,16 @@ class AuthNotifier extends AutoDisposeAsyncNotifier<ProfileEntity?> {
         onError: (failure) => throw Exception(failure.message),
       );
     });
+
+    if (!ref.mounted) return;
+    state = nextState;
   }
 
   /// Sign in with email and password.
   Future<void> signIn({required String email, required String password}) async {
     state = const AsyncLoading();
 
-    state = await AsyncValue.guard(() async {
+    final nextState = await AsyncValue.guard(() async {
       final useCase = ref.read(signInUseCaseProvider);
       final result = await useCase.call(email: email, password: password);
 
@@ -50,13 +51,16 @@ class AuthNotifier extends AutoDisposeAsyncNotifier<ProfileEntity?> {
         onError: (failure) => throw Exception(failure.message),
       );
     });
+
+    if (!ref.mounted) return;
+    state = nextState;
   }
 
   /// Sign out the current user.
   Future<void> signOut() async {
     state = const AsyncLoading();
 
-    state = await AsyncValue.guard(() async {
+    final nextState = await AsyncValue.guard(() async {
       final useCase = ref.read(signOutUseCaseProvider);
       final result = await useCase.call();
 
@@ -65,13 +69,16 @@ class AuthNotifier extends AutoDisposeAsyncNotifier<ProfileEntity?> {
         onError: (failure) => throw Exception(failure.message),
       );
     });
+
+    if (!ref.mounted) return;
+    state = nextState;
   }
 
   /// Get profile for a specific user ID.
   Future<void> getProfile(String userId) async {
     state = const AsyncLoading();
 
-    state = await AsyncValue.guard(() async {
+    final nextState = await AsyncValue.guard(() async {
       final useCase = ref.read(getProfileUseCaseProvider);
       final result = await useCase.call(userId);
 
@@ -80,13 +87,16 @@ class AuthNotifier extends AutoDisposeAsyncNotifier<ProfileEntity?> {
         onError: (failure) => throw Exception(failure.message),
       );
     });
+
+    if (!ref.mounted) return;
+    state = nextState;
   }
 
   /// Update the current user's profile.
   Future<void> updateProfile(ProfileEntity profile) async {
     state = const AsyncLoading();
 
-    state = await AsyncValue.guard(() async {
+    final nextState = await AsyncValue.guard(() async {
       final useCase = ref.read(updateProfileUseCaseProvider);
       final result = await useCase.call(profile: profile);
 
@@ -95,6 +105,9 @@ class AuthNotifier extends AutoDisposeAsyncNotifier<ProfileEntity?> {
         onError: (failure) => throw Exception(failure.message),
       );
     });
+
+    if (!ref.mounted) return;
+    state = nextState;
   }
 
   /// Send password reset email.
