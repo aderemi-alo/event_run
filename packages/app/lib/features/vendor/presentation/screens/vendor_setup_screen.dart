@@ -1,4 +1,5 @@
 import 'package:app/features/vendor/domain/entities/vendor_setup_step.dart';
+import 'package:app/core/utils/extensions.dart';
 import 'package:app/features/vendor/presentation/providers/vendor_providers_di.dart';
 import 'package:app/features/vendor/presentation/screens/steps/bank_info_step.dart';
 import 'package:app/features/vendor/presentation/screens/steps/business_info_step.dart';
@@ -87,7 +88,7 @@ class _VendorSetupScreenState extends ConsumerState<VendorSetupScreen> {
   Future<void> _submit() async {
     final user = ref.read(currentUserProvider);
     if (user == null) {
-      _showSnackBar('You are not signed in. Please sign in and try again.');
+      _showSnackBar(context.l10n.notSignedInError);
       return;
     }
 

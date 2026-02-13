@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/theme/app_typography.dart';
+import 'package:app/core/utils/extensions.dart';
 import 'package:app/core/utils/validators.dart';
 import 'package:app/features/vendor/presentation/widgets/vendor_setup_step_header.dart';
 import 'package:app/shared/widgets/app_button.dart';
@@ -39,11 +40,10 @@ class BankInfoStep extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const VendorSetupStepHeader(
+            VendorSetupStepHeader(
               icon: Icons.account_balance_outlined,
-              title: 'Bank Details',
-              subtitle:
-                  'These details appear on invoices so clients know where to pay.',
+              title: context.l10n.bankDetails,
+              subtitle: context.l10n.bankDetailsSubtitle,
             ),
             const SizedBox(height: 16),
 
@@ -56,7 +56,7 @@ class BankInfoStep extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Bank Name',
+                  context.l10n.bankName,
                   style: textTheme.labelLarge?.vCopyWith(
                     fontWeight: AppFontWeight.medium,
                     color: AppColors.textSecondary,
@@ -66,19 +66,22 @@ class BankInfoStep extends StatelessWidget {
                 DropdownButtonFormField<String>(
                   initialValue: selectedBank.isEmpty ? null : selectedBank,
                   isExpanded: true,
-                  decoration: const InputDecoration(hintText: 'Select bank'),
+                  decoration: InputDecoration(
+                    hintText: context.l10n.selectBank,
+                  ),
                   items: nigerianBanks
                       .map((b) => DropdownMenuItem(value: b, child: Text(b)))
                       .toList(),
                   onChanged: (value) => onBankChanged(value ?? ''),
-                  validator: (value) =>
-                      (value == null || value.isEmpty) ? 'Select a bank' : null,
+                  validator: (value) => (value == null || value.isEmpty)
+                      ? context.l10n.bankNameRequired
+                      : null,
                 ),
               ],
             ),
             const SizedBox(height: 16),
             AppTextField(
-              label: 'Account Number',
+              label: context.l10n.accountNumber,
               controller: accountNumberController,
               hint: '0123456789',
               keyboardType: TextInputType.number,
@@ -89,38 +92,39 @@ class BankInfoStep extends StatelessWidget {
               ],
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Account number is required';
+                  return context.l10n.accountNumberRequired;
                 }
                 if (value.trim().length != 10) {
-                  return 'Account number must be 10 digits';
+                  return context.l10n.accountNumberLength;
                 }
                 return null;
               },
             ),
             const SizedBox(height: 16),
             AppTextField(
-              label: 'Account Name',
+              label: context.l10n.accountName,
               controller: accountNameController,
-              hint: 'Matches your bank account name',
+              hint: context.l10n.accountNameHint,
               icon: Icons.person_outline,
               validator: (value) => Validators.validateRequired(
                 context,
                 value,
-                fieldName: 'Account name',
+                fieldName: context.l10n.accountName,
               ),
             ),
             const SizedBox(height: 32),
             Row(
               children: [
                 AppButton.ghost(
-                  label: 'Back',
+                  label: context.l10n.common_cancel
+                      .vToTitleCase(), // Or "Back" if we had a common_back
                   leading: Icons.arrow_back,
                   expand: false,
                   onPressed: onBack,
                 ),
                 const Spacer(),
                 AppButton(
-                  label: 'Next Step',
+                  label: context.l10n.nextStep,
                   trailing: Icons.arrow_forward,
                   expand: false,
                   onPressed: onNext,
@@ -161,7 +165,7 @@ class _BankInfoBanner extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'These details are used on client-facing invoices.',
+              context.l10n.bankInfoBanner,
               style: textTheme.bodyMedium?.vCopyWith(
                 color: AppColors.textTertiary,
               ),

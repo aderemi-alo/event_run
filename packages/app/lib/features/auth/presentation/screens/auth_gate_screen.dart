@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:app/core/utils/extensions.dart';
 import 'package:app/features/auth/presentation/providers/auth_state_provider.dart';
 
 class AuthGateScreen extends ConsumerWidget {
@@ -10,14 +11,14 @@ class AuthGateScreen extends ConsumerWidget {
     final accessState = ref.watch(routeAccessStateProvider);
 
     if (accessState.status == RouteAccessStatus.checkingVendor) {
-      return const Scaffold(
+      return Scaffold(
         body: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               CircularProgressIndicator(),
               SizedBox(height: 12),
-              Text('Checking your business profile...'),
+              Text(context.l10n.checkingBusinessProfile),
             ],
           ),
         ),
@@ -34,8 +35,8 @@ class AuthGateScreen extends ConsumerWidget {
               children: [
                 const Icon(Icons.error_outline, size: 40),
                 const SizedBox(height: 12),
-                const Text(
-                  'We could not verify your business profile.',
+                Text(
+                  context.l10n.couldNotVerifyBusinessProfile,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
@@ -53,7 +54,7 @@ class AuthGateScreen extends ConsumerWidget {
                     }
                   },
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Retry'),
+                  label: Text(context.l10n.retry),
                 ),
               ],
             ),

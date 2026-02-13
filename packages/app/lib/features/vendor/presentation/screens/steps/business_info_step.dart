@@ -1,4 +1,5 @@
 import 'package:app/shared/widgets/app_phone_text_field.dart';
+import 'package:app/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:app/core/constants/nigerian_states.dart';
 import 'package:app/core/theme/app_colors.dart';
@@ -41,22 +42,22 @@ class BusinessInfoStep extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const VendorSetupStepHeader(
+            VendorSetupStepHeader(
               icon: Icons.business_outlined,
-              title: 'Business Details',
+              title: context.l10n.businessDetails,
             ),
             const SizedBox(height: 20),
             const _LogoPicker(),
             const SizedBox(height: 24),
             AppTextField(
-              label: 'Business Name',
+              label: context.l10n.businessName,
               controller: businessNameController,
-              hint: 'e.g. Royal Events & Decor',
+              hint: context.l10n.businessNameHint,
               icon: Icons.business_center_outlined,
               validator: (value) => Validators.validateRequired(
                 context,
                 value,
-                fieldName: 'Business name',
+                fieldName: context.l10n.businessName,
               ),
             ),
             const SizedBox(height: 16),
@@ -66,14 +67,14 @@ class BusinessInfoStep extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             AppTextField(
-              label: 'Office Address',
+              label: context.l10n.officeAddress,
               controller: addressController,
-              hint: '123 Admiralty Way',
+              hint: context.l10n.officeAddressHint,
               icon: Icons.location_on_outlined,
               validator: (value) => Validators.validateRequired(
                 context,
                 value,
-                fieldName: 'Office address',
+                fieldName: context.l10n.officeAddress,
               ),
             ),
             const SizedBox(height: 16),
@@ -86,7 +87,7 @@ class BusinessInfoStep extends StatelessWidget {
             Align(
               alignment: Alignment.centerRight,
               child: AppButton(
-                label: 'Next Step',
+                label: context.l10n.nextStep,
                 trailing: Icons.arrow_forward,
                 expand: false,
                 onPressed: onNext,
@@ -131,14 +132,14 @@ class _LogoPicker extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppButton.outlined(
-                label: 'Choose Logo',
+                label: context.l10n.chooseLogo,
                 expand: false,
                 // TODO(logo): Integrate image picker for logo upload.
                 onPressed: () {},
               ),
               const SizedBox(height: 4),
               Text(
-                'Optional. Max 2MB.',
+                context.l10n.logoMaxWeight,
                 style: textTheme.bodySmall?.vCopyWith(
                   color: AppColors.textTertiary,
                 ),
@@ -163,16 +164,16 @@ class _ContactFields extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final emailField = AppTextField(
-      label: 'Business Email',
+      label: context.l10n.businessEmail,
       controller: emailController,
-      hint: 'you@business.com',
+      hint: context.l10n.emailAddressHint,
       keyboardType: TextInputType.emailAddress,
       icon: Icons.email_outlined,
       validator: (value) => Validators.validateEmail(context, value),
     );
 
     final phoneField = AppPhoneTextField(
-      label: 'Business Phone',
+      label: context.l10n.businessPhone,
       controller: phoneController,
     );
 
@@ -212,19 +213,22 @@ class _CityStateFields extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     final cityField = AppTextField(
-      label: 'City',
+      label: context.l10n.city,
       controller: cityController,
-      hint: 'Lekki',
+      hint: context.l10n.cityHint,
       icon: Icons.location_city_outlined,
-      validator: (value) =>
-          Validators.validateRequired(context, value, fieldName: 'City'),
+      validator: (value) => Validators.validateRequired(
+        context,
+        value,
+        fieldName: context.l10n.city,
+      ),
     );
 
     final stateField = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'State',
+          context.l10n.state,
           style: textTheme.labelLarge?.vCopyWith(
             fontWeight: AppFontWeight.medium,
             color: AppColors.textSecondary,

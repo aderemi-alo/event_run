@@ -1,5 +1,6 @@
 import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/theme/app_typography.dart';
+import 'package:app/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
 class VendorSetupFlowShell extends StatelessWidget {
@@ -27,7 +28,7 @@ class VendorSetupFlowShell extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    'Setup your Business',
+                    context.l10n.setupYourBusiness,
                     style: textTheme.headlineMedium?.vCopyWith(
                       fontWeight: AppFontWeight.bold,
                       color: AppColors.textPrimary,
@@ -35,7 +36,7 @@ class VendorSetupFlowShell extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    "Let's get your profile ready for clients.",
+                    context.l10n.setupBusinessSubtitle,
                     style: textTheme.bodyMedium?.vCopyWith(
                       color: AppColors.textTertiary,
                     ),

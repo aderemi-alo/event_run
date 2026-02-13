@@ -351,6 +351,252 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Account created successfully!'**
   String get accountCreatedSuccessfully;
+
+  /// No description provided for @setupYourBusiness.
+  ///
+  /// In en, this message translates to:
+  /// **'Setup your Business'**
+  String get setupYourBusiness;
+
+  /// No description provided for @setupBusinessSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s get your profile ready for clients.'**
+  String get setupBusinessSubtitle;
+
+  /// No description provided for @businessDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Details'**
+  String get businessDetails;
+
+  /// No description provided for @businessName.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Name'**
+  String get businessName;
+
+  /// No description provided for @businessNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Royal Events & Decor'**
+  String get businessNameHint;
+
+  /// No description provided for @businessEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Email'**
+  String get businessEmail;
+
+  /// No description provided for @businessPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Phone'**
+  String get businessPhone;
+
+  /// No description provided for @officeAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Office Address'**
+  String get officeAddress;
+
+  /// No description provided for @officeAddressHint.
+  ///
+  /// In en, this message translates to:
+  /// **'123 Admiralty Way'**
+  String get officeAddressHint;
+
+  /// No description provided for @city.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get city;
+
+  /// No description provided for @cityHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Lekki'**
+  String get cityHint;
+
+  /// No description provided for @state.
+  ///
+  /// In en, this message translates to:
+  /// **'State'**
+  String get state;
+
+  /// No description provided for @chooseLogo.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Logo'**
+  String get chooseLogo;
+
+  /// No description provided for @logoMaxWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. Max 2MB.'**
+  String get logoMaxWeight;
+
+  /// No description provided for @bankDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank Details'**
+  String get bankDetails;
+
+  /// No description provided for @bankDetailsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'These details appear on invoices so clients know where to pay.'**
+  String get bankDetailsSubtitle;
+
+  /// No description provided for @bankInfoBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'These details are used on client-facing invoices.'**
+  String get bankInfoBanner;
+
+  /// No description provided for @bankName.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank Name'**
+  String get bankName;
+
+  /// No description provided for @selectBank.
+  ///
+  /// In en, this message translates to:
+  /// **'Select bank'**
+  String get selectBank;
+
+  /// No description provided for @bankNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a bank'**
+  String get bankNameRequired;
+
+  /// No description provided for @accountNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Number'**
+  String get accountNumber;
+
+  /// No description provided for @accountNumberRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Account number is required'**
+  String get accountNumberRequired;
+
+  /// No description provided for @accountNumberLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Account number must be 10 digits'**
+  String get accountNumberLength;
+
+  /// No description provided for @accountName.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Name'**
+  String get accountName;
+
+  /// No description provided for @accountNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Matches your bank account name'**
+  String get accountNameHint;
+
+  /// No description provided for @selectPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a Plan'**
+  String get selectPlan;
+
+  /// No description provided for @selectPlanSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You can change plans later from subscription settings.'**
+  String get selectPlanSubtitle;
+
+  /// No description provided for @starterPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Starter'**
+  String get starterPlan;
+
+  /// No description provided for @free.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get free;
+
+  /// No description provided for @starterFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'5 Events/mo, Basic Invoices'**
+  String get starterFeatures;
+
+  /// No description provided for @proBusinessPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Pro Business'**
+  String get proBusinessPlan;
+
+  /// No description provided for @proPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'₦6,000'**
+  String get proPrice;
+
+  /// No description provided for @monthSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'/month'**
+  String get monthSuffix;
+
+  /// No description provided for @proFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited Events, Unlimited Invoices, Priority Support'**
+  String get proFeatures;
+
+  /// No description provided for @recommended.
+  ///
+  /// In en, this message translates to:
+  /// **'RECOMMENDED'**
+  String get recommended;
+
+  /// No description provided for @proceedToPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Proceed to Payment'**
+  String get proceedToPayment;
+
+  /// No description provided for @completeSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Setup'**
+  String get completeSetup;
+
+  /// No description provided for @notSignedInError.
+  ///
+  /// In en, this message translates to:
+  /// **'You are not signed in. Please sign in and try again.'**
+  String get notSignedInError;
+
+  /// No description provided for @checkingBusinessProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking your business profile...'**
+  String get checkingBusinessProfile;
+
+  /// No description provided for @couldNotVerifyBusinessProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not verify your business profile.'**
+  String get couldNotVerifyBusinessProfile;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
 }
 
 class _AppLocalizationsDelegate

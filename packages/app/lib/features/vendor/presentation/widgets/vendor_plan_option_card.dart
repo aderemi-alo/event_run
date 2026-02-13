@@ -1,5 +1,6 @@
 import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/theme/app_typography.dart';
+import 'package:app/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
 class VendorPlanOptionCard extends StatelessWidget {
@@ -61,7 +62,7 @@ class VendorPlanOptionCard extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'RECOMMENDED',
+                    context.l10n.recommended,
                     style: textTheme.labelSmall?.vCopyWith(
                       color: AppColors.onPrimary,
                       fontWeight: AppFontWeight.bold,

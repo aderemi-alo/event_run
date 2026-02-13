@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/theme/app_typography.dart';
+import 'package:app/core/utils/extensions.dart';
 import 'package:app/features/vendor/domain/entities/vendor_entity.dart';
 import 'package:app/features/vendor/presentation/widgets/vendor_plan_option_card.dart';
 import 'package:app/features/vendor/presentation/widgets/vendor_setup_step_header.dart';
@@ -31,13 +32,13 @@ class PlanSelectionStep extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const VendorSetupStepHeader(
+          VendorSetupStepHeader(
             icon: Icons.workspace_premium_outlined,
-            title: 'Select a Plan',
+            title: context.l10n.selectPlan,
           ),
           const SizedBox(height: 8),
           Text(
-            'You can change plans later from subscription settings.',
+            context.l10n.selectPlanSubtitle,
             style: textTheme.bodyMedium?.vCopyWith(
               color: AppColors.textTertiary,
             ),
@@ -48,7 +49,7 @@ class PlanSelectionStep extends StatelessWidget {
           Row(
             children: [
               AppButton.ghost(
-                label: 'Back',
+                label: context.l10n.common_cancel.vToTitleCase(),
                 leading: Icons.arrow_back,
                 expand: false,
                 onPressed: onBack,
@@ -56,8 +57,8 @@ class PlanSelectionStep extends StatelessWidget {
               const Spacer(),
               AppButton(
                 label: selectedPlan == VendorPlan.pro
-                    ? 'Proceed to Payment'
-                    : 'Complete Setup',
+                    ? context.l10n.proceedToPayment
+                    : context.l10n.completeSetup,
                 expand: false,
                 loading: isSubmitting,
                 onPressed: isSubmitting ? null : onSubmit,
@@ -79,24 +80,20 @@ class _PlanCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final starterCard = VendorPlanOptionCard(
-      title: 'Starter',
-      priceLabel: 'Free',
+      title: context.l10n.starterPlan,
+      priceLabel: context.l10n.free,
       priceSuffix: '',
-      features: const ['5 Events/mo', 'Basic Invoices'],
+      features: context.l10n.starterFeatures.split(', '),
       isRecommended: false,
       isSelected: selectedPlan == VendorPlan.free,
       onTap: () => onPlanChanged(VendorPlan.free),
     );
 
     final proCard = VendorPlanOptionCard(
-      title: 'Pro Business',
-      priceLabel: '₦6,000',
-      priceSuffix: '/month',
-      features: const [
-        'Unlimited Events',
-        'Unlimited Invoices',
-        'Priority Support',
-      ],
+      title: context.l10n.proBusinessPlan,
+      priceLabel: context.l10n.proPrice,
+      priceSuffix: context.l10n.monthSuffix,
+      features: context.l10n.proFeatures.split(', '),
       isRecommended: true,
       isSelected: selectedPlan == VendorPlan.pro,
       onTap: () => onPlanChanged(VendorPlan.pro),
