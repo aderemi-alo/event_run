@@ -10,6 +10,12 @@ void main() {
       businessName: 'Acme Events',
       email: 'acme@example.com',
       phone: '08000000000',
+      address: '123 Admiralty Way',
+      city: 'Lekki',
+      state: 'Lagos',
+      bankName: 'GTBank',
+      accountName: 'Acme Events',
+      accountNumber: '0123456789',
       createdAt: DateTime(2026, 1, 1),
       ownerId: ownerId,
     );
@@ -20,10 +26,7 @@ void main() {
     required AsyncValue<VendorEntity?> vendorLookupValue,
   }) {
     return ProviderContainer(
-      overrides: [
-        authIdentityProvider.overrideWith((ref) => identity),
-        vendorLookupProvider.overrideWith((ref, ownerId) => vendorLookupValue),
-      ],
+      overrides: [authIdentityProvider.overrideWith((ref) => identity)],
     );
   }
 

@@ -11,9 +11,6 @@ import 'package:app/features/auth/presentation/screens/forgot_password_screen.da
 import 'package:app/features/auth/presentation/screens/profile_screen.dart';
 import 'package:app/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:app/features/vendor/presentation/screens/vendor_setup_screen.dart';
-import 'package:app/features/vendor/presentation/screens/business_settings_screen.dart';
-import 'package:app/features/vendor/presentation/screens/bank_details_screen.dart';
-import 'package:app/features/vendor/presentation/screens/subscription_screen.dart';
 import 'package:app/features/clients/presentation/screens/clients_list_screen.dart';
 import 'package:app/features/clients/presentation/screens/client_detail_screen.dart';
 import 'package:app/features/events/presentation/screens/events_list_screen.dart';
@@ -89,21 +86,6 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: RoutePaths.vendorSetup,
         name: RouteNames.vendorSetup,
         builder: (context, state) => const VendorSetupScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.businessSettings,
-        name: RouteNames.businessSettings,
-        builder: (context, state) => const BusinessSettingsScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.bankDetails,
-        name: RouteNames.bankDetails,
-        builder: (context, state) => const BankDetailsScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.subscription,
-        name: RouteNames.subscription,
-        builder: (context, state) => const SubscriptionScreen(),
       ),
 
       // Clients

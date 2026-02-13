@@ -1,7 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:app/core/utils/result.dart';
 import 'package:app/features/vendor/domain/entities/vendor_entity.dart';
-import 'package:app/features/vendor/presentation/providers/vendor_providers.dart';
+import 'package:app/features/vendor/presentation/providers/vendor_providers_di.dart';
 
 final authStateProvider = StreamProvider<AuthState>((ref) {
   return Supabase.instance.client.auth.onAuthStateChange;
@@ -75,11 +76,17 @@ final authIdentityProvider = Provider<AuthIdentity>((ref) {
   return AuthIdentity(userId: user?.id);
 });
 
-final vendorLookupProvider = Provider.family<AsyncValue<VendorEntity?>, String>(
-  (ref, ownerId) {
-    return ref.watch(vendorProvider(ownerId));
-  },
-);
+final vendorLookupRequestProvider = FutureProvider.autoDispose
+    .family<VendorEntity?, String>((ref, ownerId) async {
+      final result = await ref
+          .read(getVendorUseCaseProvider)
+          .call('owner', ownerId);
+
+      return result.fold(
+        onSuccess: (vendor) => vendor,
+        onError: (failure) => throw Exception(failure.message),
+      );
+    });
 
 final routeAccessStateProvider = Provider<RouteAccessState>((ref) {
   final identity = ref.watch(authIdentityProvider);
@@ -88,7 +95,7 @@ final routeAccessStateProvider = Provider<RouteAccessState>((ref) {
     return const RouteAccessState.unauthenticated();
   }
 
-  final vendorState = ref.watch(vendorLookupProvider(identity.userId!));
+  final vendorState = ref.watch(vendorLookupRequestProvider(identity.userId!));
 
   return vendorState.when(
     data: (vendor) {

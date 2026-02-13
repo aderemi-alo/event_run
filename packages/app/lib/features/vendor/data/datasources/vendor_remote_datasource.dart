@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:app/features/vendor/domain/entities/create_vendor_params.dart';
+import 'package:app/features/vendor/domain/entities/update_vendor_params.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:app/core/constants/supabase_constants.dart';
 import 'package:app/core/error/exceptions.dart';
@@ -6,8 +8,10 @@ import 'package:app/features/vendor/data/models/vendor_model.dart';
 
 abstract class VendorRemoteDatasource {
   Future<VendorModel?> getVendorByOwner(String ownerId);
-  Future<VendorModel> createVendor({required VendorModel vendor});
-  Future<VendorModel> updateVendor({required VendorModel vendor});
+  Future<VendorModel?> getVendorById(String vendorId);
+  Future<VendorModel> createVendor({required CreateVendorParams params});
+  Future<VendorModel> updateVendor({required UpdateVendorParams params});
+  Future<void> deleteVendor(String vendorId);
   Future<void> updateBankDetails({
     required String vendorId,
     required String bankName,
@@ -42,11 +46,26 @@ class VendorRemoteDatasourceImpl implements VendorRemoteDatasource {
   }
 
   @override
-  Future<VendorModel> createVendor({required VendorModel vendor}) async {
+  Future<VendorModel?> getVendorById(String vendorId) async {
     try {
       final response = await _client
           .from(SupabaseConstants.vendorsTable)
-          .insert(vendor.toJson())
+          .select()
+          .eq('id', vendorId)
+          .maybeSingle();
+      if (response == null) return null;
+      return VendorModel.fromJson(response);
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<VendorModel> createVendor({required CreateVendorParams params}) async {
+    try {
+      final response = await _client
+          .from(SupabaseConstants.vendorsTable)
+          .insert(params.toJson())
           .select()
           .single();
 
@@ -57,16 +76,28 @@ class VendorRemoteDatasourceImpl implements VendorRemoteDatasource {
   }
 
   @override
-  Future<VendorModel> updateVendor({required VendorModel vendor}) async {
+  Future<VendorModel> updateVendor({required UpdateVendorParams params}) async {
     try {
       final response = await _client
           .from(SupabaseConstants.vendorsTable)
-          .update(vendor.toJson())
-          .eq('id', vendor.id)
+          .update(params.toJson())
+          .eq('id', params.vendorId)
           .select()
           .single();
 
       return VendorModel.fromJson(response);
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<void> deleteVendor(String vendorId) async {
+    try {
+      await _client
+          .from(SupabaseConstants.vendorsTable)
+          .delete()
+          .eq('id', vendorId);
     } catch (e) {
       throw ServerException(message: e.toString());
     }

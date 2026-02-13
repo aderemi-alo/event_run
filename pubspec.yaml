@@ -21,8 +21,6 @@ dependency_overrides:
   riverpod_generator: ^2.6.3
   build_runner: ^2.4.13
   json_serializable: ^6.9.0
-  freezed: ^2.5.7
-  freezed_annotation: ^2.4.4
   flutter_lints: ^5.0.0
   
 melos:

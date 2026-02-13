@@ -1,12 +1,17 @@
+import 'package:app/features/vendor/domain/entities/vendor_setup_step.dart';
+import 'package:app/features/vendor/presentation/providers/vendor_providers_di.dart';
+import 'package:app/features/vendor/presentation/screens/steps/bank_info_step.dart';
+import 'package:app/features/vendor/presentation/screens/steps/business_info_step.dart';
+import 'package:app/features/vendor/presentation/screens/steps/plan_selection_step.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app/core/router/route_names.dart';
-import 'package:app/core/utils/validators.dart';
 import 'package:app/features/auth/presentation/providers/auth_state_provider.dart';
+import 'package:app/features/vendor/domain/entities/create_vendor_params.dart';
 import 'package:app/features/vendor/domain/entities/vendor_entity.dart';
-import 'package:app/features/vendor/presentation/providers/vendor_providers.dart';
-import 'package:app/features/auth/presentation/widgets/auth_form_field.dart';
+import 'package:app/features/vendor/presentation/providers/vendor_state.dart';
+import 'package:app/features/vendor/presentation/widgets/vendor_setup_flow_shell.dart';
 
 class VendorSetupScreen extends ConsumerStatefulWidget {
   const VendorSetupScreen({super.key});
@@ -16,117 +21,156 @@ class VendorSetupScreen extends ConsumerStatefulWidget {
 }
 
 class _VendorSetupScreenState extends ConsumerState<VendorSetupScreen> {
-  final _formKey = GlobalKey<FormState>();
+  // ── Step navigation ──
+  var _currentStep = VendorSetupStep.businessInfo;
+
+  // ── Form keys ──
+  final _businessFormKey = GlobalKey<FormState>();
+  final _bankFormKey = GlobalKey<FormState>();
+
+  // ── Business info controllers ──
   final _businessNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
-  bool _loading = false;
+  final _addressController = TextEditingController();
+  final _cityController = TextEditingController();
+
+  // ── Bank info controllers ──
+  final _accountNumberController = TextEditingController();
+  final _accountNameController = TextEditingController();
+
+  // ── Discrete selections ──
+  String _selectedState = 'Lagos';
+  String _selectedBank = '';
+  VendorPlan _selectedPlan = VendorPlan.free;
 
   @override
   void dispose() {
     _businessNameController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
+    _addressController.dispose();
+    _cityController.dispose();
+    _accountNumberController.dispose();
+    _accountNameController.dispose();
     super.dispose();
   }
 
-  Future<void> _submit() async {
-    if (!_formKey.currentState!.validate()) return;
+  // ── Navigation ──
 
-    final user = ref.read(currentUserProvider);
-    if (user == null) return;
-
-    setState(() => _loading = true);
-    try {
-      final vendor = VendorEntity(
-        id: '',
-        businessName: _businessNameController.text.trim(),
-        email: _emailController.text.trim(),
-        phone: _phoneController.text.trim(),
-        createdAt: DateTime.now(),
-        ownerId: user.id,
-      );
-      await ref.read(createVendorUsecaseProvider).call(vendor: vendor);
-      ref.invalidate(vendorProvider(user.id));
-      if (mounted) context.goNamed(RouteNames.dashboard);
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(e.toString())));
-      }
-    } finally {
-      if (mounted) setState(() => _loading = false);
+  void _nextStep() {
+    switch (_currentStep) {
+      case VendorSetupStep.businessInfo:
+        if (!(_businessFormKey.currentState?.validate() ?? false)) return;
+        setState(() => _currentStep = VendorSetupStep.bankInfo);
+      case VendorSetupStep.bankInfo:
+        if (!(_bankFormKey.currentState?.validate() ?? false)) return;
+        setState(() => _currentStep = VendorSetupStep.planSelection);
+      case VendorSetupStep.planSelection:
+        break;
     }
   }
 
+  void _previousStep() {
+    switch (_currentStep) {
+      case VendorSetupStep.businessInfo:
+        return;
+      case VendorSetupStep.bankInfo:
+        setState(() => _currentStep = VendorSetupStep.businessInfo);
+      case VendorSetupStep.planSelection:
+        setState(() => _currentStep = VendorSetupStep.bankInfo);
+    }
+  }
+
+  // ── Submission ──
+
+  Future<void> _submit() async {
+    final user = ref.read(currentUserProvider);
+    if (user == null) {
+      _showSnackBar('You are not signed in. Please sign in and try again.');
+      return;
+    }
+
+    await ref
+        .read(vendorProvider.notifier)
+        .createVendor(
+          CreateVendorParams(
+            ownerId: user.id,
+            businessName: _businessNameController.text.trim(),
+            email: _emailController.text.trim(),
+            phone: _phoneController.text.trim(),
+            address: _addressController.text.trim(),
+            city: _cityController.text.trim(),
+            state: _selectedState,
+            bankName: _selectedBank,
+            accountName: _accountNameController.text.trim(),
+            accountNumber: _accountNumberController.text.trim(),
+            plan: _selectedPlan.name,
+          ),
+        );
+  }
+
+  void _showSnackBar(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  // ── Build ──
+
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    ref.listen<VendorState>(vendorProvider, (previous, next) {
+      if (next.actionState == ActionState.success) {
+        context.goNamed(RouteNames.dashboard);
+      }
+      if (next.actionState == ActionState.error && next.actionError != null) {
+        _showSnackBar(next.actionError!);
+        ref.read(vendorProvider.notifier).resetAction();
+      }
+    });
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Set Up Your Business')),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'Tell us about your business',
-                style: theme.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 24),
-              AuthFormField(
-                label: 'Business Name',
-                hint: 'Acme Events',
-                controller: _businessNameController,
-                prefixIcon: Icons.business_outlined,
-                textInputAction: TextInputAction.next,
-                validator: (v) => Validators.validateRequired(
-                  context,
-                  v,
-                  fieldName: 'Business name',
-                ),
-              ),
-              const SizedBox(height: 16),
-              AuthFormField(
-                label: 'Business Email',
-                hint: 'hello@acme.com',
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                prefixIcon: Icons.email_outlined,
-                textInputAction: TextInputAction.next,
-                validator: (v) => Validators.validateEmail(context, v),
-              ),
-              const SizedBox(height: 16),
-              AuthFormField(
-                label: 'Phone Number',
-                hint: '08012345678',
-                controller: _phoneController,
-                keyboardType: TextInputType.phone,
-                prefixIcon: Icons.phone_outlined,
-                textInputAction: TextInputAction.done,
-                validator: (v) => Validators.validatePhone(context, v),
-                onFieldSubmitted: (_) => _submit(),
-              ),
-              const SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: _loading ? null : _submit,
-                child: _loading
-                    ? const SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : const Text('Continue'),
-              ),
-            ],
+    final isSubmitting = ref.watch(
+      vendorProvider.select((s) => s.actionState == ActionState.loading),
+    );
+
+    return VendorSetupFlowShell(
+      progress: _currentStep.progress,
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 250),
+        child: switch (_currentStep) {
+          VendorSetupStep.businessInfo => BusinessInfoStep(
+            key: const ValueKey('business-info'),
+            formKey: _businessFormKey,
+            businessNameController: _businessNameController,
+            emailController: _emailController,
+            phoneController: _phoneController,
+            addressController: _addressController,
+            cityController: _cityController,
+            selectedState: _selectedState,
+            onStateChanged: (v) => setState(() => _selectedState = v),
+            onNext: _nextStep,
           ),
-        ),
+          VendorSetupStep.bankInfo => BankInfoStep(
+            key: const ValueKey('bank-info'),
+            formKey: _bankFormKey,
+            accountNumberController: _accountNumberController,
+            accountNameController: _accountNameController,
+            selectedBank: _selectedBank,
+            onBankChanged: (v) => setState(() => _selectedBank = v),
+            onNext: _nextStep,
+            onBack: _previousStep,
+          ),
+          VendorSetupStep.planSelection => PlanSelectionStep(
+            key: const ValueKey('plan-selection'),
+            selectedPlan: _selectedPlan,
+            isSubmitting: isSubmitting,
+            onPlanChanged: (v) => setState(() => _selectedPlan = v),
+            onSubmit: _submit,
+            onBack: _previousStep,
+          ),
+        },
       ),
     );
   }

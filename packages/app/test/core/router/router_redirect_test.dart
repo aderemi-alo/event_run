@@ -8,6 +8,13 @@ void main() {
   VendorEntity buildVendor() {
     return VendorEntity(
       id: 'vendor-1',
+      address: '',
+      city: '',
+      state: '',
+      bankName: '',
+      accountName: '',
+      accountNumber: '',
+      plan: VendorPlan.free,
       businessName: 'Acme Events',
       email: 'acme@example.com',
       phone: '08000000000',
@@ -87,16 +94,19 @@ void main() {
       expect(redirect, isNull);
     });
 
-    test('moves authenticated user without vendor from gate to vendor setup', () {
-      final redirect = resolveAppRedirect(
-        accessState: const RouteAccessState.authenticatedNoVendor(
-          userId: 'user-1',
-        ),
-        location: RoutePaths.authGate,
-      );
+    test(
+      'moves authenticated user without vendor from gate to vendor setup',
+      () {
+        final redirect = resolveAppRedirect(
+          accessState: const RouteAccessState.authenticatedNoVendor(
+            userId: 'user-1',
+          ),
+          location: RoutePaths.authGate,
+        );
 
-      expect(redirect, RoutePaths.vendorSetup);
-    });
+        expect(redirect, RoutePaths.vendorSetup);
+      },
+    );
 
     test('redirects authenticated user with vendor away from auth routes', () {
       final redirect = resolveAppRedirect(

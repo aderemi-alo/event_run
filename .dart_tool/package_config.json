@@ -699,7 +699,7 @@
     },
     {
       "name": "riverpod_analyzer_utils",
-      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/riverpod_analyzer_utils-0.5.10",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/riverpod_analyzer_utils-0.5.9",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -711,7 +711,7 @@
     },
     {
       "name": "riverpod_generator",
-      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/riverpod_generator-2.6.5",
+      "rootUri": "file:///Users/aderemialo/.pub-cache/hosted/pub.dev/riverpod_generator-2.6.4",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },

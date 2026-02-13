@@ -1,5 +1,9 @@
+import 'package:app/core/error/exceptions.dart';
+import 'package:app/core/error/failures.dart';
+import 'package:app/core/utils/result.dart';
 import 'package:app/features/vendor/data/datasources/vendor_remote_datasource.dart';
-import 'package:app/features/vendor/data/models/vendor_model.dart';
+import 'package:app/features/vendor/domain/entities/create_vendor_params.dart';
+import 'package:app/features/vendor/domain/entities/update_vendor_params.dart';
 import 'package:app/features/vendor/domain/entities/vendor_entity.dart';
 import 'package:app/features/vendor/domain/repositories/vendor_repository.dart';
 
@@ -9,52 +13,67 @@ class VendorRepositoryImpl implements VendorRepository {
   VendorRepositoryImpl(this._datasource);
 
   @override
-  Future<VendorEntity?> getVendorByOwner(String ownerId) {
-    return _datasource.getVendorByOwner(ownerId);
+  Future<Result<VendorEntity?>> getVendorByOwner(String ownerId) async {
+    try {
+      final vendorModel = await _datasource.getVendorByOwner(ownerId);
+      return Success(vendorModel);
+    } on ServerException catch (e) {
+      return Error(ServerFailure(e.message));
+    } catch (e) {
+      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+    }
   }
 
   @override
-  Future<VendorEntity> createVendor({required VendorEntity vendor}) {
-    final model = VendorModel(
-      id: vendor.id,
-      businessName: vendor.businessName,
-      logoUrl: vendor.logoUrl,
-      email: vendor.email,
-      phone: vendor.phone,
-      address: vendor.address,
-      city: vendor.city,
-      state: vendor.state,
-      bankName: vendor.bankName,
-      accountName: vendor.accountName,
-      accountNumber: vendor.accountNumber,
-      plan: vendor.plan,
-      planExpiresAt: vendor.planExpiresAt,
-      createdAt: vendor.createdAt,
-      ownerId: vendor.ownerId,
-    );
-    return _datasource.createVendor(vendor: model);
+  Future<Result<VendorEntity?>> getVendorById(String vendorId) async {
+    try {
+      final vendorModel = await _datasource.getVendorById(vendorId);
+      return Success(vendorModel);
+    } on ServerException catch (e) {
+      return Error(ServerFailure(e.message));
+    } catch (e) {
+      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+    }
   }
 
   @override
-  Future<VendorEntity> updateVendor({required VendorEntity vendor}) {
-    final model = VendorModel(
-      id: vendor.id,
-      businessName: vendor.businessName,
-      logoUrl: vendor.logoUrl,
-      email: vendor.email,
-      phone: vendor.phone,
-      address: vendor.address,
-      city: vendor.city,
-      state: vendor.state,
-      bankName: vendor.bankName,
-      accountName: vendor.accountName,
-      accountNumber: vendor.accountNumber,
-      plan: vendor.plan,
-      planExpiresAt: vendor.planExpiresAt,
-      createdAt: vendor.createdAt,
-      ownerId: vendor.ownerId,
-    );
-    return _datasource.updateVendor(vendor: model);
+  Future<Result<VendorEntity>> createVendor({
+    required CreateVendorParams params,
+  }) async {
+    try {
+      final vendorModel = await _datasource.createVendor(params: params);
+      return Success(vendorModel);
+    } on ServerException catch (e) {
+      return Error(ServerFailure(e.message));
+    } catch (e) {
+      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+    }
+  }
+
+  @override
+  Future<Result<VendorEntity>> updateVendor({
+    required UpdateVendorParams params,
+  }) async {
+    try {
+      final vendorModel = await _datasource.updateVendor(params: params);
+      return Success(vendorModel);
+    } on ServerException catch (e) {
+      return Error(ServerFailure(e.message));
+    } catch (e) {
+      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+    }
+  }
+
+  @override
+  Future<Result<void>> deleteVendor(String vendorId) async {
+    try {
+      await _datasource.deleteVendor(vendorId);
+      return const Success(null);
+    } on ServerException catch (e) {
+      return Error(ServerFailure(e.message));
+    } catch (e) {
+      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+    }
   }
 
   @override

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:app/features/auth/presentation/providers/auth_state_provider.dart';
-import 'package:app/features/vendor/presentation/providers/vendor_providers.dart';
 
 class AuthGateScreen extends ConsumerWidget {
   const AuthGateScreen({super.key});
@@ -50,7 +49,7 @@ class AuthGateScreen extends ConsumerWidget {
                   onPressed: () {
                     final userId = accessState.userId;
                     if (userId != null) {
-                      ref.invalidate(vendorProvider(userId));
+                      ref.invalidate(vendorLookupRequestProvider(userId));
                     }
                   },
                   icon: const Icon(Icons.refresh),

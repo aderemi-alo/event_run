@@ -7,6 +7,7 @@ import 'package:app/features/auth/domain/entities/signup_params.dart';
 import 'package:app/features/auth/presentation/providers/auth_providers.dart';
 import 'package:app/features/auth/presentation/widgets/signup_legal_text.dart';
 import 'package:app/shared/widgets/app_button.dart';
+import 'package:app/shared/widgets/app_phone_text_field.dart';
 import 'package:app/shared/widgets/app_text_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -119,19 +120,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                         const SizedBox(height: 16),
 
                         // ── Phone with +234 prefix ──
-                        AppTextField(
-                          label: context.l10n.phoneNumber,
-                          icon: Icons.phone_outlined,
+                        AppPhoneTextField(
                           controller: _phoneController,
-                          hint: context.l10n.phoneNumberHint,
-                          keyboardType: TextInputType.phone,
-                          prefix: _buildPhonePrefix(context),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(11),
-                          ],
-                          validator: (value) =>
-                              Validators.validatePhone(context, value),
+                          label: context.l10n.phoneNumber,
                         ),
                         const SizedBox(height: 16),
 
@@ -203,26 +194,6 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  /// Non-editable "+234" chip shown inside the phone field.
-  Widget _buildPhonePrefix(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-      margin: const EdgeInsets.only(right: 8),
-      decoration: BoxDecoration(
-        color: AppColors.primaryDark.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Text(
-        '+234',
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          color: AppColors.primaryDark,
         ),
       ),
     );
