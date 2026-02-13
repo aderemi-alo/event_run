@@ -7,7 +7,7 @@ environment:
 
 dependencies:
   # Add this so you can write logic in Core!
-  riverpod: ^2.6.1 
+  riverpod: ^3.0.3
   riverpod_annotation: ^2.6.1
 
   json_annotation: ^4.9.0

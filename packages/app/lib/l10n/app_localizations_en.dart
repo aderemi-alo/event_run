@@ -142,4 +142,134 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountCreatedSuccessfully => 'Account created successfully!';
+
+  @override
+  String get setupYourBusiness => 'Setup your Business';
+
+  @override
+  String get setupBusinessSubtitle =>
+      'Let\'s get your profile ready for clients.';
+
+  @override
+  String get businessDetails => 'Business Details';
+
+  @override
+  String get businessName => 'Business Name';
+
+  @override
+  String get businessNameHint => 'e.g. Royal Events & Decor';
+
+  @override
+  String get businessEmail => 'Business Email';
+
+  @override
+  String get businessPhone => 'Business Phone';
+
+  @override
+  String get officeAddress => 'Office Address';
+
+  @override
+  String get officeAddressHint => '123 Admiralty Way';
+
+  @override
+  String get city => 'City';
+
+  @override
+  String get cityHint => 'Lekki';
+
+  @override
+  String get state => 'State';
+
+  @override
+  String get chooseLogo => 'Choose Logo';
+
+  @override
+  String get logoMaxWeight => 'Optional. Max 2MB.';
+
+  @override
+  String get bankDetails => 'Bank Details';
+
+  @override
+  String get bankDetailsSubtitle =>
+      'These details appear on invoices so clients know where to pay.';
+
+  @override
+  String get bankInfoBanner =>
+      'These details are used on client-facing invoices.';
+
+  @override
+  String get bankName => 'Bank Name';
+
+  @override
+  String get selectBank => 'Select bank';
+
+  @override
+  String get bankNameRequired => 'Select a bank';
+
+  @override
+  String get accountNumber => 'Account Number';
+
+  @override
+  String get accountNumberRequired => 'Account number is required';
+
+  @override
+  String get accountNumberLength => 'Account number must be 10 digits';
+
+  @override
+  String get accountName => 'Account Name';
+
+  @override
+  String get accountNameHint => 'Matches your bank account name';
+
+  @override
+  String get selectPlan => 'Select a Plan';
+
+  @override
+  String get selectPlanSubtitle =>
+      'You can change plans later from subscription settings.';
+
+  @override
+  String get starterPlan => 'Starter';
+
+  @override
+  String get free => 'Free';
+
+  @override
+  String get starterFeatures => '5 Events/mo, Basic Invoices';
+
+  @override
+  String get proBusinessPlan => 'Pro Business';
+
+  @override
+  String get proPrice => '₦6,000';
+
+  @override
+  String get monthSuffix => '/month';
+
+  @override
+  String get proFeatures =>
+      'Unlimited Events, Unlimited Invoices, Priority Support';
+
+  @override
+  String get recommended => 'RECOMMENDED';
+
+  @override
+  String get proceedToPayment => 'Proceed to Payment';
+
+  @override
+  String get completeSetup => 'Complete Setup';
+
+  @override
+  String get notSignedInError =>
+      'You are not signed in. Please sign in and try again.';
+
+  @override
+  String get checkingBusinessProfile => 'Checking your business profile...';
+
+  @override
+  String get couldNotVerifyBusinessProfile =>
+      'We could not verify your business profile.';
+
+  @override
+  String get retry => 'Retry';
 }

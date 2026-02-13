@@ -170,7 +170,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             color: colorScheme.primary,
                           ),
                           recognizer: TapGestureRecognizer()
-                            ..onTap = () => context.go(RouteNames.signup),
+                            ..onTap = () => context.goNamed(RouteNames.signup),
                         ),
                       ],
                     ),

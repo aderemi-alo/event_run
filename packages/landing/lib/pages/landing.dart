@@ -945,84 +945,6 @@ class _LandingState extends State<Landing> {
       ],
     );
   }
-
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  //  FOOTER
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  Component _buildFooter() {
-    return footer(
-      classes: 'bg-slate-900 text-slate-400 py-12',
-      [
-        div(
-          classes:
-              'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8',
-          [
-            // Brand Column
-            div(
-              classes: 'col-span-1 md:col-span-1',
-              [
-                span(
-                  classes: 'text-xl font-bold text-white tracking-tight',
-                  [text('EventRun')],
-                ),
-                p(
-                  classes: 'mt-4 text-sm leading-relaxed',
-                  [
-                    text(
-                      'The all-in-one business management platform built for the Nigerian events industry.',
-                    ),
-                  ],
-                ),
-              ],
-            ),
-
-            // Product Column
-            _footerColumn(
-                'Product', ['Features', 'Pricing', 'Success Stories']),
-
-            // Company Column
-            _footerColumn('Company', ['About Us', 'Careers', 'Contact']),
-
-            // Legal Column
-            _footerColumn('Legal', ['Privacy Policy', 'Terms of Service']),
-          ],
-        ),
-
-        // Copyright
-        div(
-          classes:
-              'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-slate-800 text-sm text-center md:text-left',
-          [
-            text(
-                '© ${DateTime.now().year} EventRun Nigeria. All rights reserved.'),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Component _footerColumn(String title, List<String> links) {
-    return div([
-      h4(
-        classes: 'text-white font-semibold mb-4',
-        [text(title)],
-      ),
-      ul(
-        classes: 'space-y-2 text-sm',
-        links
-            .map(
-              (label) => li([
-                a(
-                  href: '#',
-                  classes: 'hover:text-white transition-colors',
-                  [text(label)],
-                ),
-              ]),
-            )
-            .toList(),
-      ),
-    ]);
-  }
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1072,12 +994,6 @@ class FeatureCard extends StatelessComponent {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //  SVG ICON CONSTANTS (Lucide equivalents)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-const _menuIcon =
-    '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>';
-
-const _xIcon =
-    '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
 
 const _calendarIcon =
     '<svg class="w-8 h-8 {{COLOR}}" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>';

@@ -5,14 +5,13 @@ import 'package:app/core/router/route_names.dart';
 import 'package:app/core/widgets/app_error_widget.dart';
 import 'package:app/core/widgets/app_loading.dart';
 import 'package:app/core/widgets/empty_state_widget.dart';
+import 'package:app/features/auth/presentation/providers/auth_state_provider.dart';
 import 'package:app/features/invoices/domain/entities/invoice_entity.dart';
 import 'package:app/features/invoices/presentation/providers/invoice_providers.dart';
 import 'package:app/features/invoices/presentation/widgets/invoice_card.dart';
 
 class InvoicesListScreen extends ConsumerStatefulWidget {
-  final String vendorId;
-
-  const InvoicesListScreen({super.key, required this.vendorId});
+  const InvoicesListScreen({super.key});
 
   @override
   ConsumerState<InvoicesListScreen> createState() => _InvoicesListScreenState();
@@ -23,7 +22,19 @@ class _InvoicesListScreenState extends ConsumerState<InvoicesListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final invoicesAsync = ref.watch(invoicesProvider(widget.vendorId));
+    final vendorId = ref.watch(currentVendorIdProvider);
+
+    if (vendorId == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Invoices')),
+        body: AppErrorWidget(
+          message: 'Complete business setup to manage invoices.',
+          onRetry: () => ref.invalidate(routeAccessStateProvider),
+        ),
+      );
+    }
+
+    final invoicesAsync = ref.watch(invoicesProvider(vendorId));
 
     return Scaffold(
       appBar: AppBar(
@@ -45,7 +56,7 @@ class _InvoicesListScreenState extends ConsumerState<InvoicesListScreen> {
         loading: () => const AppLoading(),
         error: (error, _) => AppErrorWidget(
           message: error.toString(),
-          onRetry: () => ref.invalidate(invoicesProvider(widget.vendorId)),
+          onRetry: () => ref.invalidate(invoicesProvider(vendorId)),
         ),
         data: (invoices) {
           final filtered = _filterStatus != null
@@ -61,8 +72,7 @@ class _InvoicesListScreenState extends ConsumerState<InvoicesListScreen> {
           }
 
           return RefreshIndicator(
-            onRefresh: () async =>
-                ref.invalidate(invoicesProvider(widget.vendorId)),
+            onRefresh: () async => ref.invalidate(invoicesProvider(vendorId)),
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(vertical: 8),
               itemCount: filtered.length,
@@ -72,7 +82,7 @@ class _InvoicesListScreenState extends ConsumerState<InvoicesListScreen> {
                   invoice: invoice,
                   onTap: () => context.pushNamed(
                     RouteNames.invoiceDetail,
-                    pathParameters: {'invoiceId': invoice.id},
+                    pathParameters: {'id': invoice.id},
                   ),
                 );
               },

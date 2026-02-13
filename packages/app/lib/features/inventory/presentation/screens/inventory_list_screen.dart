@@ -5,14 +5,13 @@ import 'package:app/core/router/route_names.dart';
 import 'package:app/core/widgets/app_loading.dart';
 import 'package:app/core/widgets/app_error_widget.dart';
 import 'package:app/core/widgets/empty_state_widget.dart';
+import 'package:app/features/auth/presentation/providers/auth_state_provider.dart';
 import 'package:app/features/inventory/presentation/providers/inventory_providers.dart';
 import 'package:app/features/inventory/presentation/widgets/inventory_card.dart';
 import 'package:app/features/inventory/presentation/widgets/category_filter_chips.dart';
 
 class InventoryListScreen extends ConsumerStatefulWidget {
-  const InventoryListScreen({super.key, required this.vendorId});
-
-  final String vendorId;
+  const InventoryListScreen({super.key});
 
   @override
   ConsumerState<InventoryListScreen> createState() =>
@@ -24,7 +23,19 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final itemsAsync = ref.watch(inventoryItemsProvider(widget.vendorId));
+    final vendorId = ref.watch(currentVendorIdProvider);
+
+    if (vendorId == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Inventory')),
+        body: AppErrorWidget(
+          message: 'Complete business setup to manage inventory.',
+          onRetry: () => ref.invalidate(routeAccessStateProvider),
+        ),
+      );
+    }
+
+    final itemsAsync = ref.watch(inventoryItemsProvider(vendorId));
 
     return Scaffold(
       appBar: AppBar(title: const Text('Inventory')),
@@ -36,8 +47,7 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
         loading: () => const AppLoading(),
         error: (e, _) => AppErrorWidget(
           message: e.toString(),
-          onRetry: () =>
-              ref.invalidate(inventoryItemsProvider(widget.vendorId)),
+          onRetry: () => ref.invalidate(inventoryItemsProvider(vendorId)),
         ),
         data: (items) {
           if (items.isEmpty) {
@@ -75,7 +85,7 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: () async {
-                    ref.invalidate(inventoryItemsProvider(widget.vendorId));
+                    ref.invalidate(inventoryItemsProvider(vendorId));
                   },
                   child: ListView.separated(
                     padding: const EdgeInsets.all(16),

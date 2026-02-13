@@ -3,15 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
 import 'package:app/core/utils/currency_formatter.dart';
+import 'package:app/features/auth/presentation/providers/auth_state_provider.dart';
 import 'package:app/features/invoices/domain/entities/invoice_entity.dart';
 import 'package:app/features/invoices/domain/entities/invoice_item_entity.dart';
 import 'package:app/features/invoices/presentation/providers/invoice_providers.dart';
 
 class InvoiceFormScreen extends ConsumerStatefulWidget {
-  final String vendorId;
   final String? invoiceId;
 
-  const InvoiceFormScreen({super.key, required this.vendorId, this.invoiceId});
+  const InvoiceFormScreen({super.key, this.invoiceId});
 
   @override
   ConsumerState<InvoiceFormScreen> createState() => _InvoiceFormScreenState();
@@ -24,6 +24,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
   DateTime _dueDate = DateTime.now().add(const Duration(days: 30));
   final List<_ItemEntry> _items = [];
   bool _isLoading = false;
+  String? _loadedInvoiceVendorId;
 
   bool get _isEditing => widget.invoiceId != null;
 
@@ -43,6 +44,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         .call(widget.invoiceId!);
     if (invoice != null && mounted) {
       setState(() {
+        _loadedInvoiceVendorId = invoice.vendorId;
         _clientIdController.text = invoice.clientId;
         _notesController.text = invoice.notes ?? '';
         _dueDate = invoice.dueDate;
@@ -104,6 +106,16 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       return;
     }
 
+    final vendorId = _isEditing
+        ? _loadedInvoiceVendorId
+        : ref.read(currentVendorIdProvider);
+    if (vendorId == null || vendorId.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Complete business setup first.')),
+      );
+      return;
+    }
+
     setState(() => _isLoading = true);
 
     try {
@@ -114,7 +126,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
           ? '' // Will be ignored on update
           : await ref
                 .read(invoiceRepositoryProvider)
-                .generateInvoiceNumber(widget.vendorId);
+                .generateInvoiceNumber(vendorId);
 
       final items = _items.map((entry) {
         return InvoiceItemEntity(
@@ -128,7 +140,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
 
       final invoice = InvoiceEntity(
         id: invoiceId,
-        vendorId: widget.vendorId,
+        vendorId: vendorId,
         clientId: _clientIdController.text.trim(),
         invoiceNumber: invoiceNumber,
         items: items,
@@ -148,7 +160,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         await ref.read(createInvoiceProvider).call(invoice: invoice);
       }
 
-      ref.invalidate(invoicesProvider(widget.vendorId));
+      ref.invalidate(invoicesProvider(vendorId));
       if (mounted) context.pop();
     } catch (e) {
       if (mounted) {

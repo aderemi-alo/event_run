@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:app/features/auth/presentation/providers/auth_state_provider.dart';
 
 import 'package:app/features/dashboard/data/datasources/dashboard_remote_datasource.dart';
 import 'package:app/features/dashboard/data/repositories/dashboard_repository_impl.dart';
@@ -51,7 +52,10 @@ final getOutstandingInvoicesProvider = Provider<GetOutstandingInvoices>((ref) {
 
 final dashboardStatsProvider = FutureProvider.autoDispose<DashboardStatsEntity>(
   (ref) async {
-    final vendorId = Supabase.instance.client.auth.currentUser?.id ?? '';
+    final vendorId = ref.watch(currentVendorIdProvider);
+    if (vendorId == null) {
+      throw StateError('Vendor profile not found for current user.');
+    }
     return ref.watch(getDashboardStatsProvider).call(vendorId);
   },
 );
@@ -59,12 +63,18 @@ final dashboardStatsProvider = FutureProvider.autoDispose<DashboardStatsEntity>(
 final upcomingEventsProvider = FutureProvider.autoDispose<List<EventEntity>>((
   ref,
 ) async {
-  final vendorId = Supabase.instance.client.auth.currentUser?.id ?? '';
+  final vendorId = ref.watch(currentVendorIdProvider);
+  if (vendorId == null) {
+    throw StateError('Vendor profile not found for current user.');
+  }
   return ref.watch(getUpcomingEventsProvider).call(vendorId);
 });
 
 final outstandingInvoicesProvider =
     FutureProvider.autoDispose<List<InvoiceEntity>>((ref) async {
-      final vendorId = Supabase.instance.client.auth.currentUser?.id ?? '';
+      final vendorId = ref.watch(currentVendorIdProvider);
+      if (vendorId == null) {
+        throw StateError('Vendor profile not found for current user.');
+      }
       return ref.watch(getOutstandingInvoicesProvider).call(vendorId);
     });

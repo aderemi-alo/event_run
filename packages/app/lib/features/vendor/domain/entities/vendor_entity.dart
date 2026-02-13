@@ -18,12 +18,12 @@ class VendorEntity {
   final String? logoUrl;
   final String email;
   final String phone;
-  final String? address;
-  final String? city;
-  final String? state;
-  final String? bankName;
-  final String? accountName;
-  final String? accountNumber;
+  final String address;
+  final String city;
+  final String state;
+  final String bankName;
+  final String accountName;
+  final String accountNumber;
   final VendorPlan plan;
   final DateTime? planExpiresAt;
   final DateTime createdAt;
@@ -35,12 +35,12 @@ class VendorEntity {
     this.logoUrl,
     required this.email,
     required this.phone,
-    this.address,
-    this.city,
-    this.state,
-    this.bankName,
-    this.accountName,
-    this.accountNumber,
+    required this.address,
+    required this.city,
+    required this.state,
+    required this.bankName,
+    required this.accountName,
+    required this.accountNumber,
     this.plan = VendorPlan.free,
     this.planExpiresAt,
     required this.createdAt,

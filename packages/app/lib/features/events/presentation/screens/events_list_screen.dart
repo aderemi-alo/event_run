@@ -5,16 +5,27 @@ import 'package:app/core/router/route_names.dart';
 import 'package:app/core/widgets/app_loading.dart';
 import 'package:app/core/widgets/app_error_widget.dart';
 import 'package:app/core/widgets/empty_state_widget.dart';
+import 'package:app/features/auth/presentation/providers/auth_state_provider.dart';
 import 'package:app/features/events/presentation/providers/event_providers.dart';
 import 'package:app/features/events/presentation/widgets/event_card.dart';
 
 class EventsListScreen extends ConsumerWidget {
-  const EventsListScreen({super.key, required this.vendorId});
-
-  final String vendorId;
+  const EventsListScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final vendorId = ref.watch(currentVendorIdProvider);
+
+    if (vendorId == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Events')),
+        body: AppErrorWidget(
+          message: 'Complete business setup to manage events.',
+          onRetry: () => ref.invalidate(routeAccessStateProvider),
+        ),
+      );
+    }
+
     final eventsAsync = ref.watch(eventsProvider(vendorId));
 
     return Scaffold(

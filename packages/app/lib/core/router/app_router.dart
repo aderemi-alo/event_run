@@ -2,17 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app/core/router/route_names.dart';
+import 'package:app/core/router/router_redirect.dart';
 import 'package:app/features/auth/presentation/providers/auth_state_provider.dart';
-import 'package:app/features/vendor/presentation/providers/vendor_providers.dart';
+import 'package:app/features/auth/presentation/screens/auth_gate_screen.dart';
 import 'package:app/features/auth/presentation/screens/login_screen.dart';
 import 'package:app/features/auth/presentation/screens/signup_screen.dart';
 import 'package:app/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:app/features/auth/presentation/screens/profile_screen.dart';
 import 'package:app/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:app/features/vendor/presentation/screens/vendor_setup_screen.dart';
-import 'package:app/features/vendor/presentation/screens/business_settings_screen.dart';
-import 'package:app/features/vendor/presentation/screens/bank_details_screen.dart';
-import 'package:app/features/vendor/presentation/screens/subscription_screen.dart';
 import 'package:app/features/clients/presentation/screens/clients_list_screen.dart';
 import 'package:app/features/clients/presentation/screens/client_detail_screen.dart';
 import 'package:app/features/events/presentation/screens/events_list_screen.dart';
@@ -27,119 +25,77 @@ import 'package:app/features/invoices/presentation/screens/invoice_form_screen.d
 import 'package:app/features/invoices/presentation/screens/invoice_preview_screen.dart';
 import 'package:app/features/invoices/presentation/screens/record_payment_screen.dart';
 
+final routerRefreshListenableProvider = Provider<Listenable>((ref) {
+  final listenable = _RouterRefreshListenable(ref);
+  ref.onDispose(listenable.dispose);
+  return listenable;
+});
+
 final routerProvider = Provider<GoRouter>((ref) {
-  final authState = ref.watch(authStateProvider);
+  final refreshListenable = ref.watch(routerRefreshListenableProvider);
 
   return GoRouter(
-    initialLocation: '/login',
+    initialLocation: RoutePaths.login,
+    refreshListenable: refreshListenable,
     redirect: (BuildContext context, GoRouterState state) {
-      // Check if user is authenticated
-      final authValue = authState.value;
-      final isAuthenticated = authValue?.session != null;
-      final user = authValue?.session?.user;
-
-      // Define auth pages (public routes)
-      final isOnAuthPage =
-          state.matchedLocation == '/login' ||
-          state.matchedLocation == '/signup' ||
-          state.matchedLocation == '/forgot-password';
-
-      // ── Not authenticated: redirect to login (unless already on auth page) ──
-      if (!isAuthenticated && !isOnAuthPage) {
-        return '/login';
-      }
-
-      // ── Authenticated: check vendor setup completion ──
-      if (isAuthenticated && user != null) {
-        // If on auth page, redirect based on vendor setup status
-        if (isOnAuthPage) {
-          // Check if vendor exists for this user
-          final vendorAsync = ref.read(vendorProvider(user.id));
-
-          return vendorAsync.when(
-            data: (vendor) {
-              // Vendor exists - go to dashboard
-              if (vendor != null) {
-                return '/';
-              }
-              // No vendor - go to vendor setup
-              return '/vendor-setup';
-            },
-            loading: () => null, // Stay on current page while loading
-            error: (_, __) =>
-                '/vendor-setup', // On error, assume no vendor exists
-          );
-        }
-      }
-
-      return null; // No redirect needed
+      final accessState = ref.read(routeAccessStateProvider);
+      return resolveAppRedirect(
+        accessState: accessState,
+        location: state.matchedLocation,
+      );
     },
     routes: [
       // Auth (public)
       GoRoute(
-        path: '/login',
+        path: RoutePaths.login,
         name: RouteNames.login,
         builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
-        path: '/signup',
+        path: RoutePaths.signup,
         name: RouteNames.signup,
         builder: (context, state) => const SignupScreen(),
       ),
       GoRoute(
-        path: '/forgot-password',
+        path: RoutePaths.forgotPassword,
         name: RouteNames.forgotPassword,
         builder: (context, state) => const ForgotPasswordScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.authGate,
+        name: RouteNames.authGate,
+        builder: (context, state) => const AuthGateScreen(),
       ),
 
       // Dashboard
       GoRoute(
-        path: '/',
+        path: RoutePaths.dashboard,
         name: RouteNames.dashboard,
         builder: (context, state) => const DashboardScreen(),
       ),
 
       // Profile
       GoRoute(
-        path: '/profile',
+        path: RoutePaths.profile,
         name: RouteNames.profile,
         builder: (context, state) => const ProfileScreen(),
       ),
 
       // Vendor
       GoRoute(
-        path: '/vendor-setup',
+        path: RoutePaths.vendorSetup,
         name: RouteNames.vendorSetup,
         builder: (context, state) => const VendorSetupScreen(),
-      ),
-      GoRoute(
-        path: '/business-settings',
-        name: RouteNames.businessSettings,
-        builder: (context, state) => const BusinessSettingsScreen(),
-      ),
-      GoRoute(
-        path: '/bank-details',
-        name: RouteNames.bankDetails,
-        builder: (context, state) => const BankDetailsScreen(),
-      ),
-      GoRoute(
-        path: '/subscription',
-        name: RouteNames.subscription,
-        builder: (context, state) => const SubscriptionScreen(),
       ),
 
       // Clients
       GoRoute(
-        path: '/clients',
+        path: RoutePaths.clients,
         name: RouteNames.clients,
-
-        builder: (context, state) {
-          final vendorId = state.pathParameters['vendorId']!;
-          return ClientsListScreen(vendorId: vendorId);
-        },
+        builder: (context, state) => const ClientsListScreen(),
       ),
       GoRoute(
-        path: '/clients/:id',
+        path: RoutePaths.clientDetail,
         name: RouteNames.clientDetail,
         builder: (context, state) {
           final id = state.pathParameters['id']!;
@@ -149,20 +105,17 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       // Events
       GoRoute(
-        path: '/events',
+        path: RoutePaths.events,
         name: RouteNames.events,
-        builder: (context, state) {
-          final vendorId = state.pathParameters['vendorId']!;
-          return EventsListScreen(vendorId: vendorId);
-        },
+        builder: (context, state) => const EventsListScreen(),
       ),
       GoRoute(
-        path: '/events/new',
+        path: RoutePaths.eventForm,
         name: RouteNames.eventForm,
         builder: (context, state) => const EventFormScreen(),
       ),
       GoRoute(
-        path: '/events/:id',
+        path: RoutePaths.eventDetail,
         name: RouteNames.eventDetail,
         builder: (context, state) {
           final id = state.pathParameters['id']!;
@@ -189,20 +142,17 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       // Inventory
       GoRoute(
-        path: '/inventory',
+        path: RoutePaths.inventory,
         name: RouteNames.inventory,
-        builder: (context, state) {
-          final vendorId = state.pathParameters['vendorId']!;
-          return InventoryListScreen(vendorId: vendorId);
-        },
+        builder: (context, state) => const InventoryListScreen(),
       ),
       GoRoute(
-        path: '/inventory/new',
+        path: RoutePaths.inventoryForm,
         name: RouteNames.inventoryForm,
         builder: (context, state) => const InventoryFormScreen(),
       ),
       GoRoute(
-        path: '/inventory/:id/edit',
+        path: RoutePaths.inventoryEdit,
         builder: (context, state) {
           final id = state.pathParameters['id']!;
           return InventoryFormScreen(itemId: id);
@@ -211,21 +161,17 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       // Invoices
       GoRoute(
-        path: '/invoices',
+        path: RoutePaths.invoices,
         name: RouteNames.invoices,
-        builder: (context, state) {
-          final vendorId = state.pathParameters['vendorId']!;
-          return InvoicesListScreen(vendorId: vendorId);
-        },
+        builder: (context, state) => const InvoicesListScreen(),
       ),
       GoRoute(
-        path: '/invoices/new',
+        path: RoutePaths.invoiceForm,
         name: RouteNames.invoiceForm,
-
-        builder: (context, state) => const InvoiceFormScreen(vendorId: ''),
+        builder: (context, state) => const InvoiceFormScreen(),
       ),
       GoRoute(
-        path: '/invoices/:id',
+        path: RoutePaths.invoiceDetail,
         name: RouteNames.invoiceDetail,
         builder: (context, state) {
           final id = state.pathParameters['id']!;
@@ -236,8 +182,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: 'edit',
             builder: (context, state) {
               final id = state.pathParameters['id']!;
-              final vendorId = state.pathParameters['vendorId']!;
-              return InvoiceFormScreen(invoiceId: id, vendorId: vendorId);
+              return InvoiceFormScreen(invoiceId: id);
             },
           ),
           GoRoute(
@@ -261,3 +206,21 @@ final routerProvider = Provider<GoRouter>((ref) {
     ],
   );
 });
+
+class _RouterRefreshListenable extends ChangeNotifier {
+  _RouterRefreshListenable(this.ref) {
+    _subscription = ref.listen<RouteAccessState>(
+      routeAccessStateProvider,
+      (_, __) => notifyListeners(),
+    );
+  }
+
+  final Ref ref;
+  late final ProviderSubscription<RouteAccessState> _subscription;
+
+  @override
+  void dispose() {
+    _subscription.close();
+    super.dispose();
+  }
+}

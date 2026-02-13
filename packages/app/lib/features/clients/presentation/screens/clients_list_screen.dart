@@ -5,17 +5,28 @@ import 'package:app/core/router/route_names.dart';
 import 'package:app/core/widgets/app_loading.dart';
 import 'package:app/core/widgets/app_error_widget.dart';
 import 'package:app/core/widgets/empty_state_widget.dart';
+import 'package:app/features/auth/presentation/providers/auth_state_provider.dart';
 import 'package:app/features/clients/presentation/providers/client_providers.dart';
 import 'package:app/features/clients/presentation/widgets/client_card.dart';
 import 'package:app/features/clients/presentation/widgets/client_search_delegate.dart';
 
 class ClientsListScreen extends ConsumerWidget {
-  const ClientsListScreen({super.key, required this.vendorId});
-
-  final String vendorId;
+  const ClientsListScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final vendorId = ref.watch(currentVendorIdProvider);
+
+    if (vendorId == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Clients')),
+        body: AppErrorWidget(
+          message: 'Complete business setup to manage clients.',
+          onRetry: () => ref.invalidate(routeAccessStateProvider),
+        ),
+      );
+    }
+
     final clientsAsync = ref.watch(clientsProvider(vendorId));
 
     return Scaffold(
@@ -25,7 +36,7 @@ class ClientsListScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              final clients = clientsAsync.valueOrNull ?? [];
+              final clients = clientsAsync.asData?.value ?? [];
               showSearch(
                 context: context,
                 delegate: ClientSearchDelegate(clients: clients),
