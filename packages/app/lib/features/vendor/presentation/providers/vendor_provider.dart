@@ -1,6 +1,8 @@
+import 'package:app/core/utils/enums.dart';
 import 'package:app/core/utils/result.dart';
 import 'package:app/features/vendor/domain/entities/create_vendor_params.dart';
 import 'package:app/features/vendor/domain/entities/update_vendor_params.dart';
+import 'package:app/features/vendor/domain/entities/vendor_entity.dart';
 import 'package:app/features/vendor/presentation/providers/vendor_providers_di.dart';
 import 'package:app/features/vendor/presentation/providers/vendor_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,6 +24,10 @@ class VendorNotifier extends Notifier<VendorState> {
         state = state.copyWith(isLoading: false, error: failure.message);
       },
     );
+  }
+
+  void setVendor(VendorEntity vendor) {
+    state = state.copyWith(currentVendor: vendor);
   }
 
   Future<void> createVendor(CreateVendorParams params) async {

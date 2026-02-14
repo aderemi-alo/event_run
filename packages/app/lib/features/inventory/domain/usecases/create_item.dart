@@ -1,3 +1,5 @@
+import 'package:app/core/utils/result.dart';
+import 'package:app/features/inventory/domain/entities/create_inventory_item_params.dart';
 import 'package:app/features/inventory/domain/entities/inventory_item_entity.dart';
 import 'package:app/features/inventory/domain/repositories/inventory_repository.dart';
 
@@ -6,7 +8,10 @@ class CreateItem {
 
   CreateItem(this._repository);
 
-  Future<InventoryItemEntity> call({required InventoryItemEntity item}) {
-    return _repository.createItem(item: item);
+  Future<Result<InventoryItemEntity>> call({
+    required String vendorId,
+    required CreateInventoryItemParams params,
+  }) {
+    return _repository.createItem(vendorId: vendorId, params: params);
   }
 }

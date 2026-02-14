@@ -26,7 +26,7 @@ String? resolveAppRedirect({
       return RoutePaths.vendorSetup;
     case RouteAccessStatus.authenticatedWithVendor:
       if (isAuthRoute || isOnboardingRoute || isGateRoute) {
-        return RoutePaths.dashboard;
+        return RoutePaths.inventory;
       }
       return null;
   }

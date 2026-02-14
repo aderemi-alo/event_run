@@ -1,9 +1,18 @@
+import 'package:app/core/utils/result.dart';
+import 'package:app/features/inventory/domain/entities/create_inventory_item_params.dart';
 import 'package:app/features/inventory/domain/entities/inventory_item_entity.dart';
+import 'package:app/features/inventory/domain/entities/update_inventory_item_params.dart';
 
 abstract class InventoryRepository {
-  Future<List<InventoryItemEntity>> getInventoryItems(String vendorId);
-  Future<InventoryItemEntity?> getItemById(String itemId);
-  Future<InventoryItemEntity> createItem({required InventoryItemEntity item});
-  Future<InventoryItemEntity> updateItem({required InventoryItemEntity item});
-  Future<void> deleteItem(String itemId);
+  Future<Result<List<InventoryItemEntity>>> getInventoryItems(String vendorId);
+  Future<Result<InventoryItemEntity>> getItemById(String itemId);
+  Future<Result<InventoryItemEntity>> createItem({
+    required String vendorId,
+    required CreateInventoryItemParams params,
+  });
+  Future<Result<InventoryItemEntity>> updateItem({
+    required UpdateInventoryItemParams params,
+  });
+  Future<Result<void>> deleteItem(String itemId);
+  Future<Result<List<String>>> getCategories(String vendorId);
 }

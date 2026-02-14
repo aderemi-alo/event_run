@@ -1,3 +1,4 @@
+import 'package:app/core/utils/enums.dart';
 import 'package:app/features/vendor/domain/entities/vendor_setup_step.dart';
 import 'package:app/core/utils/extensions.dart';
 import 'package:app/features/vendor/presentation/providers/vendor_providers_di.dart';

@@ -1,3 +1,4 @@
+import 'package:app/features/vendor/presentation/providers/vendor_providers_di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:app/core/utils/extensions.dart';
@@ -9,6 +10,13 @@ class AuthGateScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final accessState = ref.watch(routeAccessStateProvider);
+
+    if (accessState.status == RouteAccessStatus.authenticatedWithVendor) {
+      // Vendor lookup succeeded — now load it into the notifier
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ref.read(vendorProvider.notifier).setVendor(accessState.vendor!);
+      });
+    }
 
     if (accessState.status == RouteAccessStatus.checkingVendor) {
       return Scaffold(

@@ -1,6 +1,10 @@
+import 'package:app/core/error/exceptions.dart';
+import 'package:app/core/error/failures.dart';
+import 'package:app/core/utils/result.dart';
 import 'package:app/features/inventory/data/datasources/inventory_remote_datasource.dart';
-import 'package:app/features/inventory/data/models/inventory_item_model.dart';
+import 'package:app/features/inventory/domain/entities/create_inventory_item_params.dart';
 import 'package:app/features/inventory/domain/entities/inventory_item_entity.dart';
+import 'package:app/features/inventory/domain/entities/update_inventory_item_params.dart';
 import 'package:app/features/inventory/domain/repositories/inventory_repository.dart';
 
 class InventoryRepositoryImpl implements InventoryRepository {
@@ -9,47 +13,84 @@ class InventoryRepositoryImpl implements InventoryRepository {
   InventoryRepositoryImpl(this._datasource);
 
   @override
-  Future<List<InventoryItemEntity>> getInventoryItems(String vendorId) {
-    return _datasource.getInventoryItems(vendorId);
+  Future<Result<List<InventoryItemEntity>>> getInventoryItems(
+    String vendorId,
+  ) async {
+    try {
+      final inventoryItems = await _datasource.getInventoryItems(vendorId);
+      return Success(inventoryItems);
+    } on ServerException catch (e) {
+      return Error(ServerFailure(e.message));
+    } catch (e) {
+      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+    }
   }
 
   @override
-  Future<InventoryItemEntity?> getItemById(String itemId) {
-    return _datasource.getItemById(itemId);
+  Future<Result<InventoryItemEntity>> getItemById(String itemId) async {
+    try {
+      final inventoryItem = await _datasource.getItemById(itemId);
+      return Success(inventoryItem);
+    } on ServerException catch (e) {
+      return Error(ServerFailure(e.message));
+    } catch (e) {
+      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+    }
   }
 
   @override
-  Future<InventoryItemEntity> createItem({required InventoryItemEntity item}) {
-    final model = InventoryItemModel(
-      id: item.id,
-      vendorId: item.vendorId,
-      name: item.name,
-      quantity: item.quantity,
-      category: item.category,
-      notes: item.notes,
-      imageUrl: item.imageUrl,
-      createdAt: item.createdAt,
-    );
-    return _datasource.createItem(item: model);
+  Future<Result<InventoryItemEntity>> createItem({
+    required String vendorId,
+    required CreateInventoryItemParams params,
+  }) async {
+    try {
+      final inventoryItem = await _datasource.createItem(
+        vendorId: vendorId,
+        params: params,
+      );
+      return Success(inventoryItem);
+    } on ServerException catch (e) {
+      return Error(ServerFailure(e.message));
+    } catch (e) {
+      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+    }
   }
 
   @override
-  Future<InventoryItemEntity> updateItem({required InventoryItemEntity item}) {
-    final model = InventoryItemModel(
-      id: item.id,
-      vendorId: item.vendorId,
-      name: item.name,
-      quantity: item.quantity,
-      category: item.category,
-      notes: item.notes,
-      imageUrl: item.imageUrl,
-      createdAt: item.createdAt,
-    );
-    return _datasource.updateItem(item: model);
+  Future<Result<InventoryItemEntity>> updateItem({
+    required UpdateInventoryItemParams params,
+  }) async {
+    try {
+      final inventoryItem = await _datasource.updateItem(params: params);
+      return Success(inventoryItem);
+    } on ServerException catch (e) {
+      return Error(ServerFailure(e.message));
+    } catch (e) {
+      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+    }
   }
 
   @override
-  Future<void> deleteItem(String itemId) {
-    return _datasource.deleteItem(itemId);
+  Future<Result<void>> deleteItem(String itemId) async {
+    try {
+      await _datasource.deleteItem(itemId);
+      return Success(null);
+    } on ServerException catch (e) {
+      return Error(ServerFailure(e.message));
+    } catch (e) {
+      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+    }
+  }
+
+  @override
+  Future<Result<List<String>>> getCategories(String vendorId) async {
+    try {
+      final categories = await _datasource.getCategories(vendorId);
+      return Success(categories);
+    } on ServerException catch (e) {
+      return Error(ServerFailure(e.message));
+    } catch (e) {
+      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+    }
   }
 }

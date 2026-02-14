@@ -29,7 +29,8 @@ class RouteNames {
 
   // Inventory
   static const String inventory = 'inventory';
-  static const String inventoryForm = 'inventoryForm';
+  static const String createInventory = 'createInventory';
+  static const String inventoryDetail = 'inventoryDetail';
 
   // Invoices
   static const String invoices = 'invoices';
@@ -69,8 +70,8 @@ class RoutePaths {
 
   // Inventory
   static const String inventory = '/inventory';
-  static const String inventoryForm = '/inventory/new';
-  static const String inventoryEdit = '/inventory/:id/edit';
+  static const String createInventory = '/inventory/create';
+  static const String inventoryDetail = '/inventory/:id';
 
   // Invoices
   static const String invoices = '/invoices';

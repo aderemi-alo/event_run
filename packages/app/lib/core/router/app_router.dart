@@ -1,3 +1,6 @@
+import 'package:app/core/router/app_shell.dart';
+import 'package:app/features/inventory/presentation/screens/create_inventory_screen.dart';
+import 'package:app/features/inventory/presentation/screens/inventory_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -18,7 +21,6 @@ import 'package:app/features/events/presentation/screens/event_detail_screen.dar
 import 'package:app/features/events/presentation/screens/event_form_screen.dart';
 import 'package:app/features/events/presentation/screens/event_requirements_screen.dart';
 import 'package:app/features/inventory/presentation/screens/inventory_list_screen.dart';
-import 'package:app/features/inventory/presentation/screens/inventory_form_screen.dart';
 import 'package:app/features/invoices/presentation/screens/invoices_list_screen.dart';
 import 'package:app/features/invoices/presentation/screens/invoice_detail_screen.dart';
 import 'package:app/features/invoices/presentation/screens/invoice_form_screen.dart';
@@ -45,7 +47,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       );
     },
     routes: [
-      // Auth (public)
+      // ── Auth (no shell) ──
       GoRoute(
         path: RoutePaths.login,
         name: RouteNames.login,
@@ -66,140 +68,146 @@ final routerProvider = Provider<GoRouter>((ref) {
         name: RouteNames.authGate,
         builder: (context, state) => const AuthGateScreen(),
       ),
-
-      // Dashboard
-      GoRoute(
-        path: RoutePaths.dashboard,
-        name: RouteNames.dashboard,
-        builder: (context, state) => const DashboardScreen(),
-      ),
-
-      // Profile
-      GoRoute(
-        path: RoutePaths.profile,
-        name: RouteNames.profile,
-        builder: (context, state) => const ProfileScreen(),
-      ),
-
-      // Vendor
       GoRoute(
         path: RoutePaths.vendorSetup,
         name: RouteNames.vendorSetup,
         builder: (context, state) => const VendorSetupScreen(),
       ),
 
-      // Clients
-      GoRoute(
-        path: RoutePaths.clients,
-        name: RouteNames.clients,
-        builder: (context, state) => const ClientsListScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.clientDetail,
-        name: RouteNames.clientDetail,
-        builder: (context, state) {
-          final id = state.pathParameters['id']!;
-          return ClientDetailScreen(clientId: id);
-        },
-      ),
-
-      // Events
-      GoRoute(
-        path: RoutePaths.events,
-        name: RouteNames.events,
-        builder: (context, state) => const EventsListScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.eventForm,
-        name: RouteNames.eventForm,
-        builder: (context, state) => const EventFormScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.eventDetail,
-        name: RouteNames.eventDetail,
-        builder: (context, state) {
-          final id = state.pathParameters['id']!;
-          return EventDetailScreen(eventId: id);
-        },
+      // ── App shell (all authenticated screens) ──
+      ShellRoute(
+        builder: (context, state, child) => AppShell(child: child),
         routes: [
+          // Dashboard
           GoRoute(
-            path: 'edit',
-            builder: (context, state) {
-              final id = state.pathParameters['id']!;
-              return EventFormScreen(eventId: id);
-            },
+            path: RoutePaths.dashboard,
+            name: RouteNames.dashboard,
+            builder: (context, state) => const DashboardScreen(),
           ),
-          GoRoute(
-            path: 'requirements',
-            name: RouteNames.eventRequirements,
-            builder: (context, state) {
-              final id = state.pathParameters['id']!;
-              return EventRequirementsScreen(eventId: id);
-            },
-          ),
-        ],
-      ),
 
-      // Inventory
-      GoRoute(
-        path: RoutePaths.inventory,
-        name: RouteNames.inventory,
-        builder: (context, state) => const InventoryListScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.inventoryForm,
-        name: RouteNames.inventoryForm,
-        builder: (context, state) => const InventoryFormScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.inventoryEdit,
-        builder: (context, state) {
-          final id = state.pathParameters['id']!;
-          return InventoryFormScreen(itemId: id);
-        },
-      ),
+          // Profile
+          GoRoute(
+            path: RoutePaths.profile,
+            name: RouteNames.profile,
+            builder: (context, state) => const ProfileScreen(),
+          ),
 
-      // Invoices
-      GoRoute(
-        path: RoutePaths.invoices,
-        name: RouteNames.invoices,
-        builder: (context, state) => const InvoicesListScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.invoiceForm,
-        name: RouteNames.invoiceForm,
-        builder: (context, state) => const InvoiceFormScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.invoiceDetail,
-        name: RouteNames.invoiceDetail,
-        builder: (context, state) {
-          final id = state.pathParameters['id']!;
-          return InvoiceDetailScreen(invoiceId: id);
-        },
-        routes: [
+          // Clients
           GoRoute(
-            path: 'edit',
-            builder: (context, state) {
-              final id = state.pathParameters['id']!;
-              return InvoiceFormScreen(invoiceId: id);
-            },
+            path: RoutePaths.clients,
+            name: RouteNames.clients,
+            builder: (context, state) => const ClientsListScreen(),
           ),
           GoRoute(
-            path: 'preview',
-            name: RouteNames.invoicePreview,
+            path: RoutePaths.clientDetail,
+            name: RouteNames.clientDetail,
             builder: (context, state) {
               final id = state.pathParameters['id']!;
-              return InvoicePreviewScreen(invoiceId: id);
+              return ClientDetailScreen(clientId: id);
             },
           ),
+
+          // Events
           GoRoute(
-            path: 'payment',
-            name: RouteNames.recordPayment,
+            path: RoutePaths.events,
+            name: RouteNames.events,
+            builder: (context, state) => const EventsListScreen(),
+          ),
+          GoRoute(
+            path: RoutePaths.eventForm,
+            name: RouteNames.eventForm,
+            builder: (context, state) => const EventFormScreen(),
+          ),
+          GoRoute(
+            path: RoutePaths.eventDetail,
+            name: RouteNames.eventDetail,
             builder: (context, state) {
               final id = state.pathParameters['id']!;
-              return RecordPaymentScreen(invoiceId: id);
+              return EventDetailScreen(eventId: id);
             },
+            routes: [
+              GoRoute(
+                path: 'edit',
+                builder: (context, state) {
+                  final id = state.pathParameters['id']!;
+                  return EventFormScreen(eventId: id);
+                },
+              ),
+              GoRoute(
+                path: 'requirements',
+                name: RouteNames.eventRequirements,
+                builder: (context, state) {
+                  final id = state.pathParameters['id']!;
+                  return EventRequirementsScreen(eventId: id);
+                },
+              ),
+            ],
+          ),
+
+          // Inventory
+          GoRoute(
+            path: RoutePaths.inventory,
+            name: RouteNames.inventory,
+            builder: (context, state) => const InventoryListScreen(),
+          ),
+          GoRoute(
+            path: RoutePaths.createInventory,
+            name: RouteNames.createInventory,
+            builder: (context, state) => const CreateInventoryScreen(),
+          ),
+          GoRoute(
+            path: RoutePaths.inventoryDetail,
+            name: RouteNames.inventoryDetail,
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              final edit = state.uri.queryParameters['edit'] == 'true';
+              return InventoryDetailScreen(itemId: id, startInEditMode: edit);
+            },
+          ),
+
+          // Invoices
+          GoRoute(
+            path: RoutePaths.invoices,
+            name: RouteNames.invoices,
+            builder: (context, state) => const InvoicesListScreen(),
+          ),
+          GoRoute(
+            path: RoutePaths.invoiceForm,
+            name: RouteNames.invoiceForm,
+            builder: (context, state) => const InvoiceFormScreen(),
+          ),
+          GoRoute(
+            path: RoutePaths.invoiceDetail,
+            name: RouteNames.invoiceDetail,
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return InvoiceDetailScreen(invoiceId: id);
+            },
+            routes: [
+              GoRoute(
+                path: 'edit',
+                builder: (context, state) {
+                  final id = state.pathParameters['id']!;
+                  return InvoiceFormScreen(invoiceId: id);
+                },
+              ),
+              GoRoute(
+                path: 'preview',
+                name: RouteNames.invoicePreview,
+                builder: (context, state) {
+                  final id = state.pathParameters['id']!;
+                  return InvoicePreviewScreen(invoiceId: id);
+                },
+              ),
+              GoRoute(
+                path: 'payment',
+                name: RouteNames.recordPayment,
+                builder: (context, state) {
+                  final id = state.pathParameters['id']!;
+                  return RecordPaymentScreen(invoiceId: id);
+                },
+              ),
+            ],
           ),
         ],
       ),

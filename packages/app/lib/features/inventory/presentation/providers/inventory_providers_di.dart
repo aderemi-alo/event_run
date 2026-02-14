@@ -1,8 +1,10 @@
+import 'package:app/features/inventory/domain/usecases/get_categories.dart';
+import 'package:app/features/inventory/presentation/providers/inventory_notifier.dart';
+import 'package:app/features/inventory/presentation/providers/inventory_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:app/features/inventory/data/datasources/inventory_remote_datasource.dart';
 import 'package:app/features/inventory/data/repositories/inventory_repository_impl.dart';
-import 'package:app/features/inventory/domain/entities/inventory_item_entity.dart';
 import 'package:app/features/inventory/domain/repositories/inventory_repository.dart';
 import 'package:app/features/inventory/domain/usecases/get_inventory_items.dart';
 import 'package:app/features/inventory/domain/usecases/get_item_by_id.dart';
@@ -43,13 +45,9 @@ final deleteItemUsecaseProvider = Provider<DeleteItem>((ref) {
   return DeleteItem(ref.watch(inventoryRepositoryProvider));
 });
 
-// Async state
-final inventoryItemsProvider = FutureProvider.autoDispose
-    .family<List<InventoryItemEntity>, String>((ref, vendorId) {
-      return ref.watch(getInventoryItemsUsecaseProvider).call(vendorId);
-    });
+final getCategoriesUsecaseProvider = Provider<GetCategories>((ref) {
+  return GetCategories(ref.watch(inventoryRepositoryProvider));
+});
 
-final inventoryItemDetailProvider = FutureProvider.autoDispose
-    .family<InventoryItemEntity?, String>((ref, itemId) {
-      return ref.watch(getItemByIdUsecaseProvider).call(itemId);
-    });
+final inventoryNotifierProvider =
+    NotifierProvider<InventoryNotifier, InventoryState>(InventoryNotifier.new);

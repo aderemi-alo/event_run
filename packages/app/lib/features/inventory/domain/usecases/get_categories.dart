@@ -1,12 +1,12 @@
 import 'package:app/core/utils/result.dart';
 import 'package:app/features/inventory/domain/repositories/inventory_repository.dart';
 
-class DeleteItem {
+class GetCategories {
   final InventoryRepository _repository;
 
-  DeleteItem(this._repository);
+  GetCategories(this._repository);
 
-  Future<Result<void>> call(String itemId) {
-    return _repository.deleteItem(itemId);
+  Future<Result<List<String>>> call(String vendorId) {
+    return _repository.getCategories(vendorId);
   }
 }

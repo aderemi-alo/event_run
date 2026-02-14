@@ -1,3 +1,4 @@
+import 'package:app/core/utils/result.dart';
 import 'package:app/features/inventory/domain/entities/inventory_item_entity.dart';
 import 'package:app/features/inventory/domain/repositories/inventory_repository.dart';
 
@@ -6,7 +7,7 @@ class GetItemById {
 
   GetItemById(this._repository);
 
-  Future<InventoryItemEntity?> call(String itemId) {
+  Future<Result<InventoryItemEntity>> call(String itemId) {
     return _repository.getItemById(itemId);
   }
 }

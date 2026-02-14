@@ -4,8 +4,9 @@ class InventoryItemEntity {
   final String name;
   final int quantity;
   final String? category;
-  final String? notes;
+  final String? description;
   final String? imageUrl;
+  final bool? isActive;
   final DateTime createdAt;
 
   const InventoryItemEntity({
@@ -14,8 +15,9 @@ class InventoryItemEntity {
     required this.name,
     required this.quantity,
     this.category,
-    this.notes,
+    this.description,
     this.imageUrl,
+    this.isActive,
     required this.createdAt,
   });
 }

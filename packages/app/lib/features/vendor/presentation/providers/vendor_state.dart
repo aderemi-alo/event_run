@@ -1,3 +1,4 @@
+import 'package:app/core/utils/enums.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:app/features/vendor/domain/entities/vendor_entity.dart';
 
@@ -13,5 +14,3 @@ class VendorState with _$VendorState {
     @Default(null) String? actionError,
   }) = _VendorState;
 }
-
-enum ActionState { idle, loading, success, error }

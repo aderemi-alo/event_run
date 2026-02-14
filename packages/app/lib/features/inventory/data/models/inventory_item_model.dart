@@ -7,7 +7,8 @@ class InventoryItemModel extends InventoryItemEntity {
     required super.name,
     required super.quantity,
     super.category,
-    super.notes,
+    super.isActive,
+    super.description,
     super.imageUrl,
     required super.createdAt,
   });
@@ -19,7 +20,8 @@ class InventoryItemModel extends InventoryItemEntity {
       name: json['name'] as String,
       quantity: json['quantity'] as int,
       category: json['category'] as String?,
-      notes: json['notes'] as String?,
+      isActive: json['is_active'] as bool?,
+      description: json['description'] as String?,
       imageUrl: json['image_url'] as String?,
       createdAt: DateTime.parse(json['created_at'] as String),
     );
@@ -32,7 +34,8 @@ class InventoryItemModel extends InventoryItemEntity {
       'name': name,
       'quantity': quantity,
       'category': category,
-      'notes': notes,
+      'is_active': isActive,
+      'description': description,
       'image_url': imageUrl,
       'created_at': createdAt.toIso8601String(),
     };
