@@ -97,6 +97,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) =>
                               Validators.validateEmail(context, value),
+                          textInputAction: TextInputAction.next,
+                          autofillHints: [AutofillHints.email],
                         ),
                         const SizedBox(height: 16),
 
@@ -131,6 +133,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           isPassword: true,
                           validator: (value) =>
                               Validators.validatePassword(context, value),
+                          textInputAction: TextInputAction.done,
+                          onFieldSubmitted: (_) => _handleSubmit(),
+                          autofillHints: [AutofillHints.password],
                         ),
 
                         const SizedBox(height: 24),

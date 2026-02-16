@@ -15,6 +15,9 @@ class AppTextField extends StatefulWidget {
   final Widget? suffix;
   final Widget? prefix;
   final List<TextInputFormatter>? inputFormatters;
+  final TextInputAction? textInputAction;
+  final void Function(String)? onFieldSubmitted;
+  final Iterable<String>? autofillHints;
 
   const AppTextField({
     super.key,
@@ -29,6 +32,9 @@ class AppTextField extends StatefulWidget {
     this.suffix,
     this.prefix,
     this.inputFormatters,
+    this.textInputAction,
+    this.onFieldSubmitted,
+    this.autofillHints,
   });
 
   @override
@@ -63,10 +69,13 @@ class _AppTextFieldState extends State<AppTextField> {
                 : const SizedBox.shrink()),
         const SizedBox(height: 6),
         TextFormField(
+          autofillHints: widget.autofillHints,
           inputFormatters: widget.inputFormatters,
           controller: widget.controller,
           keyboardType: widget.keyboardType,
           obscureText: widget.isPassword ? obscureText : false,
+          textInputAction: widget.textInputAction,
+          onFieldSubmitted: widget.onFieldSubmitted,
           decoration: InputDecoration(
             hintText: widget.hint,
             hintStyle: textTheme.bodyMedium?.vCopyWith(

@@ -135,6 +135,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                             value,
                             fieldName: context.l10n.fullName,
                           ),
+                          textInputAction: TextInputAction.next,
+                          autofillHints: [AutofillHints.name],
                         ),
                         const SizedBox(height: 16),
 
@@ -142,6 +144,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                         AppPhoneTextField(
                           controller: _phoneController,
                           label: context.l10n.phoneNumber,
+                          autofillHints: [AutofillHints.telephoneNumber],
+                          textInputAction: TextInputAction.next,
                         ),
                         const SizedBox(height: 16),
 
@@ -153,6 +157,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) =>
                               Validators.validateEmail(context, value),
+                          textInputAction: TextInputAction.next,
+                          autofillHints: [AutofillHints.email],
                         ),
                         const SizedBox(height: 16),
 
@@ -164,6 +170,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                           isPassword: true,
                           validator: (value) =>
                               Validators.validatePassword(context, value),
+                          textInputAction: TextInputAction.done,
+                          onFieldSubmitted: (_) => _handleSubmit(),
+                          autofillHints: [AutofillHints.password],
                         ),
 
                         const SizedBox(height: 24),

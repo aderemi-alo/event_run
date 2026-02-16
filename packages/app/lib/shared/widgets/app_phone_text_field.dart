@@ -10,10 +10,14 @@ class AppPhoneTextField extends StatelessWidget {
     super.key,
     required this.controller,
     required this.label,
+    this.autofillHints,
+    this.textInputAction,
   });
 
   final TextEditingController controller;
   final String label;
+  final Iterable<String>? autofillHints;
+  final TextInputAction? textInputAction;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +33,8 @@ class AppPhoneTextField extends StatelessWidget {
         LengthLimitingTextInputFormatter(11),
       ],
       validator: (value) => Validators.validatePhone(context, value),
+      autofillHints: autofillHints,
+      textInputAction: textInputAction,
     );
   }
 
