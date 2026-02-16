@@ -71,7 +71,7 @@ class _CreateInventoryScreenState extends ConsumerState<CreateInventoryScreen> {
         title: const Text('Add Inventory'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.pop(),
         ),
       ),
       body: SingleChildScrollView(

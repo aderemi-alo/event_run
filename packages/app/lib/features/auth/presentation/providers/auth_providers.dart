@@ -1,7 +1,8 @@
 import 'package:app/core/utils/result.dart';
 import 'package:app/features/auth/domain/entities/profile_entity.dart';
 import 'package:app/features/auth/domain/entities/signup_params.dart';
-import 'package:app/features/auth/presentation/providers/providers_di.dart';
+import 'package:app/features/auth/domain/usecases/sign_in.dart';
+import 'package:app/features/auth/presentation/providers/auth_providers_di.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Comprehensive auth provider that manages all authentication operations.
@@ -13,8 +14,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// - Get profile
 /// - Update profile
 /// - Reset password
-final authProvider =
-    AsyncNotifierProvider<AuthNotifier, ProfileEntity?>(AuthNotifier.new);
 
 class AuthNotifier extends AsyncNotifier<ProfileEntity?> {
   @override
@@ -26,7 +25,7 @@ class AuthNotifier extends AsyncNotifier<ProfileEntity?> {
 
     final nextState = await AsyncValue.guard(() async {
       final useCase = ref.read(signupUseCaseProvider);
-      final result = await useCase.call(params);
+      final result = await useCase.call(params: params);
 
       return result.fold(
         onSuccess: (profile) => profile,
@@ -39,12 +38,12 @@ class AuthNotifier extends AsyncNotifier<ProfileEntity?> {
   }
 
   /// Sign in with email and password.
-  Future<void> signIn({required String email, required String password}) async {
+  Future<void> signIn(SignInParams params) async {
     state = const AsyncLoading();
 
     final nextState = await AsyncValue.guard(() async {
       final useCase = ref.read(signInUseCaseProvider);
-      final result = await useCase.call(email: email, password: password);
+      final result = await useCase.call(params: params);
 
       return result.fold(
         onSuccess: (profile) => profile,

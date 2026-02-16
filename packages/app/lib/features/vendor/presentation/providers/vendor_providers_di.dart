@@ -1,5 +1,5 @@
 import 'package:app/features/vendor/domain/usecases/delete_vendor.dart';
-import 'package:app/features/vendor/presentation/providers/vendor_provider.dart';
+import 'package:app/features/vendor/presentation/providers/vendor_notifier.dart';
 import 'package:app/features/vendor/presentation/providers/vendor_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

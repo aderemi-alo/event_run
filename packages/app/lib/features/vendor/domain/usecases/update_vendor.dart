@@ -11,20 +11,7 @@ class UpdateVendorUseCase {
 
   Future<Result<VendorEntity>> call({required UpdateVendorParams params}) {
     if (params.phone != null) {
-      params = UpdateVendorParams(
-        vendorId: params.vendorId,
-        phone: PhoneUtils.normalise(params.phone!),
-        businessName: params.businessName,
-        email: params.email,
-        address: params.address,
-        city: params.city,
-        state: params.state,
-        bankName: params.bankName,
-        accountName: params.accountName,
-        accountNumber: params.accountNumber,
-        plan: params.plan,
-        logoUrl: params.logoUrl,
-      );
+      params.copyWith(phone: PhoneUtils.normalise(params.phone!));
     }
 
     return _repository.updateVendor(params: params);

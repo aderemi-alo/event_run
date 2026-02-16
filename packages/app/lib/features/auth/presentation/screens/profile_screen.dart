@@ -3,9 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app/core/widgets/app_loading.dart';
 import 'package:app/core/widgets/app_error_widget.dart';
-import 'package:app/features/auth/presentation/providers/auth_providers.dart';
 import 'package:app/features/auth/presentation/providers/auth_state_provider.dart';
-import 'package:app/features/auth/presentation/providers/providers_di.dart';
+import 'package:app/features/auth/presentation/providers/auth_providers_di.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -22,7 +21,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final user = ref.read(currentUserProvider);
       if (user != null) {
-        ref.read(authProvider.notifier).getProfile(user.id);
+        ref.read(authNotifierProvider.notifier).getProfile(user.id);
       }
     });
   }
@@ -32,7 +31,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final user = ref.watch(currentUserProvider);
     if (user == null) return const AppErrorWidget(message: 'Not signed in');
 
-    final profileAsync = ref.watch(authProvider);
+    final profileAsync = ref.watch(authNotifierProvider);
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -47,7 +46,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         loading: () => const AppLoading(),
         error: (e, _) => AppErrorWidget(
           message: e.toString(),
-          onRetry: () => ref.read(authProvider.notifier).getProfile(user.id),
+          onRetry: () =>
+              ref.read(authNotifierProvider.notifier).getProfile(user.id),
         ),
         data: (profile) {
           if (profile == null) {

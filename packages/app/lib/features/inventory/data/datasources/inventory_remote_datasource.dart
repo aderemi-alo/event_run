@@ -2,7 +2,6 @@ import 'package:app/features/inventory/domain/entities/create_inventory_item_par
 import 'package:app/features/inventory/domain/entities/update_inventory_item_params.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:app/core/constants/supabase_constants.dart';
-import 'package:app/core/error/exceptions.dart';
 import 'package:app/features/inventory/data/models/inventory_item_model.dart';
 
 abstract class InventoryRemoteDatasource {
@@ -26,32 +25,24 @@ class InventoryRemoteDatasourceImpl implements InventoryRemoteDatasource {
 
   @override
   Future<List<InventoryItemModel>> getInventoryItems(String vendorId) async {
-    try {
-      final response = await _client
-          .from(SupabaseConstants.inventoryItemsTable)
-          .select()
-          .eq('vendor_id', vendorId)
-          .order('name');
+    final response = await _client
+        .from(SupabaseConstants.inventoryItemsTable)
+        .select()
+        .eq('vendor_id', vendorId)
+        .order('name');
 
-      return response.map((json) => InventoryItemModel.fromJson(json)).toList();
-    } catch (e) {
-      throw ServerException(message: e.toString());
-    }
+    return response.map((json) => InventoryItemModel.fromJson(json)).toList();
   }
 
   @override
   Future<InventoryItemModel> getItemById(String itemId) async {
-    try {
-      final response = await _client
-          .from(SupabaseConstants.inventoryItemsTable)
-          .select()
-          .eq('id', itemId)
-          .single();
+    final response = await _client
+        .from(SupabaseConstants.inventoryItemsTable)
+        .select()
+        .eq('id', itemId)
+        .single();
 
-      return InventoryItemModel.fromJson(response);
-    } catch (e) {
-      throw ServerException(message: e.toString());
-    }
+    return InventoryItemModel.fromJson(response);
   }
 
   @override
@@ -59,63 +50,44 @@ class InventoryRemoteDatasourceImpl implements InventoryRemoteDatasource {
     required String vendorId,
     required CreateInventoryItemParams params,
   }) async {
-    try {
-      final response = await _client
-          .from(SupabaseConstants.inventoryItemsTable)
-          .insert({...params.toJson(), 'vendor_id': vendorId})
-          .select()
-          .single();
+    final response = await _client
+        .from(SupabaseConstants.inventoryItemsTable)
+        .insert({...params.toJson(), 'vendor_id': vendorId})
+        .select()
+        .single();
 
-      return InventoryItemModel.fromJson(response);
-    } catch (e) {
-      throw ServerException(message: e.toString());
-    }
+    return InventoryItemModel.fromJson(response);
   }
 
   @override
   Future<InventoryItemModel> updateItem({
     required UpdateInventoryItemParams params,
   }) async {
-    try {
-      final response = await _client
-          .from(SupabaseConstants.inventoryItemsTable)
-          .update(params.toJson())
-          .eq('id', params.id)
-          .select()
-          .single();
-      return InventoryItemModel.fromJson(response);
-    } catch (e) {
-      throw ServerException(message: e.toString());
-    }
+    final response = await _client
+        .from(SupabaseConstants.inventoryItemsTable)
+        .update(params.toJson())
+        .eq('id', params.id)
+        .select()
+        .single();
+    return InventoryItemModel.fromJson(response);
   }
 
   @override
   Future<void> deleteItem(String itemId) async {
-    try {
-      await _client
-          .from(SupabaseConstants.inventoryItemsTable)
-          .delete()
-          .eq('id', itemId);
-    } catch (e) {
-      throw ServerException(message: e.toString());
-    }
+    await _client
+        .from(SupabaseConstants.inventoryItemsTable)
+        .delete()
+        .eq('id', itemId);
   }
 
   @override
   Future<List<String>> getCategories(String vendorId) async {
-    try {
-      final response = await _client
-          .from(SupabaseConstants.inventoryItemsTable)
-          .select('category')
-          .eq('vendor_id', vendorId)
-          .not('category', 'is', null);
+    final response = await _client
+        .from(SupabaseConstants.inventoryItemsTable)
+        .select('category')
+        .eq('vendor_id', vendorId)
+        .not('category', 'is', null);
 
-      return response
-          .map((json) => json['category'] as String)
-          .toSet()
-          .toList();
-    } catch (e) {
-      throw ServerException(message: e.toString());
-    }
+    return response.map((json) => json['category'] as String).toSet().toList();
   }
 }

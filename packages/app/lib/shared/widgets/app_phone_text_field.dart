@@ -1,3 +1,4 @@
+import 'package:app/core/theme/app_color_set.dart';
 import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/utils/extensions.dart';
 import 'package:app/core/utils/validators.dart';
@@ -38,7 +39,7 @@ class AppPhoneTextField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       margin: const EdgeInsets.only(right: 8),
       decoration: BoxDecoration(
-        color: AppColors.primaryDark.withValues(alpha: 0.08),
+        color: context.appColors.primaryDark.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
@@ -46,7 +47,7 @@ class AppPhoneTextField extends StatelessWidget {
         style: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w600,
-          color: AppColors.primaryDark,
+          color: context.appColors.primaryDark,
         ),
       ),
     );

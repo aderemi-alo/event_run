@@ -1,3 +1,4 @@
+import 'package:app/core/theme/app_color_set.dart';
 import 'package:app/shared/widgets/app_phone_text_field.dart';
 import 'package:app/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
@@ -117,12 +118,12 @@ class _LogoPicker extends StatelessWidget {
           height: 80,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: AppColors.surfaceTertiary,
-            border: Border.all(color: AppColors.borderLight),
+            color: context.appColors.surfaceTertiary,
+            border: Border.all(color: context.appColors.borderLight),
           ),
-          child: const Icon(
+          child: Icon(
             Icons.upload_outlined,
-            color: AppColors.textHint,
+            color: context.appColors.textHint,
             size: 30,
           ),
         ),
@@ -141,7 +142,7 @@ class _LogoPicker extends StatelessWidget {
               Text(
                 context.l10n.logoMaxWeight,
                 style: textTheme.bodySmall?.vCopyWith(
-                  color: AppColors.textTertiary,
+                  color: context.appColors.textTertiary,
                 ),
               ),
             ],
@@ -231,7 +232,7 @@ class _CityStateFields extends StatelessWidget {
           context.l10n.state,
           style: textTheme.labelLarge?.vCopyWith(
             fontWeight: AppFontWeight.medium,
-            color: AppColors.textSecondary,
+            color: context.appColors.textSecondary,
           ),
         ),
         const SizedBox(height: 6),

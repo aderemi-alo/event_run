@@ -27,6 +27,36 @@ class UpdateVendorParams {
     this.logoUrl,
   });
 
+  UpdateVendorParams copyWith({
+    String? vendorId,
+    String? businessName,
+    String? email,
+    String? phone,
+    String? address,
+    String? city,
+    String? state,
+    String? bankName,
+    String? accountName,
+    String? accountNumber,
+    String? plan,
+    String? logoUrl,
+  }) {
+    return UpdateVendorParams(
+      vendorId: vendorId ?? this.vendorId,
+      businessName: businessName ?? this.businessName,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      address: address ?? this.address,
+      city: city ?? this.city,
+      state: state ?? this.state,
+      bankName: bankName ?? this.bankName,
+      accountName: accountName ?? this.accountName,
+      accountNumber: accountNumber ?? this.accountNumber,
+      plan: plan ?? this.plan,
+      logoUrl: logoUrl ?? this.logoUrl,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       if (businessName != null) 'business_name': businessName,

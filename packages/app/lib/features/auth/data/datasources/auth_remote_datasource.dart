@@ -15,127 +15,81 @@ class AuthRemoteDatasource {
     required String password,
     required Map<String, dynamic> metadata,
   }) async {
-    try {
-      final response = await _client.auth.signUp(
-        email: email,
-        password: password,
-        data: metadata,
-      );
+    final response = await _client.auth.signUp(
+      email: email,
+      password: password,
+      data: metadata,
+    );
 
-      if (response.user == null) {
-        throw const AppAuthException(
-          message: 'Sign up failed: No user returned',
-        );
-      }
-
-      // Fetch profile from profiles table
-      return await getProfile(response.user!.id);
-    } on AuthException catch (e) {
-      throw AppAuthException(message: e.message);
-    } catch (e) {
-      throw ServerException(message: e.toString());
+    if (response.user == null) {
+      throw const AppAuthException(message: 'Sign up failed: No user returned');
     }
+
+    // Fetch profile from profiles table
+    return await getProfile(response.user!.id);
   }
 
   Future<ProfileModel> signIn({
     required String email,
     required String password,
   }) async {
-    try {
-      final response = await _client.auth.signInWithPassword(
-        email: email,
-        password: password,
-      );
+    final response = await _client.auth.signInWithPassword(
+      email: email,
+      password: password,
+    );
 
-      if (response.user == null) {
-        throw const AppAuthException(
-          message: 'Sign in failed: No user returned',
-        );
-      }
+    final user = response.user;
 
-      // Fetch profile from profiles table
-      return await getProfile(response.user!.id);
-    } on AuthException catch (e) {
-      throw AppAuthException(message: e.message);
-    } catch (e) {
-      throw ServerException(message: e.toString());
+    if (user == null) {
+      throw const AppAuthException(message: 'Sign in failed: No user returned');
     }
+
+    // Fetch profile from profiles table
+    return await getProfile(user.id);
   }
 
   Future<void> signOut() async {
-    try {
-      await _client.auth.signOut();
-    } on AuthException catch (e) {
-      throw AppAuthException(message: e.message);
-    } catch (e) {
-      throw ServerException(message: e.toString());
-    }
+    await _client.auth.signOut();
   }
 
   Future<ProfileModel> getProfile(String userId) async {
-    try {
-      final response = await _client
-          .from('profiles')
-          .select()
-          .eq('id', userId)
-          .single();
+    final response = await _client
+        .from('profiles')
+        .select()
+        .eq('id', userId)
+        .single();
 
-      return ProfileModel.fromJson(response);
-    } on PostgrestException catch (e) {
-      throw ServerException(message: e.message);
-    } catch (e) {
-      throw ServerException(message: e.toString());
-    }
+    return ProfileModel.fromJson(response);
   }
 
   Future<ProfileModel> updateProfile({required ProfileModel profile}) async {
-    try {
-      final response = await _client
-          .from('profiles')
-          .update({
-            'full_name': profile.fullName,
-            'avatar_url': profile.avatarUrl,
-          })
-          .eq('id', profile.id)
-          .select()
-          .single();
+    final response = await _client
+        .from('profiles')
+        .update({
+          'full_name': profile.fullName,
+          'avatar_url': profile.avatarUrl,
+        })
+        .eq('id', profile.id)
+        .select()
+        .single();
 
-      return ProfileModel.fromJson(response);
-    } on PostgrestException catch (e) {
-      throw ServerException(message: e.message);
-    } catch (e) {
-      throw ServerException(message: e.toString());
-    }
+    return ProfileModel.fromJson(response);
   }
 
   Future<void> resetPassword({required String email}) async {
-    try {
-      await _client.auth.resetPasswordForEmail(email);
-    } on AuthException catch (e) {
-      throw AppAuthException(message: e.message);
-    } catch (e) {
-      throw ServerException(message: e.toString());
-    }
+    await _client.auth.resetPasswordForEmail(email);
   }
 
   Future<void> deleteAccount() async {
-    try {
-      final user = _client.auth.currentUser;
-      if (user == null) {
-        throw const AppAuthException(message: 'No user logged in');
-      }
-
-      // Delete profile first (due to foreign key constraint)
-      await _client.from('profiles').delete().eq('id', user.id);
-
-      // Then delete auth user
-      await _client.auth.admin.deleteUser(user.id);
-    } on AuthException catch (e) {
-      throw AppAuthException(message: e.message);
-    } on PostgrestException catch (e) {
-      throw ServerException(message: e.message);
-    } catch (e) {
-      throw ServerException(message: e.toString());
+    final user = _client.auth.currentUser;
+    if (user == null) {
+      throw const AuthException('No user logged in');
     }
+
+    // Delete profile first (due to foreign key constraint)
+    await _client.from('profiles').delete().eq('id', user.id);
+
+    // Then delete auth user
+    await _client.auth.admin.deleteUser(user.id);
   }
 }

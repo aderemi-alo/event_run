@@ -30,9 +30,9 @@ class _InventoryDetailScreenState extends ConsumerState<InventoryDetailScreen> {
 
   // Form controllers
   final _formKey = GlobalKey<FormState>();
-  late TextEditingController _nameController;
-  late TextEditingController _quantityController;
-  late TextEditingController _descriptionController;
+  final _nameController = TextEditingController();
+  final _quantityController = TextEditingController();
+  final _descriptionController = TextEditingController();
   late String _category;
   File? _imageFile;
   bool _formInitialized = false;

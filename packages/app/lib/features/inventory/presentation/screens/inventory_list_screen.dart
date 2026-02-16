@@ -1,8 +1,11 @@
 import 'package:app/core/router/route_names.dart';
+import 'package:app/core/theme/app_color_set.dart';
 import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/theme/app_typography.dart';
 import 'package:app/core/utils/extensions.dart';
 import 'package:app/features/inventory/presentation/providers/inventory_providers_di.dart';
+import 'package:app/features/inventory/presentation/widgets/filter_chip.dart';
+import 'package:app/features/inventory/presentation/widgets/inventory_item_tile.dart';
 import 'package:app/shared/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,7 +62,7 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
   void _navigateToDetail(InventoryItemEntity item, {bool edit = false}) {
     context.pushNamed(
       RouteNames.inventoryDetail,
-      extra: item.id,
+      pathParameters: {'id': item.id},
       queryParameters: {'edit': edit.toString()},
     );
   }
@@ -95,6 +98,8 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
                   totalQuantity: _totalQuantity(items),
                   onAddItem: _navigateToCreate,
                 ),
+
+                const SizedBox(height: 16),
 
                 // Search + category filter
                 _SearchAndFilter(
@@ -199,10 +204,6 @@ class _EmptyState extends StatelessWidget {
   }
 }
 
-// ──────────────────────────────────────────────
-// HEADER
-// ──────────────────────────────────────────────
-
 class _Header extends StatelessWidget {
   final int totalQuantity;
   final VoidCallback onAddItem;
@@ -229,7 +230,7 @@ class _Header extends StatelessWidget {
               Text(
                 'Track your stock and avoid shortages.',
                 style: context.textTheme.bodyMedium?.copyWith(
-                  color: AppColors.textTertiary,
+                  color: context.appColors.textTertiary,
                 ),
               ),
             ],
@@ -239,6 +240,10 @@ class _Header extends StatelessWidget {
             leading: Icons.add,
             label: 'Add Item',
             onPressed: onAddItem,
+            height: 40,
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+            ),
           ),
         ],
       ),
@@ -246,10 +251,7 @@ class _Header extends StatelessWidget {
   }
 }
 
-// ──────────────────────────────────────────────
-// SEARCH + CATEGORY FILTER
-// ──────────────────────────────────────────────
-
+// Search and Category filter
 class _SearchAndFilter extends StatelessWidget {
   final String searchQuery;
   final String? selectedCategory;
@@ -268,52 +270,62 @@ class _SearchAndFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: context.colors.surface,
+      decoration: BoxDecoration(
+        color: context.colors.surface,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: context.colors.outline),
+        boxShadow: [
+          BoxShadow(
+            offset: const Offset(0, 1),
+            blurRadius: 3,
+            spreadRadius: 0,
+            color: Colors.black.withValues(alpha: 0.1),
+          ),
+          // Layer 2: 0 1px 2px -1px rgb(0 0 0 / 0.1)
+          BoxShadow(
+            offset: const Offset(0, 1),
+            blurRadius: 2,
+            spreadRadius: -1,
+            color: Colors.black.withValues(alpha: 0.1),
+          ),
+        ],
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Search bar
-            Flexible(
-              child: Container(
-                // constraints: const BoxConstraints(maxWidth: 400),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
-                      offset: const Offset(0, 1),
-                      blurRadius: 2,
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  onChanged: onSearchChanged,
-                  decoration: InputDecoration(
-                    hintText: 'Search inventory...',
-                    prefixIcon: const Icon(Icons.search, size: 20),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                    filled: true,
-                    fillColor: Colors.white,
-                  ),
+            Container(
+              constraints: const BoxConstraints(maxWidth: 300),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: TextField(
+                onChanged: onSearchChanged,
+                decoration: InputDecoration(
+                  hintText: 'Search inventory...',
+                  prefixIcon: const Icon(Icons.search, size: 20),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                  filled: true,
+                  fillColor: Colors.white,
                 ),
               ),
             ),
             const SizedBox(width: 60),
 
             // Category chips
-            if (categories.isNotEmpty)
+            if (categories.length > 1)
               Expanded(
                 child: SizedBox(
-                  height: 40,
+                  height: 30,
                   child: Align(
-                    alignment: Alignment.centerRight,
+                    alignment: Alignment.topRight,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       children: [
-                        _FilterChip(
+                        CategoryFilterChip(
                           label: 'All',
                           isSelected: selectedCategory == null,
                           onTap: () => onCategoryChanged(null),
@@ -322,7 +334,7 @@ class _SearchAndFilter extends StatelessWidget {
                         ...categories.map(
                           (cat) => Padding(
                             padding: const EdgeInsets.only(right: 8),
-                            child: _FilterChip(
+                            child: CategoryFilterChip(
                               label: cat,
                               isSelected: selectedCategory == cat,
                               onTap: () => onCategoryChanged(cat),
@@ -340,45 +352,6 @@ class _SearchAndFilter extends StatelessWidget {
     );
   }
 }
-
-class _FilterChip extends StatelessWidget {
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _FilterChip({
-    required this.label,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final primary = Theme.of(context).colorScheme.primary;
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-        decoration: BoxDecoration(
-          color: isSelected ? primary : Colors.grey.shade100,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.w500,
-            color: isSelected ? Colors.white : Colors.grey.shade700,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// ──────────────────────────────────────────────
-// NO RESULTS
-// ──────────────────────────────────────────────
 
 class _NoResults extends StatelessWidget {
   final VoidCallback onClear;
@@ -405,10 +378,6 @@ class _NoResults extends StatelessWidget {
   }
 }
 
-// ──────────────────────────────────────────────
-// INVENTORY TABLE / LIST
-// ──────────────────────────────────────────────
-
 class _InventoryTable extends StatelessWidget {
   final List<InventoryItemEntity> items;
   final ValueChanged<InventoryItemEntity> onItemTap;
@@ -422,137 +391,32 @@ class _InventoryTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      itemCount: items.length,
-      separatorBuilder: (_, __) => const Divider(height: 1),
-      itemBuilder: (context, index) {
-        final item = items[index];
-        return _InventoryItemTile(
-          item: item,
-          onTap: () => onItemTap(item),
-          onEdit: () => onEditTap(item),
-        );
-      },
-    );
-  }
-}
-
-class _InventoryItemTile extends StatelessWidget {
-  final InventoryItemEntity item;
-  final VoidCallback onTap;
-  final VoidCallback onEdit;
-
-  const _InventoryItemTile({
-    required this.item,
-    required this.onTap,
-    required this.onEdit,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(8),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: Row(
+    return Column(
+      children: [
+        Row(
           children: [
-            // Thumbnail
-            Container(
-              width: 44,
-              height: 44,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey.shade200),
-              ),
-              clipBehavior: Clip.antiAlias,
-              child: (item.imageUrl != null && item.imageUrl!.isNotEmpty)
-                  ? Image.network(item.imageUrl!, fit: BoxFit.cover)
-                  : Icon(
-                      Icons.inventory_2_outlined,
-                      size: 20,
-                      color: Colors.grey.shade400,
-                    ),
-            ),
-            const SizedBox(width: 12),
-
-            // Name + low stock warning
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          item.category ?? '-',
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey.shade700,
-                          ),
-                        ),
-                      ),
-                      if (item.quantity < 5) ...[
-                        const SizedBox(width: 8),
-                        const Text(
-                          'Low Stock',
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
-            // Quantity
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Text(
-                item.quantity.toString(),
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-
-            // Edit button
-            IconButton(
-              onPressed: onEdit,
-              icon: Icon(
-                Icons.edit_outlined,
-                size: 18,
-                color: Colors.grey.shade400,
-              ),
-              splashRadius: 20,
-            ),
+            Expanded(flex: 4, child: Text('Item')),
+            Expanded(flex: 2, child: Center(child: Text('Category'))),
+            Expanded(flex: 2, child: Center(child: Text('Quantity Owned'))),
+            Expanded(flex: 1, child: Center(child: Text('Actions'))),
           ],
         ),
-      ),
+        Expanded(
+          child: ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            itemCount: items.length,
+            separatorBuilder: (_, __) => const Divider(height: 1),
+            itemBuilder: (context, index) {
+              final item = items[index];
+              return InventoryItemTile(
+                item: item,
+                onTap: () => onItemTap(item),
+                onEdit: () => onEditTap(item),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

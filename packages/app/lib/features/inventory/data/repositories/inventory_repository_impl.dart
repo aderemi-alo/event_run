@@ -1,5 +1,4 @@
-import 'package:app/core/error/exceptions.dart';
-import 'package:app/core/error/failures.dart';
+import 'package:app/core/error/supabase_error_handler.dart';
 import 'package:app/core/utils/result.dart';
 import 'package:app/features/inventory/data/datasources/inventory_remote_datasource.dart';
 import 'package:app/features/inventory/domain/entities/create_inventory_item_params.dart';
@@ -19,10 +18,8 @@ class InventoryRepositoryImpl implements InventoryRepository {
     try {
       final inventoryItems = await _datasource.getInventoryItems(vendorId);
       return Success(inventoryItems);
-    } on ServerException catch (e) {
-      return Error(ServerFailure(e.message));
     } catch (e) {
-      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+      return Error(SupabaseErrorHandler.map(e));
     }
   }
 
@@ -31,10 +28,8 @@ class InventoryRepositoryImpl implements InventoryRepository {
     try {
       final inventoryItem = await _datasource.getItemById(itemId);
       return Success(inventoryItem);
-    } on ServerException catch (e) {
-      return Error(ServerFailure(e.message));
     } catch (e) {
-      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+      return Error(SupabaseErrorHandler.map(e));
     }
   }
 
@@ -49,10 +44,8 @@ class InventoryRepositoryImpl implements InventoryRepository {
         params: params,
       );
       return Success(inventoryItem);
-    } on ServerException catch (e) {
-      return Error(ServerFailure(e.message));
     } catch (e) {
-      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+      return Error(SupabaseErrorHandler.map(e));
     }
   }
 
@@ -63,10 +56,8 @@ class InventoryRepositoryImpl implements InventoryRepository {
     try {
       final inventoryItem = await _datasource.updateItem(params: params);
       return Success(inventoryItem);
-    } on ServerException catch (e) {
-      return Error(ServerFailure(e.message));
     } catch (e) {
-      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+      return Error(SupabaseErrorHandler.map(e));
     }
   }
 
@@ -75,10 +66,8 @@ class InventoryRepositoryImpl implements InventoryRepository {
     try {
       await _datasource.deleteItem(itemId);
       return Success(null);
-    } on ServerException catch (e) {
-      return Error(ServerFailure(e.message));
     } catch (e) {
-      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+      return Error(SupabaseErrorHandler.map(e));
     }
   }
 
@@ -87,10 +76,8 @@ class InventoryRepositoryImpl implements InventoryRepository {
     try {
       final categories = await _datasource.getCategories(vendorId);
       return Success(categories);
-    } on ServerException catch (e) {
-      return Error(ServerFailure(e.message));
     } catch (e) {
-      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+      return Error(SupabaseErrorHandler.map(e));
     }
   }
 }

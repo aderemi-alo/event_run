@@ -42,6 +42,7 @@ class AppButton extends StatelessWidget {
     this.trailing,
     this.expand = true,
     this.height = 52,
+    this.style,
   }) : _variant = _AppButtonVariant.filled;
 
   const AppButton.outlined({
@@ -54,6 +55,7 @@ class AppButton extends StatelessWidget {
     this.trailing,
     this.expand = true,
     this.height = 52,
+    this.style,
   }) : _variant = _AppButtonVariant.outlined;
 
   const AppButton.ghost({
@@ -66,6 +68,7 @@ class AppButton extends StatelessWidget {
     this.trailing,
     this.expand = true,
     this.height = 48,
+    this.style,
   }) : _variant = _AppButtonVariant.ghost;
 
   final String label;
@@ -76,6 +79,7 @@ class AppButton extends StatelessWidget {
   final IconData? trailing;
   final bool expand;
   final double height;
+  final ButtonStyle? style;
   final _AppButtonVariant _variant;
 
   bool get _isDisabled => disabled || onPressed == null;
@@ -87,14 +91,17 @@ class AppButton extends StatelessWidget {
     Widget button = switch (_variant) {
       _AppButtonVariant.filled => ElevatedButton(
         onPressed: _isDisabled || loading ? null : onPressed,
+        style: style,
         child: child,
       ),
       _AppButtonVariant.outlined => OutlinedButton(
         onPressed: _isDisabled || loading ? null : onPressed,
+        style: style,
         child: child,
       ),
       _AppButtonVariant.ghost => TextButton(
         onPressed: _isDisabled || loading ? null : onPressed,
+        style: style,
         child: child,
       ),
     };
@@ -127,7 +134,7 @@ class AppButton extends StatelessWidget {
       mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (hasLeading) ...[Icon(leading, size: 20), const SizedBox(width: 8)],
+        if (hasLeading) ...[Icon(leading, size: 20), const SizedBox(width: 4)],
         Text(label),
         if (hasTrailing) ...[
           const SizedBox(width: 8),

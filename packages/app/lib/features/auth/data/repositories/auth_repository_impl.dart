@@ -1,5 +1,5 @@
-import 'package:app/core/error/exceptions.dart';
 import 'package:app/core/error/failures.dart';
+import 'package:app/core/error/supabase_error_handler.dart';
 import 'package:app/core/utils/result.dart';
 import 'package:app/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:app/features/auth/data/models/profile_model.dart';
@@ -28,12 +28,8 @@ class AuthRepositoryImpl implements AuthRepository {
         metadata: metadata,
       );
       return Success(profile);
-    } on AppAuthException catch (e) {
-      return Error(AuthFailure(e.message));
-    } on ServerException catch (e) {
-      return Error(ServerFailure(e.message));
     } catch (e) {
-      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+      return Error(SupabaseErrorHandler.map(e));
     }
   }
 
@@ -48,12 +44,8 @@ class AuthRepositoryImpl implements AuthRepository {
         password: password,
       );
       return Success(profile);
-    } on AppAuthException catch (e) {
-      return Error(AuthFailure(e.message));
-    } on ServerException catch (e) {
-      return Error(ServerFailure(e.message));
     } catch (e) {
-      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+      return Error(SupabaseErrorHandler.map(e));
     }
   }
 
@@ -62,12 +54,8 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await _datasource.signOut();
       return const Success(null);
-    } on AppAuthException catch (e) {
-      return Error(AuthFailure(e.message));
-    } on ServerException catch (e) {
-      return Error(ServerFailure(e.message));
     } catch (e) {
-      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+      return Error(SupabaseErrorHandler.map(e));
     }
   }
 
@@ -76,10 +64,8 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final profile = await _datasource.getProfile(userId);
       return Success(profile);
-    } on ServerException catch (e) {
-      return Error(ServerFailure(e.message));
     } catch (e) {
-      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+      return Error(SupabaseErrorHandler.map(e));
     }
   }
 
@@ -92,10 +78,8 @@ class AuthRepositoryImpl implements AuthRepository {
         profile: profile as ProfileModel,
       );
       return Success(updatedProfile);
-    } on ServerException catch (e) {
-      return Error(ServerFailure(e.message));
     } catch (e) {
-      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+      return Error(SupabaseErrorHandler.map(e));
     }
   }
 
@@ -104,12 +88,8 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await _datasource.resetPassword(email: email);
       return const Success(null);
-    } on AppAuthException catch (e) {
-      return Error(AuthFailure(e.message));
-    } on ServerException catch (e) {
-      return Error(ServerFailure(e.message));
     } catch (e) {
-      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+      return Error(SupabaseErrorHandler.map(e));
     }
   }
 
@@ -118,12 +98,8 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await _datasource.deleteAccount();
       return const Success(null);
-    } on AppAuthException catch (e) {
-      return Error(AuthFailure(e.message));
-    } on ServerException catch (e) {
-      return Error(ServerFailure(e.message));
     } catch (e) {
-      return Error(ServerFailure('Unexpected error: ${e.toString()}'));
+      return Error(SupabaseErrorHandler.map(e));
     }
   }
 }

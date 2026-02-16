@@ -1,3 +1,4 @@
+import 'package:app/core/theme/app_color_set.dart';
 import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class VendorSetupStepHeader extends StatelessWidget {
           Text(
             subtitle!,
             style: textTheme.bodyMedium?.vCopyWith(
-              color: AppColors.textTertiary,
+              color: context.appColors.textTertiary,
             ),
           ),
         ],

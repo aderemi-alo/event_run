@@ -75,7 +75,7 @@ class VendorNotifier extends Notifier<VendorState> {
   Future<void> deleteVendor(String vendorId) async {
     state = state.copyWith(actionState: ActionState.loading, actionError: null);
     final useCase = ref.read(deleteVendorUseCaseProvider);
-    final result = await useCase.call(vendorId);
+    final result = await useCase.call(params: vendorId);
     if (!ref.mounted) return;
     result.fold(
       onSuccess: (_) {

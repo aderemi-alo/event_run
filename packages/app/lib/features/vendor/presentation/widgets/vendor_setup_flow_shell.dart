@@ -1,3 +1,4 @@
+import 'package:app/core/theme/app_color_set.dart';
 import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/theme/app_typography.dart';
 import 'package:app/core/utils/extensions.dart';
@@ -18,7 +19,7 @@ class VendorSetupFlowShell extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      backgroundColor: AppColors.surfaceSecondary,
+      backgroundColor: context.appColors.surfaceSecondary,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -31,14 +32,14 @@ class VendorSetupFlowShell extends StatelessWidget {
                     context.l10n.setupYourBusiness,
                     style: textTheme.headlineMedium?.vCopyWith(
                       fontWeight: AppFontWeight.bold,
-                      color: AppColors.textPrimary,
+                      color: context.appColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     context.l10n.setupBusinessSubtitle,
                     style: textTheme.bodyMedium?.vCopyWith(
-                      color: AppColors.textTertiary,
+                      color: context.appColors.textTertiary,
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -47,19 +48,19 @@ class VendorSetupFlowShell extends StatelessWidget {
                     child: LinearProgressIndicator(
                       value: progress,
                       minHeight: 8,
-                      backgroundColor: AppColors.borderLight,
+                      backgroundColor: context.appColors.borderLight,
                     ),
                   ),
                   const SizedBox(height: 24),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: AppColors.surfacePrimary,
+                      color: context.appColors.surfacePrimary,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: AppColors.borderLight),
-                      boxShadow: const [
+                      border: Border.all(color: context.appColors.borderLight),
+                      boxShadow: [
                         BoxShadow(
-                          color: AppColors.shadow,
+                          color: context.appColors.shadow,
                           blurRadius: 10,
                           offset: Offset(0, 2),
                         ),

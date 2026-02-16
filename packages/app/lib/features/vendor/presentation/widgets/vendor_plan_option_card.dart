@@ -1,3 +1,4 @@
+import 'package:app/core/theme/app_color_set.dart';
 import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/theme/app_typography.dart';
 import 'package:app/core/utils/extensions.dart';
@@ -34,11 +35,13 @@ class VendorPlanOptionCard extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.primarySurface
-              : AppColors.surfacePrimary,
+              ? context.appColors.primarySurface
+              : context.appColors.surfacePrimary,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? AppColors.primaryLight : AppColors.borderLight,
+            color: isSelected
+                ? context.appColors.primaryLight
+                : context.appColors.borderLight,
             width: 2,
           ),
         ),
@@ -54,8 +57,8 @@ class VendorPlanOptionCard extends StatelessWidget {
                     horizontal: 12,
                     vertical: 4,
                   ),
-                  decoration: const BoxDecoration(
-                    color: AppColors.primary,
+                  decoration: BoxDecoration(
+                    color: context.appColors.primary,
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(10),
                       bottomLeft: Radius.circular(8),
@@ -64,7 +67,7 @@ class VendorPlanOptionCard extends StatelessWidget {
                   child: Text(
                     context.l10n.recommended,
                     style: textTheme.labelSmall?.vCopyWith(
-                      color: AppColors.onPrimary,
+                      color: context.appColors.onPrimary,
                       fontWeight: AppFontWeight.bold,
                     ),
                   ),
@@ -80,13 +83,13 @@ class VendorPlanOptionCard extends StatelessWidget {
                       title,
                       style: textTheme.titleLarge?.vCopyWith(
                         fontWeight: AppFontWeight.bold,
-                        color: AppColors.textPrimary,
+                        color: context.appColors.textPrimary,
                       ),
                     ),
                     if (isSelected)
-                      const Icon(
+                      Icon(
                         Icons.check_circle,
-                        color: AppColors.primary,
+                        color: context.appColors.primary,
                         size: 24,
                       ),
                   ],
@@ -99,7 +102,7 @@ class VendorPlanOptionCard extends StatelessWidget {
                       priceLabel,
                       style: textTheme.displaySmall?.vCopyWith(
                         fontWeight: AppFontWeight.extraBold,
-                        color: AppColors.textPrimary,
+                        color: context.appColors.textPrimary,
                       ),
                     ),
                     if (priceSuffix.isNotEmpty)
@@ -108,7 +111,7 @@ class VendorPlanOptionCard extends StatelessWidget {
                         child: Text(
                           priceSuffix,
                           style: textTheme.bodyMedium?.vCopyWith(
-                            color: AppColors.textTertiary,
+                            color: context.appColors.textTertiary,
                           ),
                         ),
                       ),
@@ -125,15 +128,15 @@ class VendorPlanOptionCard extends StatelessWidget {
                           Icons.check_circle_outline,
                           size: 16,
                           color: isSelected
-                              ? AppColors.primary
-                              : AppColors.textHint,
+                              ? context.appColors.primary
+                              : context.appColors.textHint,
                         ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
                             feature,
                             style: textTheme.bodyMedium?.vCopyWith(
-                              color: AppColors.textSecondary,
+                              color: context.appColors.textSecondary,
                             ),
                           ),
                         ),

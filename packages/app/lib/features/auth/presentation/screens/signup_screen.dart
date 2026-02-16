@@ -1,10 +1,11 @@
+import 'package:app/core/error/failures.dart';
 import 'package:app/core/router/route_names.dart';
-import 'package:app/core/theme/app_colors.dart';
+import 'package:app/core/theme/app_color_set.dart';
 import 'package:app/core/theme/app_typography.dart';
 import 'package:app/core/utils/extensions.dart';
 import 'package:app/core/utils/validators.dart';
 import 'package:app/features/auth/domain/entities/signup_params.dart';
-import 'package:app/features/auth/presentation/providers/auth_providers.dart';
+import 'package:app/features/auth/presentation/providers/auth_providers_di.dart';
 import 'package:app/features/auth/presentation/widgets/signup_legal_text.dart';
 import 'package:app/shared/widgets/app_button.dart';
 import 'package:app/shared/widgets/app_phone_text_field.dart';
@@ -28,9 +29,27 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  late final ProviderSubscription _authSub;
+
+  @override
+  void initState() {
+    super.initState();
+    _authSub = ref.listenManual(authNotifierProvider, (prev, next) {
+      // 1) show error toast/snackbar once
+      if (prev?.hasError != true && next.hasError) {
+        final err = next.error;
+        final msg = err is Failure ? err.message : err.toString();
+
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(msg)));
+      }
+    });
+  }
 
   @override
   void dispose() {
+    _authSub.close();
     _fullNameController.dispose();
     _phoneController.dispose();
     _emailController.dispose();
@@ -42,7 +61,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     await ref
-        .read(authProvider.notifier)
+        .read(authNotifierProvider.notifier)
         .signup(
           SignupParams(
             fullName: _fullNameController.text,
@@ -58,7 +77,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
-    final isLoading = ref.watch(authProvider).isLoading;
+    final isLoading = ref.watch(authNotifierProvider).isLoading;
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -76,21 +95,21 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                     'EventRun',
                     style: textTheme.headlineLarge!.vCopyWith(
                       fontWeight: AppFontWeight.bold,
-                      color: AppColors.primaryDark,
+                      color: context.appColors.primaryDark,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     context.l10n.createYourAccount,
                     style: textTheme.headlineMedium!.vCopyWith(
-                      color: AppColors.textSecondary,
+                      color: context.appColors.textSecondary,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     context.l10n.signupSubtitle,
                     style: textTheme.labelLarge!.vCopyWith(
-                      color: AppColors.textHint,
+                      color: context.appColors.textHint,
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -175,7 +194,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                       text: context.l10n.alreadyHaveAccount,
                       style: textTheme.labelLarge!.vCopyWith(
                         fontWeight: AppFontWeight.regular,
-                        color: AppColors.textTertiary,
+                        color: context.appColors.textTertiary,
                       ),
                       children: [
                         TextSpan(

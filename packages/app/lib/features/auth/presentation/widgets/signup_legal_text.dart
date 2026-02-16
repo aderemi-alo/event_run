@@ -1,3 +1,4 @@
+import 'package:app/core/theme/app_color_set.dart';
 import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/theme/app_typography.dart';
 import 'package:app/core/utils/extensions.dart';
@@ -48,7 +49,9 @@ class _SignupLegalTextState extends State<SignupLegalText> {
       textAlign: TextAlign.center,
       text: TextSpan(
         text: context.l10n.bySigningUpYouAgreeToOur, // Hardcoded for demo
-        style: textTheme.labelMedium?.vCopyWith(color: AppColors.textTertiary),
+        style: textTheme.labelMedium?.vCopyWith(
+          color: context.appColors.textTertiary,
+        ),
         children: [
           TextSpan(
             text: context.l10n.termsOfService,
@@ -61,7 +64,7 @@ class _SignupLegalTextState extends State<SignupLegalText> {
           TextSpan(
             text: ' ${context.l10n.and} ',
             style: textTheme.labelMedium?.vCopyWith(
-              color: AppColors.textTertiary,
+              color: context.appColors.textTertiary,
             ),
           ),
           TextSpan(

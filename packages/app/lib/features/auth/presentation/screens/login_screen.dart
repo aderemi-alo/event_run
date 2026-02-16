@@ -1,7 +1,7 @@
-import 'package:app/core/theme/app_colors.dart';
+import 'package:app/core/theme/app_color_set.dart';
 import 'package:app/core/theme/app_typography.dart';
 import 'package:app/core/utils/extensions.dart';
-import 'package:app/features/auth/presentation/providers/auth_providers.dart';
+import 'package:app/features/auth/presentation/providers/auth_providers_di.dart';
 import 'package:app/features/auth/presentation/widgets/signup_legal_text.dart';
 import 'package:app/shared/widgets/app_button.dart';
 import 'package:app/shared/widgets/app_text_field.dart';
@@ -34,12 +34,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Future<void> _handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
 
-    await ref
-        .read(authProvider.notifier)
-        .signIn(
-          email: _emailController.text,
-          password: _passwordController.text,
-        );
+    await ref.read(authNotifierProvider.notifier).signIn((
+      email: _emailController.text,
+      password: _passwordController.text,
+    ));
   }
 
   @override
@@ -47,7 +45,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
-    final isLoading = ref.watch(authProvider).isLoading;
+    final isLoading = ref.watch(authNotifierProvider).isLoading;
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -66,7 +64,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     context.l10n.appName,
                     style: textTheme.headlineLarge!.vCopyWith(
                       fontWeight: AppFontWeight.bold,
-                      color: AppColors.primaryDark,
+                      color: context.appColors.primaryDark,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -74,14 +72,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   Text(
                     context.l10n.welcomeBack,
                     style: textTheme.headlineMedium!.vCopyWith(
-                      color: AppColors.textSecondary,
+                      color: context.appColors.textSecondary,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     context.l10n.loginToManageEvents,
                     style: textTheme.labelLarge!.vCopyWith(
-                      color: AppColors.textHint,
+                      color: context.appColors.textHint,
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -109,7 +107,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               Text(
                                 context.l10n.password,
                                 style: textTheme.labelLarge!.vCopyWith(
-                                  color: AppColors.textSecondary,
+                                  color: context.appColors.textSecondary,
                                 ),
                               ),
                               const Spacer(),
@@ -160,7 +158,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       text: context.l10n.dontHaveAccount,
                       style: textTheme.labelLarge!.vCopyWith(
                         fontWeight: AppFontWeight.regular,
-                        color: AppColors.textTertiary,
+                        color: context.appColors.textTertiary,
                       ),
                       children: [
                         TextSpan(

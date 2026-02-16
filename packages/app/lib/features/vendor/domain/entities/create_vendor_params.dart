@@ -27,6 +27,36 @@ class CreateVendorParams {
     this.logoUrl,
   });
 
+  CreateVendorParams copyWith({
+    String? businessName,
+    String? email,
+    String? phone,
+    String? address,
+    String? city,
+    String? state,
+    String? bankName,
+    String? accountName,
+    String? accountNumber,
+    String? plan,
+    String? ownerId,
+    String? logoUrl,
+  }) {
+    return CreateVendorParams(
+      businessName: businessName ?? this.businessName,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      address: address ?? this.address,
+      city: city ?? this.city,
+      state: state ?? this.state,
+      bankName: bankName ?? this.bankName,
+      accountName: accountName ?? this.accountName,
+      accountNumber: accountNumber ?? this.accountNumber,
+      plan: plan ?? this.plan,
+      ownerId: ownerId ?? this.ownerId,
+      logoUrl: logoUrl ?? this.logoUrl,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'business_name': businessName,

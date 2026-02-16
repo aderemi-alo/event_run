@@ -1,5 +1,5 @@
+import 'package:app/core/theme/app_color_set.dart';
 import 'package:flutter/material.dart';
-import 'package:app/core/theme/app_colors.dart';
 import 'package:app/features/events/domain/entities/event_entity.dart';
 
 class EventStatusChip extends StatelessWidget {
@@ -10,16 +10,22 @@ class EventStatusChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (Color bg, Color fg) = switch (status) {
-      EventStatus.draft => (AppColors.info.withAlpha(30), AppColors.info),
+      EventStatus.draft => (
+        context.appColors.info.withAlpha(30),
+        context.appColors.info,
+      ),
       EventStatus.confirmed => (
-        AppColors.warning.withAlpha(30),
-        AppColors.warning,
+        context.appColors.warning.withAlpha(30),
+        context.appColors.warning,
       ),
       EventStatus.completed => (
-        AppColors.success.withAlpha(30),
-        AppColors.success,
+        context.appColors.success.withAlpha(30),
+        context.appColors.success,
       ),
-      EventStatus.cancelled => (AppColors.error.withAlpha(30), AppColors.error),
+      EventStatus.cancelled => (
+        context.appColors.error.withAlpha(30),
+        context.appColors.error,
+      ),
     };
 
     return Container(

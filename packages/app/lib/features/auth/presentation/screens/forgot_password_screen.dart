@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app/core/utils/validators.dart';
-import 'package:app/features/auth/presentation/providers/providers_di.dart';
+import 'package:app/features/auth/presentation/providers/auth_providers_di.dart';
 import 'package:app/features/auth/presentation/widgets/auth_form_field.dart';
 
 class ForgotPasswordScreen extends ConsumerStatefulWidget {

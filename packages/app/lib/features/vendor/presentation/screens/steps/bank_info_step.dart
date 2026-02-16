@@ -1,4 +1,5 @@
 import 'package:app/core/constants/banks.dart';
+import 'package:app/core/theme/app_color_set.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app/core/theme/app_colors.dart';
@@ -59,7 +60,7 @@ class BankInfoStep extends StatelessWidget {
                   context.l10n.bankName,
                   style: textTheme.labelLarge?.vCopyWith(
                     fontWeight: AppFontWeight.medium,
-                    color: AppColors.textSecondary,
+                    color: context.appColors.textSecondary,
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -150,24 +151,24 @@ class _BankInfoBanner extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.infoLight,
+        color: context.appColors.infoLight,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.infoBorder),
+        border: Border.all(color: context.appColors.infoBorder),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(
+          Icon(
             Icons.verified_user_outlined,
             size: 20,
-            color: AppColors.info,
+            color: context.appColors.info,
           ),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               context.l10n.bankInfoBanner,
               style: textTheme.bodyMedium?.vCopyWith(
-                color: AppColors.textTertiary,
+                color: context.appColors.textTertiary,
               ),
             ),
           ),

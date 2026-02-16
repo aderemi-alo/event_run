@@ -1,3 +1,4 @@
+import 'package:app/core/theme/app_color_set.dart';
 import 'package:flutter/material.dart';
 import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/theme/app_typography.dart';
@@ -40,7 +41,7 @@ class PlanSelectionStep extends StatelessWidget {
           Text(
             context.l10n.selectPlanSubtitle,
             style: textTheme.bodyMedium?.vCopyWith(
-              color: AppColors.textTertiary,
+              color: context.appColors.textTertiary,
             ),
           ),
           const SizedBox(height: 24),

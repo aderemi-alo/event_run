@@ -1,7 +1,7 @@
 /// Parameters required for the signup use case.
 class SignupParams {
   final String fullName;
-  final String phone; // raw local input (e.g. "08012345678")
+  final String phone;
   final String email;
   final String password;
 
