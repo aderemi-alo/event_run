@@ -41,6 +41,7 @@
         "fl_chart",
         "flutter",
         "flutter_localizations",
+        "flutter_lucide",
         "flutter_riverpod",
         "freezed_annotation",
         "go_router",
@@ -784,6 +785,13 @@
         "path",
         "source_gen",
         "test_api"
+      ]
+    },
+    {
+      "name": "flutter_lucide",
+      "version": "1.8.2",
+      "dependencies": [
+        "flutter"
       ]
     },
     {
