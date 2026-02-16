@@ -1,6 +1,5 @@
 import 'package:app/core/router/route_names.dart';
 import 'package:app/core/theme/app_color_set.dart';
-import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/theme/app_typography.dart';
 import 'package:app/core/utils/extensions.dart';
 import 'package:app/features/inventory/presentation/providers/inventory_providers_di.dart';

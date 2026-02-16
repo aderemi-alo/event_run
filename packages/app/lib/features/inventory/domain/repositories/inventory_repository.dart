@@ -7,7 +7,6 @@ abstract class InventoryRepository {
   Future<Result<List<InventoryItemEntity>>> getInventoryItems(String vendorId);
   Future<Result<InventoryItemEntity>> getItemById(String itemId);
   Future<Result<InventoryItemEntity>> createItem({
-    required String vendorId,
     required CreateInventoryItemParams params,
   });
   Future<Result<InventoryItemEntity>> updateItem({

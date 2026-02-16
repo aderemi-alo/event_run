@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:app/core/constants/app_constants.dart';
 import 'package:app/core/theme/app_theme.dart';
 import 'package:app/core/router/app_router.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import '../l10n/app_localizations.dart';
 

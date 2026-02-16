@@ -1,6 +1,5 @@
 import 'package:app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class AppColorSet {
   final Color primary;

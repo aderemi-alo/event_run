@@ -93,14 +93,15 @@ class _RecordPaymentScreenState extends ConsumerState<RecordPaymentScreen> {
               keyboardType: TextInputType.number,
               validator: (v) {
                 if (v == null || v.trim().isEmpty) return 'Required';
-                if (num.tryParse(v.trim()) == null)
+                if (num.tryParse(v.trim()) == null) {
                   return 'Enter a valid amount';
+                }
                 return null;
               },
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<PaymentMethod>(
-              value: _method,
+              initialValue: _method,
               decoration: const InputDecoration(
                 labelText: 'Payment Method',
                 border: OutlineInputBorder(),

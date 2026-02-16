@@ -35,12 +35,11 @@ class InventoryRepositoryImpl implements InventoryRepository {
 
   @override
   Future<Result<InventoryItemEntity>> createItem({
-    required String vendorId,
     required CreateInventoryItemParams params,
   }) async {
     try {
       final inventoryItem = await _datasource.createItem(
-        vendorId: vendorId,
+        vendorId: params.vendorId!,
         params: params,
       );
       return Success(inventoryItem);

@@ -80,7 +80,7 @@ class _CategorySelectorState extends State<CategorySelector> {
         : widget.categories.firstOrNull;
 
     return DropdownButtonFormField<String>(
-      value: effectiveValue,
+      initialValue: effectiveValue,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         contentPadding: const EdgeInsets.symmetric(

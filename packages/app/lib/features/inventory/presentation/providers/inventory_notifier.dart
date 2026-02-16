@@ -57,7 +57,9 @@ class InventoryNotifier extends Notifier<InventoryState> {
 
     state = state.copyWith(actionState: ActionState.loading, actionError: null);
     final useCase = ref.read(createItemUsecaseProvider);
-    final result = await useCase.call(vendorId: vendorId, params: params);
+    final result = await useCase.call(
+      params: params.copyWith(vendorId: vendorId),
+    );
     if (!ref.mounted) return;
     result.fold(
       onSuccess: (inventoryItem) {

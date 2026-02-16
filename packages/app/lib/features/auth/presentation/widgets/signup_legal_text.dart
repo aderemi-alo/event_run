@@ -1,5 +1,4 @@
 import 'package:app/core/theme/app_color_set.dart';
-import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/theme/app_typography.dart';
 import 'package:app/core/utils/extensions.dart';
 import 'package:flutter/gestures.dart';
@@ -31,13 +30,11 @@ class _SignupLegalTextState extends State<SignupLegalText> {
   }
 
   void _openTerms() {
-    print("Navigate to Terms...");
-    // Navigator.of(context).push(...);
+    //TODO: Navigate to Terms
   }
 
   void _openPrivacy() {
-    print("Navigate to Privacy...");
-    // Navigator.of(context).push(...);
+    //TODO: Navigate to Privacy
   }
 
   @override

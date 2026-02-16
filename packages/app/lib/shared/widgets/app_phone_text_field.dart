@@ -1,5 +1,4 @@
 import 'package:app/core/theme/app_color_set.dart';
-import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/utils/extensions.dart';
 import 'package:app/core/utils/validators.dart';
 import 'package:app/shared/widgets/app_text_field.dart';

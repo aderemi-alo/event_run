@@ -148,15 +148,14 @@ class _OutstandingInvoiceTile extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (invoice.clientId != null)
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.person, size: 14, color: Colors.grey[500]),
-                    const SizedBox(width: 4),
-                    Text(invoice.clientId!, style: theme.textTheme.bodySmall),
-                  ],
-                ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.person, size: 14, color: Colors.grey[500]),
+                  const SizedBox(width: 4),
+                  Text(invoice.clientId, style: theme.textTheme.bodySmall),
+                ],
+              ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(

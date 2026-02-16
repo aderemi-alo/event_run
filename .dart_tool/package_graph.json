@@ -47,6 +47,7 @@
         "google_fonts",
         "iconify_flutter",
         "image_picker",
+        "intl",
         "json_annotation",
         "riverpod_annotation",
         "shared_preferences",
@@ -783,6 +784,15 @@
         "path",
         "source_gen",
         "test_api"
+      ]
+    },
+    {
+      "name": "intl",
+      "version": "0.20.2",
+      "dependencies": [
+        "clock",
+        "meta",
+        "path"
       ]
     },
     {
@@ -1526,15 +1536,6 @@
         "app_links_platform_interface",
         "app_links_web",
         "flutter"
-      ]
-    },
-    {
-      "name": "intl",
-      "version": "0.20.2",
-      "dependencies": [
-        "clock",
-        "meta",
-        "path"
       ]
     },
     {

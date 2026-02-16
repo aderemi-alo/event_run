@@ -3,7 +3,6 @@ import 'package:app/shared/widgets/app_phone_text_field.dart';
 import 'package:app/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:app/core/constants/nigerian_states.dart';
-import 'package:app/core/theme/app_colors.dart';
 import 'package:app/core/theme/app_typography.dart';
 import 'package:app/core/utils/validators.dart';
 import 'package:app/features/vendor/presentation/widgets/vendor_setup_step_header.dart';
@@ -237,7 +236,7 @@ class _CityStateFields extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         DropdownButtonFormField<String>(
-          value: selectedState,
+          initialValue: selectedState,
           isExpanded: true,
           decoration: const InputDecoration(),
           items: nigerianStates
