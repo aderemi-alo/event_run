@@ -2,9 +2,6 @@
 // EventRun Color System
 // ============================================================
 //
-// Extracted from the signup & business onboarding screens.
-// Based on a Teal primary + Slate neutral palette.
-//
 // Usage:
 //   AppColors.primary
 //   AppColors.textSecondary
