@@ -37,6 +37,8 @@ class AppColorSet {
   final Color buttonDisabledFg;
   final Color onPrimary;
   final Color onError;
+  final Color mode;
+  final Color onMode;
 
   const AppColorSet({
     required this.primary,
@@ -74,6 +76,8 @@ class AppColorSet {
     required this.buttonDisabledFg,
     required this.onPrimary,
     required this.onError,
+    required this.mode,
+    required this.onMode,
   });
 
   static const light = AppColorSet(
@@ -112,6 +116,8 @@ class AppColorSet {
     buttonDisabledFg: AppColors.buttonDisabledFg,
     onPrimary: AppColors.onPrimary,
     onError: AppColors.onError,
+    mode: AppColors.mode,
+    onMode: AppColors.onMode,
   );
 
   static const dark = AppColorSet(
@@ -150,6 +156,8 @@ class AppColorSet {
     buttonDisabledFg: AppDarkColors.buttonDisabledFg,
     onPrimary: AppDarkColors.onPrimary,
     onError: AppDarkColors.onError,
+    mode: AppDarkColors.mode,
+    onMode: AppDarkColors.onMode,
   );
 }
 

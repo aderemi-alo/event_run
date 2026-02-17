@@ -93,6 +93,9 @@ abstract final class AppColors {
   // ── On-color (content on colored backgrounds) ─────────
   static const Color onPrimary = Colors.white;
   static const Color onError = Colors.white;
+
+  static const Color onMode = Color(0xFF000000);
+  static const Color mode = Color(0xFFFFFFFF);
 }
 
 abstract final class AppDarkColors {
@@ -176,4 +179,7 @@ abstract final class AppDarkColors {
     0xFF0F172A,
   ); // slate-900 — dark text on teal
   static const Color onError = Color(0xFF0F172A);
+
+  static const Color mode = Color(0xFF000000);
+  static const Color onMode = Color(0xFFFFFFFF);
 }

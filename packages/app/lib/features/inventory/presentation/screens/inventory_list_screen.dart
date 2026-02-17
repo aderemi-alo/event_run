@@ -275,24 +275,17 @@ class _SearchAndFilter extends StatelessWidget {
         border: Border.all(color: context.colors.outline),
         boxShadow: [
           BoxShadow(
-            offset: const Offset(0, 1),
-            blurRadius: 3,
-            spreadRadius: 0,
-            color: Colors.black.withValues(alpha: 0.1),
-          ),
-          // Layer 2: 0 1px 2px -1px rgb(0 0 0 / 0.1)
-          BoxShadow(
-            offset: const Offset(0, 1),
+            color: context.appColors.mode.withValues(alpha: 0.05),
             blurRadius: 2,
-            spreadRadius: -1,
-            color: Colors.black.withValues(alpha: 0.1),
+            offset: const Offset(0, 1),
           ),
         ],
       ),
+      clipBehavior: Clip.antiAlias,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Search bar
             Container(
