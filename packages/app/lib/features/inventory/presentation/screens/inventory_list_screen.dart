@@ -229,7 +229,7 @@ class _Header extends StatelessWidget {
               Text(
                 'Track your stock and avoid shortages.',
                 style: context.textTheme.bodyMedium?.copyWith(
-                  color: context.appColors.textTertiary,
+                  color: context.colors.textTertiary,
                 ),
               ),
             ],
@@ -270,12 +270,11 @@ class _SearchAndFilter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: context.colors.surface,
+        color: context.colors.surfacePrimary,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: context.colors.outline),
         boxShadow: [
           BoxShadow(
-            color: context.appColors.mode.withValues(alpha: 0.05),
+            color: context.colors.mode.withValues(alpha: 0.05),
             blurRadius: 2,
             offset: const Offset(0, 1),
           ),

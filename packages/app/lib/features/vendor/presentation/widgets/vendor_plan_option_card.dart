@@ -34,13 +34,13 @@ class VendorPlanOptionCard extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: isSelected
-              ? context.appColors.primarySurface
-              : context.appColors.surfacePrimary,
+              ? context.colors.primarySurface
+              : context.colors.surfacePrimary,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected
-                ? context.appColors.primaryLight
-                : context.appColors.borderLight,
+                ? context.colors.primaryLight
+                : context.colors.borderLight,
             width: 2,
           ),
         ),
@@ -57,7 +57,7 @@ class VendorPlanOptionCard extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: context.appColors.primary,
+                    color: context.colors.primary,
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(10),
                       bottomLeft: Radius.circular(8),
@@ -66,7 +66,7 @@ class VendorPlanOptionCard extends StatelessWidget {
                   child: Text(
                     context.l10n.recommended,
                     style: textTheme.labelSmall?.vCopyWith(
-                      color: context.appColors.onPrimary,
+                      color: context.colors.onPrimary,
                       fontWeight: AppFontWeight.bold,
                     ),
                   ),
@@ -82,13 +82,13 @@ class VendorPlanOptionCard extends StatelessWidget {
                       title,
                       style: textTheme.titleLarge?.vCopyWith(
                         fontWeight: AppFontWeight.bold,
-                        color: context.appColors.textPrimary,
+                        color: context.colors.textPrimary,
                       ),
                     ),
                     if (isSelected)
                       Icon(
                         Icons.check_circle,
-                        color: context.appColors.primary,
+                        color: context.colors.primary,
                         size: 24,
                       ),
                   ],
@@ -101,7 +101,7 @@ class VendorPlanOptionCard extends StatelessWidget {
                       priceLabel,
                       style: textTheme.displaySmall?.vCopyWith(
                         fontWeight: AppFontWeight.extraBold,
-                        color: context.appColors.textPrimary,
+                        color: context.colors.textPrimary,
                       ),
                     ),
                     if (priceSuffix.isNotEmpty)
@@ -110,7 +110,7 @@ class VendorPlanOptionCard extends StatelessWidget {
                         child: Text(
                           priceSuffix,
                           style: textTheme.bodyMedium?.vCopyWith(
-                            color: context.appColors.textTertiary,
+                            color: context.colors.textTertiary,
                           ),
                         ),
                       ),
@@ -127,15 +127,15 @@ class VendorPlanOptionCard extends StatelessWidget {
                           Icons.check_circle_outline,
                           size: 16,
                           color: isSelected
-                              ? context.appColors.primary
-                              : context.appColors.textHint,
+                              ? context.colors.primary
+                              : context.colors.textHint,
                         ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
                             feature,
                             style: textTheme.bodyMedium?.vCopyWith(
-                              color: context.appColors.textSecondary,
+                              color: context.colors.textSecondary,
                             ),
                           ),
                         ),

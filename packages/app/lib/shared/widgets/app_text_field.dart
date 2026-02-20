@@ -63,7 +63,7 @@ class _AppTextFieldState extends State<AppTextField> {
                     widget.label!,
                     style: textTheme.labelLarge?.vCopyWith(
                       fontWeight: AppFontWeight.medium,
-                      color: context.appColors.textSecondary,
+                      color: context.colors.textSecondary,
                     ),
                   )
                 : const SizedBox.shrink()),
@@ -79,7 +79,7 @@ class _AppTextFieldState extends State<AppTextField> {
           decoration: InputDecoration(
             hintText: widget.hint,
             hintStyle: textTheme.bodyMedium?.vCopyWith(
-              color: context.appColors.textHint,
+              color: context.colors.textHint,
             ),
             prefixIcon: widget.prefix != null
                 ? Row(
@@ -90,7 +90,7 @@ class _AppTextFieldState extends State<AppTextField> {
                           padding: const EdgeInsets.only(left: 12),
                           child: Icon(
                             widget.icon,
-                            color: context.appColors.textHint,
+                            color: context.colors.textHint,
                             size: 20,
                           ),
                         ),
@@ -101,7 +101,7 @@ class _AppTextFieldState extends State<AppTextField> {
                     ],
                   )
                 : widget.icon != null
-                ? Icon(widget.icon, color: context.appColors.textHint, size: 20)
+                ? Icon(widget.icon, color: context.colors.textHint, size: 20)
                 : null,
             suffixIcon: widget.isPassword
                 ? IconButton(

@@ -64,7 +64,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     context.l10n.appName,
                     style: textTheme.headlineLarge!.vCopyWith(
                       fontWeight: AppFontWeight.bold,
-                      color: context.appColors.primaryDark,
+                      color: context.colors.primaryDark,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -72,14 +72,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   Text(
                     context.l10n.welcomeBack,
                     style: textTheme.headlineMedium!.vCopyWith(
-                      color: context.appColors.textSecondary,
+                      color: context.colors.textSecondary,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     context.l10n.loginToManageEvents,
                     style: textTheme.labelLarge!.vCopyWith(
-                      color: context.appColors.textHint,
+                      color: context.colors.textHint,
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -109,7 +109,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               Text(
                                 context.l10n.password,
                                 style: textTheme.labelLarge!.vCopyWith(
-                                  color: context.appColors.textSecondary,
+                                  color: context.colors.textSecondary,
                                 ),
                               ),
                               const Spacer(),
@@ -163,7 +163,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       text: context.l10n.dontHaveAccount,
                       style: textTheme.labelLarge!.vCopyWith(
                         fontWeight: AppFontWeight.regular,
-                        color: context.appColors.textTertiary,
+                        color: context.colors.textTertiary,
                       ),
                       children: [
                         TextSpan(

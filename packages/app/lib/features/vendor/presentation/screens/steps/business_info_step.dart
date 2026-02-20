@@ -117,12 +117,12 @@ class _LogoPicker extends StatelessWidget {
           height: 80,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: context.appColors.surfaceTertiary,
-            border: Border.all(color: context.appColors.borderLight),
+            color: context.colors.surfaceTertiary,
+            border: Border.all(color: context.colors.borderLight),
           ),
           child: Icon(
             Icons.upload_outlined,
-            color: context.appColors.textHint,
+            color: context.colors.textHint,
             size: 30,
           ),
         ),
@@ -141,7 +141,7 @@ class _LogoPicker extends StatelessWidget {
               Text(
                 context.l10n.logoMaxWeight,
                 style: textTheme.bodySmall?.vCopyWith(
-                  color: context.appColors.textTertiary,
+                  color: context.colors.textTertiary,
                 ),
               ),
             ],
@@ -231,7 +231,7 @@ class _CityStateFields extends StatelessWidget {
           context.l10n.state,
           style: textTheme.labelLarge?.vCopyWith(
             fontWeight: AppFontWeight.medium,
-            color: context.appColors.textSecondary,
+            color: context.colors.textSecondary,
           ),
         ),
         const SizedBox(height: 6),

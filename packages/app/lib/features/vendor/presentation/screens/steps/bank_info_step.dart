@@ -59,7 +59,7 @@ class BankInfoStep extends StatelessWidget {
                   context.l10n.bankName,
                   style: textTheme.labelLarge?.vCopyWith(
                     fontWeight: AppFontWeight.medium,
-                    color: context.appColors.textSecondary,
+                    color: context.colors.textSecondary,
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -150,9 +150,9 @@ class _BankInfoBanner extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: context.appColors.infoLight,
+        color: context.colors.infoLight,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: context.appColors.infoBorder),
+        border: Border.all(color: context.colors.infoBorder),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,14 +160,14 @@ class _BankInfoBanner extends StatelessWidget {
           Icon(
             Icons.verified_user_outlined,
             size: 20,
-            color: context.appColors.info,
+            color: context.colors.info,
           ),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               context.l10n.bankInfoBanner,
               style: textTheme.bodyMedium?.vCopyWith(
-                color: context.appColors.textTertiary,
+                color: context.colors.textTertiary,
               ),
             ),
           ),

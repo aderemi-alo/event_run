@@ -12,16 +12,16 @@ class ConflictBanner extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(12),
-      color: context.appColors.warning.withAlpha(30),
+      color: context.colors.warning.withAlpha(30),
       child: Row(
         children: [
-          Icon(Icons.warning_amber, color: context.appColors.warning, size: 20),
+          Icon(Icons.warning_amber, color: context.colors.warning, size: 20),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               '${conflicts.length} inventory conflict${conflicts.length > 1 ? 's' : ''} detected',
               style: TextStyle(
-                color: context.appColors.warning,
+                color: context.colors.warning,
                 fontWeight: FontWeight.w500,
                 fontSize: 13,
               ),

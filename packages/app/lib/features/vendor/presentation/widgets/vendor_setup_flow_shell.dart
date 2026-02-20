@@ -18,7 +18,7 @@ class VendorSetupFlowShell extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      backgroundColor: context.appColors.surfaceSecondary,
+      backgroundColor: context.colors.surfaceSecondary,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -31,14 +31,14 @@ class VendorSetupFlowShell extends StatelessWidget {
                     context.l10n.setupYourBusiness,
                     style: textTheme.headlineMedium?.vCopyWith(
                       fontWeight: AppFontWeight.bold,
-                      color: context.appColors.textPrimary,
+                      color: context.colors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     context.l10n.setupBusinessSubtitle,
                     style: textTheme.bodyMedium?.vCopyWith(
-                      color: context.appColors.textTertiary,
+                      color: context.colors.textTertiary,
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -47,19 +47,19 @@ class VendorSetupFlowShell extends StatelessWidget {
                     child: LinearProgressIndicator(
                       value: progress,
                       minHeight: 8,
-                      backgroundColor: context.appColors.borderLight,
+                      backgroundColor: context.colors.borderLight,
                     ),
                   ),
                   const SizedBox(height: 24),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: context.appColors.surfacePrimary,
+                      color: context.colors.surfacePrimary,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: context.appColors.borderLight),
+                      border: Border.all(color: context.colors.borderLight),
                       boxShadow: [
                         BoxShadow(
-                          color: context.appColors.shadow,
+                          color: context.colors.shadow,
                           blurRadius: 10,
                           offset: Offset(0, 2),
                         ),

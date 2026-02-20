@@ -14,17 +14,15 @@ class PlanBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
-        color: isPro
-            ? context.appColors.primary
-            : context.appColors.borderLight,
+        color: isPro ? context.colors.primary : context.colors.borderLight,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
         plan.displayName,
         style: TextStyle(
           color: isPro
-              ? context.appColors.surfacePrimary
-              : context.appColors.textSecondary,
+              ? context.colors.surfacePrimary
+              : context.colors.textSecondary,
           fontWeight: FontWeight.w600,
           fontSize: 12,
         ),

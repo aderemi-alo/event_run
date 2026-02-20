@@ -40,7 +40,7 @@ class PlanSelectionStep extends StatelessWidget {
           Text(
             context.l10n.selectPlanSubtitle,
             style: textTheme.bodyMedium?.vCopyWith(
-              color: context.appColors.textTertiary,
+              color: context.colors.textTertiary,
             ),
           ),
           const SizedBox(height: 24),

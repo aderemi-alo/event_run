@@ -11,20 +11,20 @@ class EventStatusChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final (Color bg, Color fg) = switch (status) {
       EventStatus.draft => (
-        context.appColors.info.withAlpha(30),
-        context.appColors.info,
+        context.colors.info.withAlpha(30),
+        context.colors.info,
       ),
       EventStatus.confirmed => (
-        context.appColors.warning.withAlpha(30),
-        context.appColors.warning,
+        context.colors.warning.withAlpha(30),
+        context.colors.warning,
       ),
       EventStatus.completed => (
-        context.appColors.success.withAlpha(30),
-        context.appColors.success,
+        context.colors.success.withAlpha(30),
+        context.colors.success,
       ),
       EventStatus.cancelled => (
-        context.appColors.error.withAlpha(30),
-        context.appColors.error,
+        context.colors.error.withAlpha(30),
+        context.colors.error,
       ),
     };
 

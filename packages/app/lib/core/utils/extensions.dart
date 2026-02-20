@@ -7,7 +7,6 @@ extension L10nX on BuildContext {
 
 extension ThemeX on BuildContext {
   TextTheme get textTheme => Theme.of(this).textTheme;
-  ColorScheme get colors => Theme.of(this).colorScheme;
 }
 
 extension StringExtension on String {

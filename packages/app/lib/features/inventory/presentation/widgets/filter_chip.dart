@@ -1,3 +1,4 @@
+import 'package:app/core/theme/app_color_set.dart';
 import 'package:flutter/material.dart';
 
 class CategoryFilterChip extends StatelessWidget {
@@ -14,13 +15,12 @@ class CategoryFilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primary = Theme.of(context).colorScheme.primary;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
         decoration: BoxDecoration(
-          color: isSelected ? primary : Colors.grey.shade100,
+          color: isSelected ? context.colors.primary : context.colors.mode,
           borderRadius: BorderRadius.circular(4),
         ),
         child: Center(

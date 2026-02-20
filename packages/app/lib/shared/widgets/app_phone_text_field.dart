@@ -44,7 +44,7 @@ class AppPhoneTextField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       margin: const EdgeInsets.only(right: 8),
       decoration: BoxDecoration(
-        color: context.appColors.primaryDark.withValues(alpha: 0.08),
+        color: context.colors.primaryDark.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
@@ -52,7 +52,7 @@ class AppPhoneTextField extends StatelessWidget {
         style: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w600,
-          color: context.appColors.primaryDark,
+          color: context.colors.primaryDark,
         ),
       ),
     );

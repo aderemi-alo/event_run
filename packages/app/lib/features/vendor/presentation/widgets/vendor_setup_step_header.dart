@@ -39,7 +39,7 @@ class VendorSetupStepHeader extends StatelessWidget {
           Text(
             subtitle!,
             style: textTheme.bodyMedium?.vCopyWith(
-              color: context.appColors.textTertiary,
+              color: context.colors.textTertiary,
             ),
           ),
         ],

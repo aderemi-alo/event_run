@@ -1,4 +1,4 @@
-import 'package:app/core/theme/app_colors.dart';
+import 'package:app/core/theme/app_color_set.dart';
 import 'package:app/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
 
@@ -27,44 +27,45 @@ abstract final class AppTheme {
     fontVariations: [FontVariation('wght', 600)],
   );
 
+  // ── Build Theme ──────────────────────────────────────
+  static final ThemeData light = _build(AppColorSet.light, Brightness.light);
+  static final ThemeData dark = _build(AppColorSet.dark, Brightness.dark);
+
   // ═════════════════════════════════════════════════════════
-  // LIGHT THEME
+  // THEME
   // ═════════════════════════════════════════════════════════
-  static final ThemeData light = ThemeData(
+  static ThemeData _build(AppColorSet c, Brightness brightness) => ThemeData(
     useMaterial3: true,
-    brightness: Brightness.light,
-    scaffoldBackgroundColor: AppColors.surfaceSecondary,
+    brightness: brightness,
+    scaffoldBackgroundColor: c.surfaceSecondary,
     textTheme: AppTypography.textTheme,
 
     // ── Color Scheme ─────────────────────────────────
-    colorScheme: const ColorScheme.light(
-      primary: AppColors.primary,
-      onPrimary: AppColors.onPrimary,
-      primaryContainer: AppColors.primarySurface,
-      onPrimaryContainer: AppColors.primaryDark,
-      secondary: AppColors.textSecondary,
-      onSecondary: Colors.white,
-      surface: AppColors.surfacePrimary,
-      onSurface: AppColors.textPrimary,
-      surfaceContainerHighest: AppColors.surfaceTertiary,
-      outline: AppColors.border,
-      outlineVariant: AppColors.borderLight,
-      error: AppColors.error,
-      onError: AppColors.onError,
-      errorContainer: AppColors.errorLight,
+    colorScheme: ColorScheme(
+      brightness: brightness,
+      primary: c.primary,
+      onPrimary: c.onPrimary,
+      primaryContainer: c.primarySurface,
+      onPrimaryContainer: c.primaryDark,
+      secondary: c.textSecondary,
+      onSecondary: c.mode,
+      surface: c.surfacePrimary,
+      onSurface: c.textPrimary,
+      surfaceContainerHighest: c.surfaceTertiary,
+      outline: c.border,
+      outlineVariant: c.borderLight,
+      error: c.error,
+      onError: c.onError,
+      errorContainer: c.errorLight,
     ),
 
-    dividerColor: AppColors.divider,
-    dividerTheme: const DividerThemeData(
-      color: AppColors.divider,
-      thickness: 1,
-      space: 1,
-    ),
+    dividerColor: c.divider,
+    dividerTheme: DividerThemeData(color: c.divider, thickness: 1, space: 1),
 
     // ── App Bar ──────────────────────────────────────
-    appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.surfacePrimary,
-      foregroundColor: AppColors.textPrimary,
+    appBarTheme: AppBarTheme(
+      backgroundColor: c.surfacePrimary,
+      foregroundColor: c.textPrimary,
       elevation: 0,
       scrolledUnderElevation: 1,
       surfaceTintColor: Colors.transparent,
@@ -73,11 +74,11 @@ abstract final class AppTheme {
 
     // ── Card ─────────────────────────────────────────
     cardTheme: CardThemeData(
-      color: AppColors.surfacePrimary,
+      color: c.surfacePrimary,
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(_cardRadius),
-        side: const BorderSide(color: AppColors.borderLight),
+        side: BorderSide(color: c.borderLight),
       ),
       margin: EdgeInsets.zero,
     ),
@@ -86,32 +87,32 @@ abstract final class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       filled: false,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      hintStyle: const TextStyle(color: AppColors.textHint, fontSize: 14),
-      prefixIconColor: AppColors.iconDefault,
-      suffixIconColor: AppColors.iconDefault,
+      hintStyle: TextStyle(color: c.textHint, fontSize: 14),
+      prefixIconColor: c.iconDefault,
+      suffixIconColor: c.iconDefault,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(_inputRadius),
-        borderSide: const BorderSide(color: AppColors.border),
+        borderSide: BorderSide(color: c.border),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(_inputRadius),
-        borderSide: const BorderSide(color: AppColors.border),
+        borderSide: BorderSide(color: c.border),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(_inputRadius),
-        borderSide: const BorderSide(color: AppColors.primaryLight, width: 2),
+        borderSide: BorderSide(color: c.primaryLight, width: 2),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(_inputRadius),
-        borderSide: const BorderSide(color: AppColors.error),
+        borderSide: BorderSide(color: c.error),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(_inputRadius),
-        borderSide: const BorderSide(color: AppColors.error, width: 2),
+        borderSide: BorderSide(color: c.error, width: 2),
       ),
       disabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(_inputRadius),
-        borderSide: const BorderSide(color: AppColors.borderLight),
+        borderSide: BorderSide(color: c.borderLight),
       ),
     ),
 
@@ -120,21 +121,21 @@ abstract final class AppTheme {
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.disabled)) {
-            return AppColors.buttonDisabledBg;
+            return c.buttonDisabledBg;
           }
           if (states.contains(WidgetState.pressed)) {
-            return AppColors.primaryDarker;
+            return c.primaryDarker;
           }
           if (states.contains(WidgetState.hovered)) {
-            return AppColors.primaryDark;
+            return c.primaryDark;
           }
-          return AppColors.primary;
+          return c.primary;
         }),
         foregroundColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.disabled)) {
-            return AppColors.buttonDisabledFg;
+            return c.buttonDisabledFg;
           }
-          return AppColors.onPrimary;
+          return c.onPrimary;
         }),
         overlayColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.pressed)) {
@@ -151,7 +152,7 @@ abstract final class AppTheme {
           if (states.contains(WidgetState.hovered)) return 6;
           return 2;
         }),
-        shadowColor: const WidgetStatePropertyAll(AppColors.shadowPrimary),
+        shadowColor: WidgetStatePropertyAll(c.shadowPrimary),
         shape: WidgetStatePropertyAll(_buttonShape),
         padding: const WidgetStatePropertyAll(_buttonPadding),
         textStyle: const WidgetStatePropertyAll(_buttonTextStyle),
@@ -165,28 +166,28 @@ abstract final class AppTheme {
         backgroundColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.disabled)) return Colors.transparent;
           if (states.contains(WidgetState.pressed)) {
-            return AppColors.primary.withValues(alpha: 0.08);
+            return c.primary.withValues(alpha: 0.08);
           }
           if (states.contains(WidgetState.hovered)) {
-            return AppColors.primary.withValues(alpha: 0.04);
+            return c.primary.withValues(alpha: 0.04);
           }
           return Colors.transparent;
         }),
         foregroundColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.disabled)) {
-            return AppColors.buttonDisabledFg;
+            return c.buttonDisabledFg;
           }
-          return AppColors.primary;
+          return c.primary;
         }),
         side: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.disabled)) {
-            return const BorderSide(color: AppColors.borderLight, width: 1.5);
+            return BorderSide(color: c.borderLight, width: 1.5);
           }
           if (states.contains(WidgetState.hovered) ||
               states.contains(WidgetState.pressed)) {
-            return const BorderSide(color: AppColors.primaryDark, width: 1.5);
+            return BorderSide(color: c.primaryDark, width: 1.5);
           }
-          return const BorderSide(color: AppColors.primary, width: 1.5);
+          return BorderSide(color: c.primary, width: 1.5);
         }),
         elevation: const WidgetStatePropertyAll(0),
         shape: WidgetStatePropertyAll(_buttonShape),
@@ -201,18 +202,18 @@ abstract final class AppTheme {
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.pressed)) {
-            return AppColors.primary.withValues(alpha: 0.08);
+            return c.primary.withValues(alpha: 0.08);
           }
           if (states.contains(WidgetState.hovered)) {
-            return AppColors.primary.withValues(alpha: 0.04);
+            return c.primary.withValues(alpha: 0.04);
           }
           return Colors.transparent;
         }),
         foregroundColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.disabled)) {
-            return AppColors.buttonDisabledFg;
+            return c.buttonDisabledFg;
           }
-          return AppColors.primary;
+          return c.primary;
         }),
         elevation: const WidgetStatePropertyAll(0),
         shape: WidgetStatePropertyAll(_buttonShape),
@@ -223,56 +224,56 @@ abstract final class AppTheme {
     ),
 
     // ── Progress Indicator ───────────────────────────
-    progressIndicatorTheme: const ProgressIndicatorThemeData(
-      color: AppColors.primary,
-      linearTrackColor: AppColors.borderLight,
-      circularTrackColor: AppColors.borderLight,
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: c.primary,
+      linearTrackColor: c.borderLight,
+      circularTrackColor: c.borderLight,
     ),
 
     // ── Checkbox ─────────────────────────────────────
     checkboxTheme: CheckboxThemeData(
       fillColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.selected)) return AppColors.primary;
+        if (states.contains(WidgetState.selected)) return c.primary;
         return Colors.transparent;
       }),
-      checkColor: const WidgetStatePropertyAll(Colors.white),
+      checkColor: WidgetStatePropertyAll(Colors.white),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      side: const BorderSide(color: AppColors.border, width: 1.5),
+      side: BorderSide(color: c.border, width: 1.5),
     ),
 
     // ── Radio ────────────────────────────────────────
     radioTheme: RadioThemeData(
       fillColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.selected)) return AppColors.primary;
-        return AppColors.border;
+        if (states.contains(WidgetState.selected)) return c.primary;
+        return c.border;
       }),
     ),
 
     // ── Switch ───────────────────────────────────────
     switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.selected)) return AppColors.primary;
-        return AppColors.iconDefault;
+        if (states.contains(WidgetState.selected)) return c.primary;
+        return c.iconDefault;
       }),
       trackColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
-          return AppColors.primarySurface;
+          return c.primarySurface;
         }
-        return AppColors.borderLight;
+        return c.borderLight;
       }),
     ),
 
     // ── Snack Bar ────────────────────────────────────
     snackBarTheme: SnackBarThemeData(
-      backgroundColor: AppColors.textPrimary,
+      backgroundColor: c.textPrimary,
       contentTextStyle: const TextStyle(color: Colors.white, fontSize: 14),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       behavior: SnackBarBehavior.floating,
     ),
 
     // ── Bottom Sheet ─────────────────────────────────
-    bottomSheetTheme: const BottomSheetThemeData(
-      backgroundColor: AppColors.surfacePrimary,
+    bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: c.surfacePrimary,
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -281,7 +282,7 @@ abstract final class AppTheme {
 
     // ── Dialog ───────────────────────────────────────
     dialogTheme: DialogThemeData(
-      backgroundColor: AppColors.surfacePrimary,
+      backgroundColor: c.surfacePrimary,
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(_cardRadius),
@@ -290,9 +291,9 @@ abstract final class AppTheme {
 
     // ── Chip (status badges, filters) ────────────────
     chipTheme: ChipThemeData(
-      backgroundColor: AppColors.surfaceTertiary,
-      selectedColor: AppColors.primarySurface,
-      disabledColor: AppColors.surfaceTertiary,
+      backgroundColor: c.surfaceTertiary,
+      selectedColor: c.primarySurface,
+      disabledColor: c.surfaceTertiary,
       labelStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
       side: BorderSide.none,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -301,53 +302,18 @@ abstract final class AppTheme {
 
     // ── FAB ──────────────────────────────────────────
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: AppColors.primary,
-      foregroundColor: AppColors.onPrimary,
+      backgroundColor: c.primary,
+      foregroundColor: c.onPrimary,
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     ),
 
     // ── Tab Bar ──────────────────────────────────────
-    tabBarTheme: const TabBarThemeData(
-      labelColor: AppColors.primary,
-      unselectedLabelColor: AppColors.textTertiary,
-      indicatorColor: AppColors.primary,
+    tabBarTheme: TabBarThemeData(
+      labelColor: c.primary,
+      unselectedLabelColor: c.textTertiary,
+      indicatorColor: c.primary,
       indicatorSize: TabBarIndicatorSize.label,
-    ),
-  );
-
-  // ═════════════════════════════════════════════════════════
-  // DARK THEME (scaffold — extend as you build out)
-  // ═════════════════════════════════════════════════════════
-  static final ThemeData dark = light.copyWith(
-    brightness: Brightness.dark,
-    textTheme: AppTypography.darkTextTheme,
-    scaffoldBackgroundColor: const Color(0xFF0F172A),
-    colorScheme: const ColorScheme.dark(
-      primary: AppColors.primaryLight,
-      onPrimary: AppColors.onPrimary,
-      primaryContainer: Color(0xFF004D40),
-      onPrimaryContainer: AppColors.primarySurface,
-      surface: Color(0xFF1E293B),
-      onSurface: Color(0xFFF1F5F9),
-      outline: Color(0xFF475569),
-      outlineVariant: Color(0xFF334155),
-      error: Color(0xFFF87171),
-      onError: Colors.white,
-    ),
-    cardTheme: CardThemeData(
-      color: const Color(0xFF1E293B),
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(_cardRadius),
-        side: const BorderSide(color: Color(0xFF334155)),
-      ),
-    ),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Color(0xFF0F172A),
-      foregroundColor: Color(0xFFF1F5F9),
-      elevation: 0,
-      surfaceTintColor: Colors.transparent,
     ),
   );
 }

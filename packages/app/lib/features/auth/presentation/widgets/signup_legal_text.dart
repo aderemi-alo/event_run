@@ -47,7 +47,7 @@ class _SignupLegalTextState extends State<SignupLegalText> {
       text: TextSpan(
         text: context.l10n.bySigningUpYouAgreeToOur, // Hardcoded for demo
         style: textTheme.labelMedium?.vCopyWith(
-          color: context.appColors.textTertiary,
+          color: context.colors.textTertiary,
         ),
         children: [
           TextSpan(
@@ -61,7 +61,7 @@ class _SignupLegalTextState extends State<SignupLegalText> {
           TextSpan(
             text: ' ${context.l10n.and} ',
             style: textTheme.labelMedium?.vCopyWith(
-              color: context.appColors.textTertiary,
+              color: context.colors.textTertiary,
             ),
           ),
           TextSpan(

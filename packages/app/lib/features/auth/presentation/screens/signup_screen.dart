@@ -95,21 +95,21 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                     'EventRun',
                     style: textTheme.headlineLarge!.vCopyWith(
                       fontWeight: AppFontWeight.bold,
-                      color: context.appColors.primaryDark,
+                      color: context.colors.primaryDark,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     context.l10n.createYourAccount,
                     style: textTheme.headlineMedium!.vCopyWith(
-                      color: context.appColors.textSecondary,
+                      color: context.colors.textSecondary,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     context.l10n.signupSubtitle,
                     style: textTheme.labelLarge!.vCopyWith(
-                      color: context.appColors.textHint,
+                      color: context.colors.textHint,
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -203,7 +203,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                       text: context.l10n.alreadyHaveAccount,
                       style: textTheme.labelLarge!.vCopyWith(
                         fontWeight: AppFontWeight.regular,
-                        color: context.appColors.textTertiary,
+                        color: context.colors.textTertiary,
                       ),
                       children: [
                         TextSpan(
