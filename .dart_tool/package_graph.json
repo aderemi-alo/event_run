@@ -50,6 +50,7 @@
         "image_picker",
         "intl",
         "json_annotation",
+        "lucide_icons_flutter",
         "riverpod_annotation",
         "shared_preferences",
         "supabase_flutter"
@@ -785,6 +786,13 @@
         "path",
         "source_gen",
         "test_api"
+      ]
+    },
+    {
+      "name": "lucide_icons_flutter",
+      "version": "3.1.10",
+      "dependencies": [
+        "flutter"
       ]
     },
     {

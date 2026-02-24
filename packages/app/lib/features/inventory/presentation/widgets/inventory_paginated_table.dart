@@ -150,8 +150,8 @@ class _InventoryPaginatedTableState extends State<InventoryPaginatedTable> {
           decoration: BoxDecoration(
             color: context.colors.surfacePrimary,
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(24),
-              bottomRight: Radius.circular(24),
+              bottomLeft: Radius.circular(12),
+              bottomRight: Radius.circular(12),
             ),
             border: Border(
               bottom: BorderSide(color: context.colors.borderLight),

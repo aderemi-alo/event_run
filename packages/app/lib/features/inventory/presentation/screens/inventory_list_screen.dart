@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:app/features/inventory/domain/entities/inventory_item_entity.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class InventoryListScreen extends ConsumerStatefulWidget {
   const InventoryListScreen({super.key});
@@ -282,8 +283,8 @@ class _SearchAndFilter extends StatelessWidget {
       decoration: BoxDecoration(
         color: context.colors.surfacePrimary,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
         ),
         border: Border.all(color: context.colors.borderLight),
         boxShadow: [
@@ -304,13 +305,13 @@ class _SearchAndFilter extends StatelessWidget {
             Container(
               constraints: const BoxConstraints(maxWidth: 300),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(12),
               ),
               child: TextField(
                 onChanged: onSearchChanged,
                 decoration: InputDecoration(
                   hintText: 'Search inventory...',
-                  prefixIcon: const Icon(Icons.search, size: 20),
+                  prefixIcon: const Icon(LucideIcons.search, size: 20),
                   contentPadding: const EdgeInsets.symmetric(vertical: 10),
                   filled: true,
                   fillColor: Colors.white,

@@ -31,7 +31,7 @@ class InventoryItemTile extends StatelessWidget {
               child: Text(
                 item.name,
                 style: context.textTheme.bodyLarge?.vCopyWith(
-                  fontWeight: FontWeight.w500,
+                  fontWeight: AppFontWeight.semiBold,
                 ),
               ),
             ),
@@ -51,17 +51,15 @@ class InventoryItemTile extends StatelessWidget {
                         ),
                         child: Text(
                           item.category ?? '-',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
+                          style: context.textTheme.bodySmall?.vCopyWith(
+                            fontWeight: AppFontWeight.semiBold,
                           ),
                         ),
                       )
                     : Text(
                         '-',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
+                        style: context.textTheme.bodySmall?.vCopyWith(
+                          fontWeight: AppFontWeight.semiBold,
                         ),
                       ),
               ),
@@ -73,9 +71,8 @@ class InventoryItemTile extends StatelessWidget {
               child: Center(
                 child: Text(
                   item.quantity.toString(),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                  style: context.textTheme.bodyLarge?.vCopyWith(
+                    fontWeight: AppFontWeight.semiBold,
                   ),
                 ),
               ),

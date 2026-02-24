@@ -42,7 +42,9 @@ class InventoryNotifier extends Notifier<InventoryState> {
   Future<Result<InventoryItemEntity>> getItemById(String itemId) async {
     state = state.copyWith(isLoading: true, error: null);
     final useCase = ref.read(getItemByIdUsecaseProvider);
-    return useCase.call(itemId);
+    final item = await useCase.call(itemId);
+    state = state.copyWith(isLoading: false);
+    return item;
   }
 
   Future<void> createItem(CreateInventoryItemParams params) async {
@@ -65,7 +67,7 @@ class InventoryNotifier extends Notifier<InventoryState> {
       onSuccess: (inventoryItem) {
         final updatedCategories =
             inventoryItem.category != null &&
-                state.categories.contains(inventoryItem.category)
+                !state.categories.contains(inventoryItem.category)
             ? [...state.categories, inventoryItem.category!]
             : state.categories;
 

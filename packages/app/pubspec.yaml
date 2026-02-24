@@ -32,6 +32,7 @@ dependencies:
   iconify_flutter: ^0.0.7
   intl: ^0.20.2
   flutter_lucide: ^1.8.2
+  lucide_icons_flutter: ^3.1.10
 
 
 dev_dependencies:
