@@ -221,7 +221,7 @@ class _DesktopHeader extends ConsumerWidget {
                     radius: 16,
                     backgroundColor: Theme.of(
                       context,
-                    ).colorScheme.primary.withOpacity(0.1),
+                    ).colorScheme.primary.withValues(alpha: 0.1),
                     child: Text(
                       initials,
                       style: TextStyle(
@@ -311,7 +311,7 @@ class _DesktopSidebar extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 4),
                       child: Material(
                         color: isActive
-                            ? primary.withOpacity(0.08)
+                            ? primary.withValues(alpha: 0.08)
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(8),
                         child: InkWell(
