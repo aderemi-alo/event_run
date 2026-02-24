@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:app/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -47,12 +48,14 @@ class InventoryImagePicker extends StatelessWidget {
           ),
         ),
         clipBehavior: Clip.antiAlias,
-        child: hasImage ? _buildImagePreview() : _buildPlaceholder(),
+        child: hasImage
+            ? _buildImagePreview(context)
+            : _buildPlaceholder(context),
       ),
     );
   }
 
-  Widget _buildImagePreview() {
+  Widget _buildImagePreview(BuildContext context) {
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -69,14 +72,14 @@ class InventoryImagePicker extends StatelessWidget {
               color: Colors.black54,
               borderRadius: BorderRadius.circular(20),
             ),
-            child: const Row(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.edit, size: 14, color: Colors.white),
-                SizedBox(width: 4),
+                const Icon(Icons.edit, size: 14, color: Colors.white),
+                const SizedBox(width: 4),
                 Text(
-                  'Change',
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  context.l10n.inventory_image_change,
+                  style: const TextStyle(color: Colors.white, fontSize: 12),
                 ),
               ],
             ),
@@ -86,7 +89,7 @@ class InventoryImagePicker extends StatelessWidget {
     );
   }
 
-  Widget _buildPlaceholder() {
+  Widget _buildPlaceholder(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -97,7 +100,7 @@ class InventoryImagePicker extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          'Tap to upload image',
+          context.l10n.inventory_image_uploadPrompt,
           style: TextStyle(
             fontWeight: FontWeight.w600,
             color: Colors.grey.shade600,
@@ -106,7 +109,7 @@ class InventoryImagePicker extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          'PNG, JPG (MAX. 2MB)',
+          context.l10n.inventory_image_formatHint,
           style: TextStyle(color: Colors.grey.shade400, fontSize: 12),
         ),
       ],

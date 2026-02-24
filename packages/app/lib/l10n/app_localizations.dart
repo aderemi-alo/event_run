@@ -597,6 +597,294 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Retry'**
   String get retry;
+
+  /// No description provided for @nav_home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get nav_home;
+
+  /// No description provided for @nav_events.
+  ///
+  /// In en, this message translates to:
+  /// **'Events'**
+  String get nav_events;
+
+  /// No description provided for @nav_clients.
+  ///
+  /// In en, this message translates to:
+  /// **'Clients'**
+  String get nav_clients;
+
+  /// No description provided for @nav_invoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get nav_invoices;
+
+  /// No description provided for @nav_inventory.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory'**
+  String get nav_inventory;
+
+  /// No description provided for @nav_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get nav_settings;
+
+  /// No description provided for @inventory_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory'**
+  String get inventory_title;
+
+  /// No description provided for @inventory_manageEquipment.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Your Equipment'**
+  String get inventory_manageEquipment;
+
+  /// No description provided for @inventory_trackStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your stock and avoid shortages.'**
+  String get inventory_trackStock;
+
+  /// No description provided for @inventory_addItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Item'**
+  String get inventory_addItem;
+
+  /// No description provided for @inventory_searchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search inventory...'**
+  String get inventory_searchHint;
+
+  /// No description provided for @inventory_noInventory.
+  ///
+  /// In en, this message translates to:
+  /// **'No inventory yet'**
+  String get inventory_noInventory;
+
+  /// No description provided for @inventory_emptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your equipment (Speakers, Chairs, Lights, etc)\nso you can track them in your events.'**
+  String get inventory_emptySubtitle;
+
+  /// No description provided for @inventory_addFirstItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add First Item'**
+  String get inventory_addFirstItem;
+
+  /// No description provided for @inventory_noResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No items match your filters'**
+  String get inventory_noResults;
+
+  /// No description provided for @inventory_clearFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear filters'**
+  String get inventory_clearFilters;
+
+  /// No description provided for @inventory_itemTable_name.
+  ///
+  /// In en, this message translates to:
+  /// **'ITEM NAME'**
+  String get inventory_itemTable_name;
+
+  /// No description provided for @inventory_itemTable_category.
+  ///
+  /// In en, this message translates to:
+  /// **'CATEGORY'**
+  String get inventory_itemTable_category;
+
+  /// No description provided for @inventory_itemTable_quantity.
+  ///
+  /// In en, this message translates to:
+  /// **'QUANTITY OWNED'**
+  String get inventory_itemTable_quantity;
+
+  /// No description provided for @inventory_itemTable_actions.
+  ///
+  /// In en, this message translates to:
+  /// **'ACTIONS'**
+  String get inventory_itemTable_actions;
+
+  /// No description provided for @inventory_pagination_page.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {current} of {total}'**
+  String inventory_pagination_page(int current, int total);
+
+  /// No description provided for @inventory_pagination_previous.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get inventory_pagination_previous;
+
+  /// No description provided for @inventory_pagination_next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get inventory_pagination_next;
+
+  /// No description provided for @inventory_addTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Inventory'**
+  String get inventory_addTitle;
+
+  /// No description provided for @inventory_editTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Item'**
+  String get inventory_editTitle;
+
+  /// No description provided for @inventory_detailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Item Details'**
+  String get inventory_detailTitle;
+
+  /// No description provided for @inventory_image_uploadPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to upload image'**
+  String get inventory_image_uploadPrompt;
+
+  /// No description provided for @inventory_image_formatHint.
+  ///
+  /// In en, this message translates to:
+  /// **'PNG, JPG (MAX. 2MB)'**
+  String get inventory_image_formatHint;
+
+  /// No description provided for @inventory_image_change.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get inventory_image_change;
+
+  /// No description provided for @inventory_image_noImage.
+  ///
+  /// In en, this message translates to:
+  /// **'No image provided'**
+  String get inventory_image_noImage;
+
+  /// No description provided for @inventory_label_itemName.
+  ///
+  /// In en, this message translates to:
+  /// **'Item Name'**
+  String get inventory_label_itemName;
+
+  /// No description provided for @inventory_hint_itemName.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. JBL PartyBox 1000'**
+  String get inventory_hint_itemName;
+
+  /// No description provided for @inventory_label_quantityOwned.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity Owned'**
+  String get inventory_label_quantityOwned;
+
+  /// No description provided for @inventory_hint_quantityOwned.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 10'**
+  String get inventory_hint_quantityOwned;
+
+  /// No description provided for @inventory_label_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get inventory_label_category;
+
+  /// No description provided for @inventory_label_selectExisting.
+  ///
+  /// In en, this message translates to:
+  /// **'Select existing'**
+  String get inventory_label_selectExisting;
+
+  /// No description provided for @inventory_hint_newCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Type new category name...'**
+  String get inventory_hint_newCategory;
+
+  /// No description provided for @inventory_label_createNewCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Create New Category'**
+  String get inventory_label_createNewCategory;
+
+  /// No description provided for @inventory_label_notes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get inventory_label_notes;
+
+  /// No description provided for @inventory_hint_notes.
+  ///
+  /// In en, this message translates to:
+  /// **'Condition, serial numbers, or other details...'**
+  String get inventory_hint_notes;
+
+  /// No description provided for @inventory_button_saveItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Item'**
+  String get inventory_button_saveItem;
+
+  /// No description provided for @inventory_button_saveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get inventory_button_saveChanges;
+
+  /// No description provided for @inventory_message_itemUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Item updated'**
+  String get inventory_message_itemUpdated;
+
+  /// No description provided for @inventory_label_description.
+  ///
+  /// In en, this message translates to:
+  /// **'DESCRIPTION / NOTES'**
+  String get inventory_label_description;
+
+  /// No description provided for @inventory_label_noNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'No notes available for this item.'**
+  String get inventory_label_noNotes;
+
+  /// No description provided for @inventory_label_itemId.
+  ///
+  /// In en, this message translates to:
+  /// **'Item ID'**
+  String get inventory_label_itemId;
+
+  /// No description provided for @inventory_label_inStock.
+  ///
+  /// In en, this message translates to:
+  /// **'IN STOCK'**
+  String get inventory_label_inStock;
+
+  /// No description provided for @inventory_category_all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get inventory_category_all;
 }
 
 class _AppLocalizationsDelegate

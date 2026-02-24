@@ -1,3 +1,4 @@
+import 'package:app/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
 class CategorySelector extends StatefulWidget {
@@ -47,16 +48,16 @@ class _CategorySelectorState extends State<CategorySelector> {
       children: [
         Row(
           children: [
-            const Text(
-              'Category',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            Text(
+              context.l10n.inventory_label_category,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
             ),
             if (_isCustom) ...[
               const SizedBox(width: 8),
               GestureDetector(
                 onTap: _switchToDropdown,
                 child: Text(
-                  'Select existing',
+                  context.l10n.inventory_label_selectExisting,
                   style: TextStyle(
                     fontSize: 12,
                     color: Theme.of(context).colorScheme.primary,
@@ -103,7 +104,7 @@ class _CategorySelectorState extends State<CategorySelector> {
               ),
               const SizedBox(width: 6),
               Text(
-                'Create New Category',
+                context.l10n.inventory_label_createNewCategory,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: Theme.of(context).colorScheme.primary,
@@ -131,7 +132,7 @@ class _CategorySelectorState extends State<CategorySelector> {
       controller: _customController,
       autofocus: true,
       decoration: InputDecoration(
-        hintText: 'Type new category name...',
+        hintText: context.l10n.inventory_hint_newCategory,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,

@@ -99,7 +99,7 @@ class _InventoryPaginatedTableState extends State<InventoryPaginatedTable> {
                 Expanded(
                   flex: 4,
                   child: Text(
-                    'ITEM NAME',
+                    context.l10n.inventory_itemTable_name,
                     style: context.textTheme.bodyMedium?.vCopyWith(
                       color: context.colors.textTertiary,
                       fontWeight: FontWeight.bold,
@@ -110,7 +110,7 @@ class _InventoryPaginatedTableState extends State<InventoryPaginatedTable> {
                   flex: 2,
                   child: Center(
                     child: Text(
-                      'CATEGORY',
+                      context.l10n.inventory_itemTable_category,
                       style: context.textTheme.bodyMedium?.vCopyWith(
                         color: context.colors.textTertiary,
                         fontWeight: FontWeight.bold,
@@ -122,7 +122,7 @@ class _InventoryPaginatedTableState extends State<InventoryPaginatedTable> {
                   flex: 2,
                   child: Center(
                     child: Text(
-                      'QUANTITY OWNED',
+                      context.l10n.inventory_itemTable_quantity,
                       style: context.textTheme.bodyMedium?.vCopyWith(
                         color: context.colors.textTertiary,
                         fontWeight: FontWeight.bold,
@@ -134,7 +134,7 @@ class _InventoryPaginatedTableState extends State<InventoryPaginatedTable> {
                   flex: 1,
                   child: Center(
                     child: Text(
-                      'ACTIONS',
+                      context.l10n.inventory_itemTable_actions,
                       style: context.textTheme.bodyMedium?.vCopyWith(
                         color: context.colors.textTertiary,
                         fontWeight: FontWeight.bold,
@@ -193,7 +193,10 @@ class _InventoryPaginatedTableState extends State<InventoryPaginatedTable> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Page ${_currentPage + 1} of $_totalPages',
+                  context.l10n.inventory_pagination_page(
+                    _currentPage + 1,
+                    _totalPages,
+                  ),
                   style: Theme.of(context).textTheme.bodyMedium?.vCopyWith(
                     color: context.colors.textSecondary,
                   ),
@@ -201,7 +204,7 @@ class _InventoryPaginatedTableState extends State<InventoryPaginatedTable> {
                 Row(
                   children: [
                     AppButton(
-                      label: 'Previous',
+                      label: context.l10n.inventory_pagination_previous,
                       onPressed: _currentPage > 0 ? _previousPage : null,
                       expand: false,
                       height: 36,
@@ -211,7 +214,7 @@ class _InventoryPaginatedTableState extends State<InventoryPaginatedTable> {
                     ),
                     const SizedBox(width: 8),
                     AppButton(
-                      label: 'Next',
+                      label: context.l10n.inventory_pagination_next,
                       onPressed: _currentPage < _totalPages - 1
                           ? _nextPage
                           : null,

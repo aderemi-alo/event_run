@@ -272,4 +272,152 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get retry => 'Retry';
+
+  @override
+  String get nav_home => 'Home';
+
+  @override
+  String get nav_events => 'Events';
+
+  @override
+  String get nav_clients => 'Clients';
+
+  @override
+  String get nav_invoices => 'Invoices';
+
+  @override
+  String get nav_inventory => 'Inventory';
+
+  @override
+  String get nav_settings => 'Settings';
+
+  @override
+  String get inventory_title => 'Inventory';
+
+  @override
+  String get inventory_manageEquipment => 'Manage Your Equipment';
+
+  @override
+  String get inventory_trackStock => 'Track your stock and avoid shortages.';
+
+  @override
+  String get inventory_addItem => 'Add Item';
+
+  @override
+  String get inventory_searchHint => 'Search inventory...';
+
+  @override
+  String get inventory_noInventory => 'No inventory yet';
+
+  @override
+  String get inventory_emptySubtitle =>
+      'Add your equipment (Speakers, Chairs, Lights, etc)\nso you can track them in your events.';
+
+  @override
+  String get inventory_addFirstItem => 'Add First Item';
+
+  @override
+  String get inventory_noResults => 'No items match your filters';
+
+  @override
+  String get inventory_clearFilters => 'Clear filters';
+
+  @override
+  String get inventory_itemTable_name => 'ITEM NAME';
+
+  @override
+  String get inventory_itemTable_category => 'CATEGORY';
+
+  @override
+  String get inventory_itemTable_quantity => 'QUANTITY OWNED';
+
+  @override
+  String get inventory_itemTable_actions => 'ACTIONS';
+
+  @override
+  String inventory_pagination_page(int current, int total) {
+    return 'Page $current of $total';
+  }
+
+  @override
+  String get inventory_pagination_previous => 'Previous';
+
+  @override
+  String get inventory_pagination_next => 'Next';
+
+  @override
+  String get inventory_addTitle => 'Add Inventory';
+
+  @override
+  String get inventory_editTitle => 'Edit Item';
+
+  @override
+  String get inventory_detailTitle => 'Item Details';
+
+  @override
+  String get inventory_image_uploadPrompt => 'Tap to upload image';
+
+  @override
+  String get inventory_image_formatHint => 'PNG, JPG (MAX. 2MB)';
+
+  @override
+  String get inventory_image_change => 'Change';
+
+  @override
+  String get inventory_image_noImage => 'No image provided';
+
+  @override
+  String get inventory_label_itemName => 'Item Name';
+
+  @override
+  String get inventory_hint_itemName => 'e.g. JBL PartyBox 1000';
+
+  @override
+  String get inventory_label_quantityOwned => 'Quantity Owned';
+
+  @override
+  String get inventory_hint_quantityOwned => 'e.g. 10';
+
+  @override
+  String get inventory_label_category => 'Category';
+
+  @override
+  String get inventory_label_selectExisting => 'Select existing';
+
+  @override
+  String get inventory_hint_newCategory => 'Type new category name...';
+
+  @override
+  String get inventory_label_createNewCategory => 'Create New Category';
+
+  @override
+  String get inventory_label_notes => 'Notes';
+
+  @override
+  String get inventory_hint_notes =>
+      'Condition, serial numbers, or other details...';
+
+  @override
+  String get inventory_button_saveItem => 'Save Item';
+
+  @override
+  String get inventory_button_saveChanges => 'Save Changes';
+
+  @override
+  String get inventory_message_itemUpdated => 'Item updated';
+
+  @override
+  String get inventory_label_description => 'DESCRIPTION / NOTES';
+
+  @override
+  String get inventory_label_noNotes => 'No notes available for this item.';
+
+  @override
+  String get inventory_label_itemId => 'Item ID';
+
+  @override
+  String get inventory_label_inStock => 'IN STOCK';
+
+  @override
+  String get inventory_category_all => 'All';
 }

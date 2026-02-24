@@ -61,7 +61,7 @@ class _CreateInventoryScreenState extends ConsumerState<CreateInventoryScreen> {
         if (context.mounted) context.pop();
       } else if (next.actionState == ActionState.error) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(next.actionError ?? 'Something went wrong')),
+          SnackBar(content: Text(next.actionError ?? context.l10n.retry)),
         );
         ref.read(inventoryNotifierProvider.notifier).resetAction();
       }
@@ -71,7 +71,7 @@ class _CreateInventoryScreenState extends ConsumerState<CreateInventoryScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Inventory'),
+        title: Text(context.l10n.inventory_addTitle),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
@@ -93,13 +93,13 @@ class _CreateInventoryScreenState extends ConsumerState<CreateInventoryScreen> {
 
               // Item name
               AppTextField(
-                label: 'Item Name',
+                label: context.l10n.inventory_label_itemName,
                 controller: _nameController,
-                hint: 'e.g. JBL PartyBox 1000',
+                hint: context.l10n.inventory_hint_itemName,
                 validator: (value) => Validators.validateRequired(
                   context,
                   value,
-                  fieldName: 'Item name',
+                  fieldName: context.l10n.inventory_label_itemName,
                 ),
               ),
 
@@ -115,8 +115,8 @@ class _CreateInventoryScreenState extends ConsumerState<CreateInventoryScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AppTextField(
-                          label: 'Quantity Owned',
-                          hint: 'e.g. 10',
+                          label: context.l10n.inventory_label_quantityOwned,
+                          hint: context.l10n.inventory_hint_quantityOwned,
                           controller: _quantityController,
                           keyboardType: TextInputType.number,
                           inputFormatters: [
@@ -125,7 +125,8 @@ class _CreateInventoryScreenState extends ConsumerState<CreateInventoryScreen> {
                           validator: (value) => Validators.validateRequired(
                             context,
                             value,
-                            fieldName: 'Quantity owned',
+                            fieldName:
+                                context.l10n.inventory_label_quantityOwned,
                           ),
                         ),
                       ],
@@ -149,14 +150,14 @@ class _CreateInventoryScreenState extends ConsumerState<CreateInventoryScreen> {
 
               // Notes
               AppTextField(
-                label: 'Notes',
-                hint: 'Condition, serial numbers, or other details...',
+                label: context.l10n.inventory_label_notes,
+                hint: context.l10n.inventory_hint_notes,
                 controller: _notesController,
                 maxLines: 3,
                 validator: (value) => Validators.validateRequired(
                   context,
                   value,
-                  fieldName: 'Notes',
+                  fieldName: context.l10n.inventory_label_notes,
                 ),
               ),
               const SizedBox(height: 32),
@@ -165,7 +166,7 @@ class _CreateInventoryScreenState extends ConsumerState<CreateInventoryScreen> {
               AppButton(
                 onPressed: isLoading ? null : _handleSubmit,
                 loading: isLoading,
-                label: 'Save Item',
+                label: context.l10n.inventory_button_saveItem,
               ),
             ],
           ),

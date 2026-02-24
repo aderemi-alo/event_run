@@ -185,7 +185,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'No inventory yet',
+              context.l10n.inventory_noInventory,
               style: textTheme.headlineLarge?.vCopyWith(
                 fontWeight: FontWeight.bold,
                 color: colorScheme.onSurface,
@@ -193,8 +193,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Add your equipment (Speakers, Chairs, Lights, etc)'
-              '\nso you can track them in your events.',
+              context.l10n.inventory_emptySubtitle,
               textAlign: TextAlign.center,
               style: textTheme.bodyLarge?.vCopyWith(
                 color: colorScheme.secondary,
@@ -202,7 +201,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 32),
             AppButton(
-              label: 'Add First Item',
+              label: context.l10n.inventory_addFirstItem,
               onPressed: onAddItem,
               leading: Icons.add,
               expand: false,
@@ -231,14 +230,14 @@ class _Header extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Manage Your Equipment',
+                context.l10n.inventory_manageEquipment,
                 style: context.textTheme.headlineLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 2),
               Text(
-                'Track your stock and avoid shortages.',
+                context.l10n.inventory_trackStock,
                 style: context.textTheme.bodyMedium?.copyWith(
                   color: context.colors.textTertiary,
                 ),
@@ -248,7 +247,7 @@ class _Header extends StatelessWidget {
           AppButton(
             expand: false,
             leading: Icons.add,
-            label: 'Add Item',
+            label: context.l10n.inventory_addItem,
             onPressed: onAddItem,
             height: 40,
             style: ElevatedButton.styleFrom(
@@ -310,7 +309,7 @@ class _SearchAndFilter extends StatelessWidget {
               child: TextField(
                 onChanged: onSearchChanged,
                 decoration: InputDecoration(
-                  hintText: 'Search inventory...',
+                  hintText: context.l10n.inventory_searchHint,
                   prefixIcon: const Icon(LucideIcons.search, size: 20),
                   contentPadding: const EdgeInsets.symmetric(vertical: 10),
                   filled: true,
@@ -332,7 +331,7 @@ class _SearchAndFilter extends StatelessWidget {
                       shrinkWrap: true,
                       children: [
                         CategoryFilterChip(
-                          label: 'All',
+                          label: context.l10n.inventory_category_all,
                           isSelected: selectedCategory == null,
                           onTap: () => onCategoryChanged(null),
                         ),
@@ -373,11 +372,14 @@ class _NoResults extends StatelessWidget {
           Icon(Icons.search_off, size: 48, color: Colors.grey.shade300),
           const SizedBox(height: 12),
           Text(
-            'No items match your filters',
+            context.l10n.inventory_noResults,
             style: TextStyle(color: Colors.grey.shade500),
           ),
           const SizedBox(height: 12),
-          TextButton(onPressed: onClear, child: const Text('Clear filters')),
+          TextButton(
+            onPressed: onClear,
+            child: Text(context.l10n.inventory_clearFilters),
+          ),
         ],
       ),
     );

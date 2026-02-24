@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app/core/router/route_names.dart';
+import 'package:app/core/utils/extensions.dart';
 import 'package:app/features/vendor/presentation/providers/vendor_providers_di.dart';
 
 class AppShell extends ConsumerWidget {
@@ -21,43 +22,43 @@ class AppShell extends ConsumerWidget {
     return _mainPaths.contains(location);
   }
 
-  static const _navItems = [
+  List<_NavItem> _getNavItems(BuildContext context) => [
     _NavItem(
-      label: 'Home',
+      label: context.l10n.nav_home,
       icon: Icons.dashboard_outlined,
       activeIcon: Icons.dashboard,
       path: RoutePaths.dashboard,
     ),
     _NavItem(
-      label: 'Events',
+      label: context.l10n.nav_events,
       icon: Icons.calendar_month_outlined,
       activeIcon: Icons.calendar_month,
       path: RoutePaths.events,
     ),
     _NavItem(
-      label: 'Clients',
+      label: context.l10n.nav_clients,
       icon: Icons.people_outline,
       activeIcon: Icons.people,
       path: RoutePaths.clients,
     ),
     _NavItem(
-      label: 'Invoices',
+      label: context.l10n.nav_invoices,
       icon: Icons.receipt_long_outlined,
       activeIcon: Icons.receipt_long,
       path: RoutePaths.invoices,
     ),
     _NavItem(
-      label: 'Inventory',
+      label: context.l10n.nav_inventory,
       icon: Icons.inventory_2_outlined,
       activeIcon: Icons.inventory_2,
       path: RoutePaths.inventory,
     ),
   ];
 
-  int _currentIndex(String location) {
-    for (int i = 0; i < _navItems.length; i++) {
-      if (location == _navItems[i].path ||
-          location.startsWith('${_navItems[i].path}/')) {
+  int _currentIndex(String location, List<_NavItem> navItems) {
+    for (int i = 0; i < navItems.length; i++) {
+      if (location == navItems[i].path ||
+          location.startsWith('${navItems[i].path}/')) {
         return i;
       }
     }
@@ -67,7 +68,8 @@ class AppShell extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final location = GoRouterState.of(context).matchedLocation;
-    final selectedIndex = _currentIndex(location);
+    final navItems = _getNavItems(context);
+    final selectedIndex = _currentIndex(location, navItems);
     final isDesktop = MediaQuery.sizeOf(context).width >= 768;
 
     if (isDesktop) {
@@ -75,7 +77,7 @@ class AppShell extends ConsumerWidget {
         body: Row(
           children: [
             _DesktopSidebar(
-              navItems: _navItems,
+              navItems: navItems,
               selectedIndex: selectedIndex,
               onItemTap: (item) => context.go(item.path),
               onSettingsTap: () => context.go(RoutePaths.profile),
@@ -84,7 +86,7 @@ class AppShell extends ConsumerWidget {
               child: Column(
                 children: [
                   _DesktopHeader(
-                    title: _navItems[selectedIndex].label,
+                    title: navItems[selectedIndex].label,
                     onProfileTap: () => context.go(RoutePaths.profile),
                   ),
                   Expanded(child: child),
@@ -105,9 +107,9 @@ class AppShell extends ConsumerWidget {
       ),
       bottomNavigationBar: _isMainScreen(location)
           ? _MobileBottomNav(
-              navItems: _navItems,
+              navItems: navItems,
               selectedIndex: selectedIndex,
-              onItemTap: (index) => context.go(_navItems[index].path),
+              onItemTap: (index) => context.go(navItems[index].path),
             )
           : null,
     );
@@ -156,7 +158,7 @@ class _MobileHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'EventRun',
+              context.l10n.appName,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -288,7 +290,7 @@ class _DesktopSidebar extends StatelessWidget {
               border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
             ),
             child: Text(
-              'EventRun',
+              context.l10n.appName,
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -382,7 +384,7 @@ class _DesktopSidebar extends StatelessWidget {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        'Settings',
+                        context.l10n.nav_settings,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,

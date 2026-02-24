@@ -116,14 +116,13 @@ class _InventoryDetailScreenState extends ConsumerState<InventoryDetailScreen> {
       if (next.actionState == ActionState.success) {
         ref.read(inventoryNotifierProvider.notifier).resetAction();
         if (_isEditing) {
-          setState(() => _isEditing = false);
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text('Item updated')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.l10n.inventory_message_itemUpdated)),
+          );
         }
       } else if (next.actionState == ActionState.error) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(next.actionError ?? 'Something went wrong')),
+          SnackBar(content: Text(next.actionError ?? context.l10n.retry)),
         );
         ref.read(inventoryNotifierProvider.notifier).resetAction();
       }
@@ -133,7 +132,11 @@ class _InventoryDetailScreenState extends ConsumerState<InventoryDetailScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_isEditing ? 'Edit Item' : 'Item Details'),
+        title: Text(
+          _isEditing
+              ? context.l10n.inventory_editTitle
+              : context.l10n.inventory_detailTitle,
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
@@ -209,7 +212,7 @@ class _ViewModeBody extends StatelessWidget {
 
                 // Notes section
                 Text(
-                  'DESCRIPTION / NOTES',
+                  context.l10n.inventory_label_description,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -221,7 +224,7 @@ class _ViewModeBody extends StatelessWidget {
                 Text(
                   (item.description != null && item.description!.isNotEmpty)
                       ? item.description!
-                      : 'No notes available for this item.',
+                      : context.l10n.inventory_label_noNotes,
                   style: TextStyle(
                     fontSize: 15,
                     height: 1.5,
@@ -242,9 +245,15 @@ class _ViewModeBody extends StatelessWidget {
                 // Metadata
                 const Divider(),
                 const SizedBox(height: 12),
-                _MetadataRow(label: 'Item ID', value: item.id),
+                _MetadataRow(
+                  label: context.l10n.inventory_label_itemId,
+                  value: item.id,
+                ),
                 const SizedBox(height: 8),
-                _MetadataRow(label: 'Category', value: item.category ?? '-'),
+                _MetadataRow(
+                  label: context.l10n.inventory_label_category,
+                  value: item.category ?? '-',
+                ),
               ],
             ),
           ),
@@ -283,7 +292,7 @@ class _ItemHeroImage extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'No image provided',
+                    context.l10n.inventory_image_noImage,
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
@@ -339,7 +348,7 @@ class _QuantityBadge extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            quantity.toString(),
+            '$quantity',
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -347,7 +356,7 @@ class _QuantityBadge extends StatelessWidget {
             ),
           ),
           Text(
-            'IN STOCK',
+            context.l10n.inventory_label_inStock,
             style: TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.w500,
@@ -436,9 +445,9 @@ class _EditModeBody extends StatelessWidget {
             const SizedBox(height: 24),
 
             // Item name
-            const Text(
-              'Item Name',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            Text(
+              context.l10n.inventory_label_itemName,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 6),
             TextFormField(
@@ -454,7 +463,9 @@ class _EditModeBody extends StatelessWidget {
               ),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Item name is required';
+                  return context.l10n.requiredField(
+                    context.l10n.inventory_label_itemName,
+                  );
                 }
                 return null;
               },
@@ -469,9 +480,9 @@ class _EditModeBody extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Quantity Owned',
-                        style: TextStyle(
+                      Text(
+                        context.l10n.inventory_label_quantityOwned,
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),
@@ -492,7 +503,7 @@ class _EditModeBody extends StatelessWidget {
                         validator: (value) {
                           final qty = int.tryParse(value ?? '');
                           if (qty == null || qty < 0) {
-                            return 'Enter a valid quantity';
+                            return context.l10n.invalidNumber;
                           }
                           return null;
                         },
@@ -513,9 +524,9 @@ class _EditModeBody extends StatelessWidget {
             const SizedBox(height: 20),
 
             // Notes
-            const Text(
-              'Notes',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            Text(
+              context.l10n.inventory_label_notes,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 6),
             TextFormField(
@@ -537,11 +548,14 @@ class _EditModeBody extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                AppButton.outlined(label: 'Cancel', onPressed: onCancel),
+                AppButton.outlined(
+                  label: context.l10n.common_cancel,
+                  onPressed: onCancel,
+                ),
                 const SizedBox(width: 12),
                 AppButton(
                   leading: Icons.save,
-                  label: 'Save Changes',
+                  label: context.l10n.inventory_button_saveChanges,
                   onPressed: onSave,
                   loading: isLoading,
                 ),
