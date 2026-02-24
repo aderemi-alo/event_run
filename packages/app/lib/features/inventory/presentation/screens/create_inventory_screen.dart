@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:app/core/utils/utils.dart';
 import 'package:app/features/inventory/presentation/providers/inventory_providers_di.dart';
+import 'package:app/shared/widgets/app_button.dart';
+import 'package:app/shared/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:app/features/inventory/domain/entities/create_inventory_item_params.dart';
 import 'package:app/features/inventory/presentation/providers/inventory_state.dart';
@@ -89,27 +92,17 @@ class _CreateInventoryScreenState extends ConsumerState<CreateInventoryScreen> {
               const SizedBox(height: 24),
 
               // Item name
-              _buildLabel('Item Name'),
-              const SizedBox(height: 6),
-              TextFormField(
+              AppTextField(
+                label: 'Item Name',
                 controller: _nameController,
-                decoration: InputDecoration(
-                  hintText: 'e.g. JBL PartyBox 1000',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 14,
-                  ),
+                hint: 'e.g. JBL PartyBox 1000',
+                validator: (value) => Validators.validateRequired(
+                  context,
+                  value,
+                  fieldName: 'Item name',
                 ),
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Item name is required';
-                  }
-                  return null;
-                },
               ),
+
               const SizedBox(height: 20),
 
               // Quantity and Category row
@@ -121,27 +114,19 @@ class _CreateInventoryScreenState extends ConsumerState<CreateInventoryScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildLabel('Quantity Owned'),
-                        const SizedBox(height: 6),
-                        TextFormField(
+                        AppTextField(
+                          label: 'Quantity Owned',
+                          hint: 'e.g. 10',
                           controller: _quantityController,
                           keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 14,
-                            ),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          validator: (value) => Validators.validateRequired(
+                            context,
+                            value,
+                            fieldName: 'Quantity owned',
                           ),
-                          validator: (value) {
-                            final qty = int.tryParse(value ?? '');
-                            if (qty == null || qty < 1) {
-                              return 'Enter a valid quantity';
-                            }
-                            return null;
-                          },
                         ),
                       ],
                     ),
@@ -163,67 +148,29 @@ class _CreateInventoryScreenState extends ConsumerState<CreateInventoryScreen> {
               const SizedBox(height: 20),
 
               // Notes
-              _buildLabel('Notes', optional: true),
-              const SizedBox(height: 6),
-              TextFormField(
+              AppTextField(
+                label: 'Notes',
+                hint: 'Condition, serial numbers, or other details...',
                 controller: _notesController,
                 maxLines: 3,
-                decoration: InputDecoration(
-                  hintText: 'Condition, serial numbers, or other details...',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 14,
-                  ),
+                validator: (value) => Validators.validateRequired(
+                  context,
+                  value,
+                  fieldName: 'Notes',
                 ),
               ),
               const SizedBox(height: 32),
 
               // Submit button
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: FilledButton.icon(
-                  onPressed: isLoading ? null : _handleSubmit,
-                  icon: isLoading
-                      ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Icon(Icons.save),
-                  label: Text(isLoading ? 'Saving...' : 'Save Item'),
-                ),
+              AppButton(
+                onPressed: isLoading ? null : _handleSubmit,
+                loading: isLoading,
+                label: 'Save Item',
               ),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildLabel(String text, {bool optional = false}) {
-    return Row(
-      children: [
-        Text(
-          text,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-        ),
-        if (optional)
-          Text(
-            '  (Optional)',
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-              color: Colors.grey.shade400,
-            ),
-          ),
-      ],
     );
   }
 }

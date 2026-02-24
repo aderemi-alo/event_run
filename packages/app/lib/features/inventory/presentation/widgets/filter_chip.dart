@@ -1,4 +1,6 @@
 import 'package:app/core/theme/app_color_set.dart';
+import 'package:app/core/theme/app_typography.dart';
+import 'package:app/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
 class CategoryFilterChip extends StatelessWidget {
@@ -15,21 +17,23 @@ class CategoryFilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
         decoration: BoxDecoration(
-          color: isSelected ? context.colors.primary : context.colors.mode,
-          borderRadius: BorderRadius.circular(4),
+          color: isSelected
+              ? context.colors.primary
+              : context.colors.surfaceTertiary,
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Center(
           child: Text(
             label,
-            style: TextStyle(
-              fontSize: 13,
+            style: context.textTheme.labelMedium?.vCopyWith(
               fontWeight: FontWeight.w500,
-              color: isSelected ? Colors.white : Colors.grey.shade700,
+              fontSize: 13,
+              color: isSelected ? Colors.white : context.colors.textTertiary,
             ),
           ),
         ),

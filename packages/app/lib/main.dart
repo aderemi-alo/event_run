@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -5,7 +6,7 @@ import 'package:app/core/constants/app_constants.dart';
 import 'package:app/core/theme/app_theme.dart';
 import 'package:app/core/router/app_router.dart';
 // ignore: depend_on_referenced_packages
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import '../l10n/app_localizations.dart';
 
 void main() async {
@@ -16,7 +17,7 @@ void main() async {
     anonKey: AppConstants.supabaseAnonKey,
   );
 
-  usePathUrlStrategy();
+  if (kIsWeb) usePathUrlStrategy();
 
   runApp(const ProviderScope(child: EventRunApp()));
 }

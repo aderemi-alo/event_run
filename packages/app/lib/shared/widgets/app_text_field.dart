@@ -18,6 +18,8 @@ class AppTextField extends StatefulWidget {
   final TextInputAction? textInputAction;
   final void Function(String)? onFieldSubmitted;
   final Iterable<String>? autofillHints;
+  final int? maxLines;
+  final void Function(String)? onChanged;
 
   const AppTextField({
     super.key,
@@ -35,6 +37,8 @@ class AppTextField extends StatefulWidget {
     this.textInputAction,
     this.onFieldSubmitted,
     this.autofillHints,
+    this.maxLines,
+    this.onChanged,
   });
 
   @override
@@ -69,6 +73,8 @@ class _AppTextFieldState extends State<AppTextField> {
                 : const SizedBox.shrink()),
         const SizedBox(height: 6),
         TextFormField(
+          onChanged: widget.onChanged,
+          maxLines: widget.maxLines ?? 1,
           autofillHints: widget.autofillHints,
           inputFormatters: widget.inputFormatters,
           controller: widget.controller,

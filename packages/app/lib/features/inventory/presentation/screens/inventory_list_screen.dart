@@ -4,7 +4,7 @@ import 'package:app/core/theme/app_typography.dart';
 import 'package:app/core/utils/extensions.dart';
 import 'package:app/features/inventory/presentation/providers/inventory_providers_di.dart';
 import 'package:app/features/inventory/presentation/widgets/filter_chip.dart';
-import 'package:app/features/inventory/presentation/widgets/inventory_item_tile.dart';
+import 'package:app/features/inventory/presentation/widgets/inventory_paginated_table.dart';
 import 'package:app/shared/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -86,52 +86,62 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
 
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1000),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Header
-                _Header(
-                  totalQuantity: _totalQuantity(items),
-                  onAddItem: _navigateToCreate,
-                ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1000),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Header
+                    _Header(
+                      totalQuantity: _totalQuantity(items),
+                      onAddItem: _navigateToCreate,
+                    ),
 
-                const SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
-                // Search + category filter
-                _SearchAndFilter(
-                  searchQuery: _searchQuery,
-                  selectedCategory: _selectedCategory,
-                  categories: categories,
-                  onSearchChanged: (query) {
-                    setState(() => _searchQuery = query);
-                  },
-                  onCategoryChanged: (cat) {
-                    setState(() => _selectedCategory = cat);
-                  },
-                ),
+                    // Search + category filter
+                    _SearchAndFilter(
+                      searchQuery: _searchQuery,
+                      selectedCategory: _selectedCategory,
+                      categories: categories,
+                      onSearchChanged: (query) {
+                        setState(() => _searchQuery = query);
+                      },
+                      onCategoryChanged: (cat) {
+                        setState(() => _selectedCategory = cat);
+                      },
+                    ),
 
-                // Item list
-                Expanded(
-                  child: filtered.isEmpty
-                      ? _NoResults(
-                          onClear: () {
-                            setState(() {
-                              _searchQuery = '';
-                              _selectedCategory = null;
-                            });
-                          },
-                        )
-                      : _InventoryTable(
-                          items: filtered,
-                          onItemTap: (item) => _navigateToDetail(item),
-                          onEditTap: (item) =>
-                              _navigateToDetail(item, edit: true),
-                        ),
+                    // Item list
+                    filtered.isEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 60),
+                            child: _NoResults(
+                              onClear: () {
+                                setState(() {
+                                  _searchQuery = '';
+                                  _selectedCategory = null;
+                                });
+                              },
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.only(bottom: 40),
+                            child: InventoryPaginatedTable(
+                              items: filtered,
+                              onItemTap: (item) => _navigateToDetail(item),
+                              onEditTap: (item) =>
+                                  _navigateToDetail(item, edit: true),
+                            ),
+                          ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
@@ -271,10 +281,14 @@ class _SearchAndFilter extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: context.colors.surfacePrimary,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
+        ),
+        border: Border.all(color: context.colors.borderLight),
         boxShadow: [
           BoxShadow(
-            color: context.colors.mode.withValues(alpha: 0.05),
+            color: context.colors.onMode.withValues(alpha: 0.05),
             blurRadius: 2,
             offset: const Offset(0, 1),
           ),
@@ -290,7 +304,7 @@ class _SearchAndFilter extends StatelessWidget {
             Container(
               constraints: const BoxConstraints(maxWidth: 300),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(24),
               ),
               child: TextField(
                 onChanged: onSearchChanged,
@@ -365,49 +379,6 @@ class _NoResults extends StatelessWidget {
           TextButton(onPressed: onClear, child: const Text('Clear filters')),
         ],
       ),
-    );
-  }
-}
-
-class _InventoryTable extends StatelessWidget {
-  final List<InventoryItemEntity> items;
-  final ValueChanged<InventoryItemEntity> onItemTap;
-  final ValueChanged<InventoryItemEntity> onEditTap;
-
-  const _InventoryTable({
-    required this.items,
-    required this.onItemTap,
-    required this.onEditTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(flex: 4, child: Text('Item')),
-            Expanded(flex: 2, child: Center(child: Text('Category'))),
-            Expanded(flex: 2, child: Center(child: Text('Quantity Owned'))),
-            Expanded(flex: 1, child: Center(child: Text('Actions'))),
-          ],
-        ),
-        Expanded(
-          child: ListView.separated(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            itemCount: items.length,
-            separatorBuilder: (_, __) => const Divider(height: 1),
-            itemBuilder: (context, index) {
-              final item = items[index];
-              return InventoryItemTile(
-                item: item,
-                onTap: () => onItemTap(item),
-                onEdit: () => onEditTap(item),
-              );
-            },
-          ),
-        ),
-      ],
     );
   }
 }

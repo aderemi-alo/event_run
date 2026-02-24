@@ -138,7 +138,9 @@ class _CategorySelectorState extends State<CategorySelector> {
           vertical: 14,
         ),
         filled: true,
-        fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.05),
+        fillColor: Theme.of(
+          context,
+        ).colorScheme.primary.withValues(alpha: 0.05),
       ),
       onChanged: widget.onCategoryChanged,
     );
