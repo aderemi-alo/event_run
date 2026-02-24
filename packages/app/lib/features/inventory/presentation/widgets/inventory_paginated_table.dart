@@ -174,13 +174,10 @@ class _InventoryPaginatedTableState extends State<InventoryPaginatedTable> {
                 Divider(height: 1, color: context.colors.borderLight),
             itemBuilder: (context, index) {
               final item = currentItems[index];
-              return Padding(
-                padding: const EdgeInsets.only(left: 24, right: 16),
-                child: InventoryItemTile(
-                  item: item,
-                  onTap: () => widget.onItemTap(item),
-                  onEdit: () => widget.onEditTap(item),
-                ),
+              return InventoryItemTile(
+                item: item,
+                onTap: () => widget.onItemTap(item),
+                onEdit: () => widget.onEditTap(item),
               );
             },
           ),

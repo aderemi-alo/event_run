@@ -39,6 +39,9 @@ abstract final class AppTheme {
     brightness: brightness,
     scaffoldBackgroundColor: c.surfaceSecondary,
     textTheme: AppTypography.textTheme,
+    splashColor: Colors.transparent,
+    highlightColor: Colors.transparent,
+    splashFactory: NoSplash.splashFactory,
 
     // ── Color Scheme ─────────────────────────────────
     colorScheme: ColorScheme(

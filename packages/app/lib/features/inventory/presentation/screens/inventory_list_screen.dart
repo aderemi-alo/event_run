@@ -246,7 +246,7 @@ class _Header extends StatelessWidget {
           ),
           AppButton(
             expand: false,
-            leading: Icons.add,
+            leading: LucideIcons.plus,
             label: context.l10n.inventory_addItem,
             onPressed: onAddItem,
             height: 40,
